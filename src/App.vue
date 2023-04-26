@@ -1,10 +1,25 @@
 <template>
+  <HeaderComponent></HeaderComponent>
   <nav>
-    <router-link to="/">Home</router-link> |
+    <router-link class="link" active-class="active" to="/" exact>Home</router-link>
     <router-link to="/about">About</router-link>
   </nav>
   <router-view />
+  <FooterComponent></FooterComponent>
 </template>
+
+<script>
+// @ is an alias to /src
+import HeaderComponent from "@/components/HeaderComponent.vue";
+import FooterComponent from "@/components/FooterComponent.vue";
+
+export default {
+  components: {
+    HeaderComponent, 
+    FooterComponent
+  },
+};
+</script>
 
 <style lang="scss">
 #app {
