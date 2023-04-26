@@ -13,14 +13,13 @@
                     <label class="align-self-start" for="password">Hasło</label>
                     <input type="password" class="form-control" id="password">
                 </div>
-                <button class="btn btn-primary" type="submit">
-                    <span class="span-text">Zaloguj się</span>
+                <base-button>Zaloguj się
                     <span class="span-icon">
                         <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M1.66663 6H12.5M8.33329 1L12.744 5.41074C13.0695 5.73618 13.0695 6.26382 12.744 6.58926L8.33329 11" stroke="#F8F9FB" stroke-width="1.5" stroke-linecap="round"/>
                         </svg>
                     </span>
-                </button>
+                </base-button>
                 <p>Nie masz konta? <router-link to="/rejestracja">Zarejestruj się</router-link></p>
             </form>
           </div>
@@ -30,19 +29,19 @@
   </template>
   
   <script>
+
+  import BaseButton from "@/components/BaseButton.vue";
   export default {
     name: "LoginView",
-
+    components: {
+        BaseButton
+    }
   };
   </script>
 
 <style lang="scss" scoped>
 @import "@/assets/styles/global.scss";
-    .btn {
-        background-color: $dark;
-        border-color: $dark;
-        padding: 10px 20px;
-        margin: 30px 0;
+.btn {
         .span-text {
             font-weight: 600;
         }
