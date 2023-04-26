@@ -2,36 +2,37 @@
     <section id="home">
       <div class="container">
         <div class="row d-flex justify-content-center">
-          <div class="col-md-6">
+          <div class="col-md-5">
             <h1>Logowanie</h1>
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Login" aria-label="Username" aria-describedby="basic-addon1">
-            </div>
-            <div class="input-group mb-3">
-                <input type="password" class="form-control" placeholder="Hasło" aria-label="Username" aria-describedby="basic-addon1">
-            </div>
-            <button class="btn btn-primary" type="submit">
-                <span class="span-text">Zaloguj się</span>
-                <span class="span-icon">
-                    <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1.66663 6H12.5M8.33329 1L12.744 5.41074C13.0695 5.73618 13.0695 6.26382 12.744 6.58926L8.33329 11" stroke="#F8F9FB" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
-                </span>
-            </button>
+            <form>
+                <div class="form-group d-flex flex-column">
+                    <label class="align-self-start" for="email">Adres email</label>
+                    <input type="email" class="form-control" id="email">
+                </div>
+                <div class="form-group d-flex flex-column">
+                    <label class="align-self-start" for="password">Hasło</label>
+                    <input type="password" class="form-control" id="password">
+                </div>
+                <button class="btn btn-primary" type="submit">
+                    <span class="span-text">Zaloguj się</span>
+                    <span class="span-icon">
+                        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1.66663 6H12.5M8.33329 1L12.744 5.41074C13.0695 5.73618 13.0695 6.26382 12.744 6.58926L8.33329 11" stroke="#F8F9FB" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </span>
+                </button>
+                <p>Nie masz konta? <router-link to="/rejestracja">Zarejestruj się</router-link></p>
+            </form>
           </div>
-          <p>Nie masz konta? <a href="#">Zarejestruj się</a></p>
         </div>
       </div>
     </section>
   </template>
   
   <script>
-  // @ is an alias to /src
   export default {
-    name: "HomeView",
-    components: {
-      
-    },
+    name: "LoginView",
+
   };
   </script>
 
@@ -41,6 +42,7 @@
         background-color: $dark;
         border-color: $dark;
         padding: 10px 20px;
+        margin: 30px 0;
         .span-text {
             font-weight: 600;
         }
@@ -49,27 +51,58 @@
         }
     }
 
-    p > a {
-        color: $teal;
-    }
 
     .row {
         p {
             color: $dark;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 22px;
+            letter-spacing: -0.001em;
+            color: $secondary;
+            
+            a {
+                color: $teal;
+            }
         }
     } 
 
-    .col-md-6 {
-        .input-group {
-            input {
-                box-sizing: border-box;
-                border: 1px solid #5F6D7E;
-                border-radius: 8px;
+    .col-md-5 {
+        form {
+            .form-group {
+                margin: 13px 0;
 
+                label {
+                    font-weight: 500;
+                    font-size: 14px;
+                    line-height: 30px;
+                    letter-spacing: -0.001em;
+                    color: $secondary;
+
+                }
+                input {
+                    box-sizing: border-box;
+                    border: 1px solid #5F6D7E;
+                    border-radius: 8px;
+                    display: flex;
+                    padding: 8px 18px;
+                    gap: 16px;
+                    background: #F8F9FB;
+
+                }
             }
+        
         }
         h1 {
-            font-weight: 600;
+            margin: 60px 0;
+            font-weight: 700;
+            font-weight: 700;
+            font-size: 52px;
+            line-height: 60px;
+            text-align: center;
+            letter-spacing: -0.01em;
+            color: $dark;
         }
     }
 
