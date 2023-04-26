@@ -7,7 +7,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <ul class="navbar-nav me-auto mb-lg-0">
             <li class="nav-item">
               <router-link class="nav-link" active-class="active" to="/">Strona główna</router-link>
             </li>
@@ -24,7 +24,7 @@
               <a class="nav-link" href="#">Umów wizytę</a>
             </li>
             <li class="d-md-none">
-              <a class="nav-link" href="#">Logowanie</a>
+              <router-link class="nav-link" active-class="active" to="/logowanie">Logowanie</router-link>
             </li>
             <li class="d-md-none">
               <a class="nav-link" href="#">Rejestracja</a>
@@ -32,7 +32,7 @@
           </ul>
           <div class="login-section d-none d-md-flex">
             <a class="nav-link register-button" href="#">Rejestracja</a>
-            <a class="nav-link login-button" href="#">Logowanie</a>
+            <router-link class="nav-link login-button" active-class="" to="/logowanie">Logowanie</router-link>
           </div>
         </div>
       </div>
@@ -60,15 +60,19 @@ export default {
 
   .login-section {
     align-items: center;
-    margin-right: 30px;
   }
 
   nav {
-    padding: 15px;
-    padding-left: 35px;
-    padding-right: 35px;
     border-bottom: 1px solid #D1D9E2;
     background-color: #F8F9FB;
+  }
+
+  @media (min-width: 768px) {
+    nav {
+      padding: 15px;
+      padding-left: 35px;
+      padding-right: 35px;
+    }  
   }
 
   .login-button {
