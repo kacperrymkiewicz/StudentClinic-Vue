@@ -1,8 +1,8 @@
 <template>
   <header>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-md bg-body-tertiary">
       <div class="container-fluid">
-        <router-link to="/"><img src="../assets/images/logo.png" alt="Logo"></router-link>
+        <router-link to="/"><img src="../assets/images/logo.png" class="nav-logo" alt="Logo"></router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -23,9 +23,17 @@
             <li class="nav-item"> 
               <a class="nav-link" href="#">Umów wizytę</a>
             </li>
+            <li class="d-md-none">
+              <a class="nav-link" href="#">Logowanie</a>
+            </li>
+            <li class="d-md-none">
+              <a class="nav-link" href="#">Rejestracja</a>
+            </li>
           </ul>
-          <a class="nav-link" href="#">Rejestracja</a>
-          <a class="nav-link" href="#">Logowanie</a>
+          <div class="login-section d-none d-md-flex">
+            <a class="nav-link register-button" href="#">Rejestracja</a>
+            <a class="nav-link login-button" href="#">Logowanie</a>
+          </div>
         </div>
       </div>
     </nav>
@@ -39,3 +47,42 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+  .nav-logo {
+    width: 50px;
+    margin-right: 20px;
+  }
+
+  .login-section a:first-child {
+    margin-right: 15px;
+  }
+
+  .login-section {
+    align-items: center;
+  }
+
+  nav {
+    padding: 15px;
+    padding-left: 35px;
+    padding-right: 35px;
+    border-bottom: 1px solid #D1D9E2;
+    background-color: #F8F9FB;
+  }
+
+  .login-button {
+    background-color: #2E3646;
+    border-radius: .5rem;
+    color: white;
+    padding: 8px 18px;
+  }
+
+  .login-button:hover {
+    color: white;
+    background-color: #2F4757;
+  }
+
+  .nav-link {
+    font-weight: 500;
+  }
+</style>
