@@ -60,6 +60,7 @@ export default {
 
   .login-section {
     align-items: center;
+    margin-right: 30px;
   }
 
   nav {
@@ -80,6 +81,9 @@ export default {
   .login-button:hover {
     color: white;
     background-color: #2F4757;
+  }
+  .login-button:focus {
+    color: white;
   }
 
   .nav-link {
