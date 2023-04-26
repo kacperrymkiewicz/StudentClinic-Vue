@@ -27,11 +27,11 @@
               <router-link class="nav-link" active-class="active" to="/logowanie">Logowanie</router-link>
             </li>
             <li class="d-md-none">
-              <a class="nav-link" href="#">Rejestracja</a>
+              <router-link class="nav-link" active-class="active" to="/rejestracja">Rejestracja</router-link>
             </li>
           </ul>
           <div class="login-section d-none d-md-flex">
-            <a class="nav-link register-button" href="#">Rejestracja</a>
+            <router-link class="nav-link register-button" active-class="" to="/rejestracja">Rejestracja</router-link>
             <router-link class="nav-link login-button" active-class="" to="/logowanie">Logowanie</router-link>
           </div>
         </div>
@@ -49,6 +49,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import "@/assets/styles/global.scss";
   .nav-logo {
     width: 50px;
     margin-right: 20px;
@@ -65,6 +66,7 @@ export default {
   nav {
     border-bottom: 1px solid #D1D9E2;
     background-color: #F8F9FB;
+    color: $secondary;
   }
 
   @media (min-width: 768px) {
@@ -88,6 +90,10 @@ export default {
   }
   .login-button:focus {
     color: white;
+  }
+
+  .register-button:focus {
+    color: $secondary;
   }
 
   .nav-link {

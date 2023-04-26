@@ -1,10 +1,6 @@
 <template>
   <HeaderComponent></HeaderComponent>
-  <nav>
-    <router-link class="link" active-class="active" to="/" exact>Home</router-link>
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
+  <router-view></router-view>
   <FooterComponent></FooterComponent>
 </template>
 
@@ -38,10 +34,6 @@ nav {
   a {
     font-weight: bold;
     color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
   }
 }
 </style>

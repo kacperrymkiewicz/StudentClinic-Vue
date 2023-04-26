@@ -25,3 +25,18 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+  @import "@/assets/styles/global.scss";
+  
+  h1 {
+      margin: 60px 0;
+      font-weight: 700;
+      font-weight: 700;
+      font-size: 52px;
+      line-height: 60px;
+      text-align: center;
+      letter-spacing: -0.01em;
+      color: $dark;
+  }
+</style>
