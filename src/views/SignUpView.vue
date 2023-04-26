@@ -4,49 +4,48 @@
         <div class="row d-flex flex-column align-content-center">
           <div class="col-md-5">
             <h1>Rejestracja</h1>
-                <form>
-                    <div class="form-group d-flex flex-column">
-                        <label class="align-self-start" for="name">Imię</label>
-                        <input type="text" class="form-control" id="name">
-                    </div>
-                    <div class="form-group d-flex flex-column">
-                        <label class="align-self-start" for="surname">Nazwisko</label>
-                        <input type="text" class="form-control" id="surname">
-                    </div>
-                    <div class="form-group d-flex flex-column">
-                        <label class="align-self-start" for="email">Adres email</label>
-                        <input type="email" class="form-control" id="email">
-                    </div>
-                    <div class="form-group d-flex flex-column">
-                        <label class="align-self-start" for="pass">Hasło</label>
-                        <input type="password" class="form-control" id="pass">
-                    </div>
-                    <div class="form-group d-flex flex-column">
-                        <label class="align-self-start" for="repeat-pass">Powtórz hasło</label>
-                        <input type="password" class="form-control" id="repeat-pass">
-                    </div>
-                    <div class="form-group d-flex flex-column">
-                        <label class="align-self-start" for="tel">Telefon kontaktowy</label>
-                        <input type="tel" class="form-control" id="tel">
-                    </div>
-                    <div class="form-group d-flex flex-column">
-                        <label class="align-self-start" for="pesel">PESEL</label>
-                        <input type="text" class="form-control" id="pesel">
-                    </div>
-                    <div class="form-check d-flex">
-                        <input type="checkbox" class="form-check-input" id="regulamin">
-                        <label class="form-check-label" for="regulamin">Akceptuję <span><router-link class="align-self-start" to="/logowanie">regulamin</router-link></span></label>
-                    </div>
-                    <base-button>Zarejestruj się
-                        <span class="span-icon">
-                            <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M1.66663 6H12.5M8.33329 1L12.744 5.41074C13.0695 5.73618 13.0695 6.26382 12.744 6.58926L8.33329 11" stroke="#F8F9FB" stroke-width="1.5" stroke-linecap="round"/>
-                            </svg>
-                        </span>
-                    </base-button>
-                    <p>Masz już konto? <router-link to="/logowanie">Zaloguj się</router-link></p>
-                </form>
-
+            <form>
+                <div class="form-group d-flex flex-column">
+                    <label class="align-self-start" for="name">Imię</label>
+                    <input type="text" class="form-control" id="name">
+                </div>
+                <div class="form-group d-flex flex-column">
+                    <label class="align-self-start" for="surname">Nazwisko</label>
+                    <input type="text" class="form-control" id="surname">
+                </div>
+                <div class="form-group d-flex flex-column">
+                    <label class="align-self-start" for="email">Adres email</label>
+                    <input type="email" class="form-control" id="email">
+                </div>
+                <div class="form-group d-flex flex-column">
+                    <label class="align-self-start" for="pass">Hasło</label>
+                    <input type="password" class="form-control" id="pass">
+                </div>
+                <div class="form-group d-flex flex-column">
+                    <label class="align-self-start" for="repeat-pass">Powtórz hasło</label>
+                    <input type="password" class="form-control" id="repeat-pass">
+                </div>
+                <div class="form-group d-flex flex-column">
+                    <label class="align-self-start" for="tel">Telefon kontaktowy</label>
+                    <input type="tel" class="form-control" id="tel">
+                </div>
+                <div class="form-group d-flex flex-column">
+                    <label class="align-self-start" for="pesel">PESEL</label>
+                    <input type="text" class="form-control" id="pesel">
+                </div>
+                <div class="form-check d-flex">
+                    <input type="checkbox" class="form-check-input" id="regulamin">
+                    <label class="form-check-label" for="regulamin">Akceptuję <span><router-link class="align-self-start" to="/logowanie">regulamin</router-link></span></label>
+                </div>
+                <base-button>Zarejestruj się
+                    <span class="span-icon">
+                        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1.66663 6H12.5M8.33329 1L12.744 5.41074C13.0695 5.73618 13.0695 6.26382 12.744 6.58926L8.33329 11" stroke="#F8F9FB" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </span>
+                </base-button>
+                <p>Masz już konto? <router-link to="/logowanie">Zaloguj się</router-link></p>
+            </form>
           </div>
         </div>
       </div>
@@ -65,7 +64,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/styles/global.scss";
-    .btn {
+    button {
         .span-text {
             font-weight: 600;
         }
@@ -116,6 +115,14 @@ export default {
             }
 
             .form-check {
+                input {
+                    border-color: $secondary;
+                    &:checked {
+                        background-color: $teal;
+                        border-color: $secondary;
+                    }
+                }
+
                 label {
                     margin-left: 10px;
                     font-weight: 500;

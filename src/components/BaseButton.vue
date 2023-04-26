@@ -14,10 +14,10 @@
         padding: 10px 20px;
         margin: 30px 0;
         font-weight: 500;
-        
+
         &:hover {
-            background-color: $secondary;
-            border-color: $secondary;
+            background-color: $dark-hover;
+            border-color: $dark-hover;
         }
     }
 </style>

@@ -41,7 +41,7 @@
 
 <style lang="scss" scoped>
 @import "@/assets/styles/global.scss";
-.btn {
+    button {
         .span-text {
             font-weight: 600;
         }
