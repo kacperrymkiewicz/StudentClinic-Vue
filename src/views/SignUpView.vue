@@ -1,0 +1,159 @@
+<template>
+    <section id="signup">
+      <div class="container">
+        <div class="row d-flex flex-column align-content-center">
+          <div class="col-md-5">
+            <h1>Rejestracja</h1>
+                <form>
+                    <div class="form-group d-flex flex-column">
+                        <label class="align-self-start" for="name">Imię</label>
+                        <input type="text" class="form-control" id="name">
+                    </div>
+                    <div class="form-group d-flex flex-column">
+                        <label class="align-self-start" for="surname">Nazwisko</label>
+                        <input type="text" class="form-control" id="surname">
+                    </div>
+                    <div class="form-group d-flex flex-column">
+                        <label class="align-self-start" for="email">Adres email</label>
+                        <input type="email" class="form-control" id="email">
+                    </div>
+                    <div class="form-group d-flex flex-column">
+                        <label class="align-self-start" for="pass">Hasło</label>
+                        <input type="password" class="form-control" id="pass">
+                    </div>
+                    <div class="form-group d-flex flex-column">
+                        <label class="align-self-start" for="repeat-pass">Powtórz hasło</label>
+                        <input type="password" class="form-control" id="repeat-pass">
+                    </div>
+                    <div class="form-group d-flex flex-column">
+                        <label class="align-self-start" for="tel">Telefon kontaktowy</label>
+                        <input type="tel" class="form-control" id="tel">
+                    </div>
+                    <div class="form-group d-flex flex-column">
+                        <label class="align-self-start" for="pesel">PESEL</label>
+                        <input type="text" class="form-control" id="pesel">
+                    </div>
+                    <div class="form-check d-flex">
+                        <input type="checkbox" class="form-check-input" id="regulamin">
+                        <label class="form-check-label" for="regulamin">Akceptuję <span><router-link class="align-self-start" to="/logowanie">regulamin</router-link></span></label>
+                    </div>
+                    <button class="btn btn-primary" type="submit">
+                        <span class="span-text">Zarejestruj się</span>
+                        <span class="span-icon">
+                            <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1.66663 6H12.5M8.33329 1L12.744 5.41074C13.0695 5.73618 13.0695 6.26382 12.744 6.58926L8.33329 11" stroke="#F8F9FB" stroke-width="1.5" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                    </button>
+                    <p>Masz już konto? <router-link to="/logowanie">Zaloguj się</router-link></p>
+                </form>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </template>
+  
+  <script>
+  // @ is an alias to /src
+  export default {
+    name: "SignUpView",
+    components: {
+      
+    },
+  };
+  </script>
+
+<style lang="scss" scoped>
+@import "@/assets/styles/global.scss";
+    .btn {
+        background-color: $dark;
+        border-color: $dark;
+        padding: 10px 20px;
+        margin: 30px 0;
+
+        &:hover {
+            background-color: $dark;
+            .span-icon {
+                transform: translate();
+            }
+        }
+        .span-text {
+            font-weight: 600;
+        }
+        .span-icon {
+            margin-left: 10px;
+        }
+    }
+
+
+    .row {
+        p {
+            color: $dark;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 22px;
+            letter-spacing: -0.001em;
+            color: $secondary;
+            
+            a {
+                color: $teal;
+            }
+        }
+    } 
+
+    .col-md-5 {
+        form {
+            .form-group {
+                margin: 13px 0;
+
+                label {
+                    font-weight: 500;
+                    font-size: 14px;
+                    line-height: 30px;
+                    letter-spacing: -0.001em;
+                    color: $secondary;
+
+                }
+                input {
+                    box-sizing: border-box;
+                    border: 1px solid #5F6D7E;
+                    border-radius: 8px;
+                    display: flex;
+                    padding: 8px 18px;
+                    gap: 16px;
+                    background: #F8F9FB;
+
+                }
+            }
+
+            .form-check {
+                label {
+                    margin-left: 10px;
+                    font-weight: 500;
+
+                    span {
+                        a {
+                            color: $teal;
+                        }
+                        
+                    }
+                } 
+            }
+        
+        }
+        h1 {
+            margin: 60px 0;
+            font-weight: 700;
+            font-weight: 700;
+            font-size: 52px;
+            line-height: 60px;
+            text-align: center;
+            letter-spacing: -0.01em;
+            color: $dark;
+        }
+    }
+
+</style>
+  
