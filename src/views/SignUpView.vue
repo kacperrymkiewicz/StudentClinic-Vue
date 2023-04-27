@@ -151,5 +151,17 @@ export default {
         }
     }
 
+    .base-button {
+        margin: 30px 0;
+
+        .span-icon {
+            display: inline-block;
+            transition: all 0.2s ease-in-out;
+        }
+    }
+
+    .base-button:hover .span-icon {
+        transform: translateX(5px);
+    }
 </style>
   

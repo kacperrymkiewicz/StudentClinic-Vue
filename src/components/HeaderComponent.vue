@@ -32,7 +32,9 @@
           </ul>
           <div class="login-section d-none d-md-flex">
             <router-link class="nav-link register-button" active-class="" to="/rejestracja">Rejestracja</router-link>
-            <router-link class="nav-link login-button" active-class="" to="/logowanie">Logowanie</router-link>
+            <router-link class="nav-link login-button" active-class="" to="/logowanie">
+              <base-button>Logowanie</base-button>
+            </router-link>
           </div>
         </div>
       </div>
@@ -41,9 +43,11 @@
 </template>
 
 <script>
+import BaseButton from "@/components/BaseButton.vue";
+
 export default {
   components: {
-    
+    BaseButton
   },
 };
 </script>
@@ -75,21 +79,6 @@ export default {
       padding-left: 35px;
       padding-right: 35px;
     }  
-  }
-
-  .login-button {
-    background-color: #2E3646;
-    border-radius: .5rem;
-    color: white;
-    padding: 8px 18px;
-  }
-
-  .login-button:hover {
-    color: white;
-    background-color: #2F4757;
-  }
-  .login-button:focus {
-    color: white;
   }
 
   .register-button:focus {
