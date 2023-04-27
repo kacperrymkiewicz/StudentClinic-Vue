@@ -88,4 +88,9 @@ export default {
   .nav-link {
     font-weight: 500;
   }
+
+  .nav-link.active {
+    font-weight: 800;
+    color: #5F6D7E;
+  }
 </style>
