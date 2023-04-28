@@ -33,7 +33,7 @@
           <div class="login-section d-none d-md-flex">
             <router-link class="nav-link register-button" active-class="" to="/rejestracja">Rejestracja</router-link>
             <router-link class="nav-link login-button" active-class="" to="/logowanie">
-              <base-button>Logowanie</base-button>
+              <base-button type="dark">Logowanie</base-button>
             </router-link>
           </div>
         </div>
