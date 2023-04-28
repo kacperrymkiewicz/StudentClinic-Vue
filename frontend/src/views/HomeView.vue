@@ -10,7 +10,7 @@
           godzinę wizyty. Nasz system potwierdzi Twoją rezerwację i przypomni Ci o
           niej przed planowanym terminem.</p>
           <div class="home-buttons mt-3 mb-5">
-            <router-link to="/logowanie"><base-button class="mx-2">Logowanie</base-button></router-link>
+            <router-link to="/logowanie"><base-button type="dark" class="mx-2">Logowanie</base-button></router-link>
             <router-link to="/rejestracja"><base-button class="mx-2" style="background-color: #E6E9EC; border: 1px solid #D1D9E2; color: rgb(95, 109, 126);">Rejestracja</base-button></router-link>
           </div>
         </div>
@@ -160,7 +160,7 @@ export default {
       line-height: 60px;
       text-align: center;
       letter-spacing: -0.01em;
-      color: $dark;
+      color: $button-dark;
   }
 
   h2 {
@@ -168,7 +168,7 @@ export default {
     font-size: 32px;
     line-height: 40px;
     letter-spacing: -0.02em;
-    color: $dark;
+    color: $button-dark;
   }
 
   p {
