@@ -43,16 +43,16 @@
                   <div class="termin-content">
                     <div class="termin-content-daty">
                       <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12 col-lg-6">
                           <base-button class="termin-button">Dzisiaj 09:00</base-button>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12 col-lg-6">
                           <base-button class="termin-button">Dzisiaj 09:30</base-button>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12 col-lg-6">
                           <base-button class="termin-button">Jutro 09:00</base-button>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12 col-lg-6">
                           <base-button class="termin-button">Jutro 09:00</base-button>
                         </div>
                       </div>
@@ -77,22 +77,22 @@
                   <div class="termin-content">
                     <div class="termin-content-daty">
                       <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12 col-lg-6">
                           <base-button class="termin-button">Dzisiaj 09:00</base-button>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12 col-lg-6">
                           <base-button class="termin-button">Dzisiaj 09:30</base-button>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12 col-lg-6">
                           <base-button class="termin-button">Jutro 09:00</base-button>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12 col-lg-6">
                           <base-button class="termin-button">Jutro 09:00</base-button>
                         </div>
                       </div>
                     </div>
-                    <div class="termin-content-more-button mt-2">
-                      <base-button class="termin-button">Więcej terminów</base-button>
+                    <div class="termin-content-more-button">
+                      <base-button class="termin-button mt-2">Więcej terminów</base-button>
                     </div>
                   </div>
                 </div>
@@ -111,16 +111,16 @@
                   <div class="termin-content">
                     <div class="termin-content-daty">
                       <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12 col-lg-6">
                           <base-button class="termin-button">Dzisiaj 09:00</base-button>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12 col-lg-6">
                           <base-button class="termin-button">Dzisiaj 09:30</base-button>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12 col-lg-6">
                           <base-button class="termin-button">Jutro 09:00</base-button>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12 col-lg-6">
                           <base-button class="termin-button">Jutro 09:00</base-button>
                         </div>
                       </div>
