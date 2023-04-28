@@ -21,7 +21,7 @@
               </ul>
             </li>
             <li class="nav-item"> 
-              <a class="nav-link" href="#">Umów wizytę</a>
+              <router-link class="nav-link" active-class="active" to="/umow-wizyte">Umów wizytę</router-link>
             </li>
             <li class="d-md-none">
               <router-link class="nav-link" active-class="active" to="/logowanie">Logowanie</router-link>
