@@ -30,12 +30,9 @@
   
   <script>
 
-  import BaseButton from "@/components/BaseButton.vue";
+
   export default {
     name: "LoginView",
-    components: {
-        BaseButton
-    }
   };
   </script>
 

@@ -53,12 +53,8 @@
   </template>
   
   <script>
-import BaseButton from "@/components/BaseButton.vue";
 export default {
     name: "SignUpView",
-    components: {
-        BaseButton,
-    }
 };
 </script>
 
