@@ -1,9 +1,9 @@
 <template>
-    <section id="home">
+    <section id="edit-profile">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <hello-message></hello-message>
+                    <hello-message icon-name="clipboard"><template v-slot:info>Tutaj możesz edytować swoje dane personalne oraz dodać przyjmowane leki</template></hello-message>
                     <div class="d-flex flex-column align-items-center"> 
                         <div class="col-md-6">
                             <h1>Edycja profilu</h1>
@@ -41,7 +41,7 @@
                                     <input type="text" class="form-control" id="street">
                                 </div>         
                                 <base-button type="dark">Zapisz zmiany</base-button>
-                                <base-button type="light">Anuluj</base-button>
+                                <router-link to="../profil"><base-button type="light">Anuluj</base-button></router-link>
                             </form>
                             
                         </div>
