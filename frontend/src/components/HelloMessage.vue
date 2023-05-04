@@ -13,7 +13,7 @@
     </p>
     <h1>Witaj {{ this.name }}</h1>
     <p class="info">
-        {{ info }}
+        <slot name="info"></slot>
     </p>
     <img src="../assets/images/icons/reminder.png">
 </div>
@@ -40,7 +40,7 @@ export default {
             name: "Grzegorz",
             isPatient: true,
             activeTab: this.$route.path,
-            info: "Oto lista Twoich wizyt",
+            info: "",
             breadcrumb: "",
         }
     },
