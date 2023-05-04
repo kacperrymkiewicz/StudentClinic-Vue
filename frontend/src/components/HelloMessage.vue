@@ -15,7 +15,7 @@
     <p class="info">
         <slot name="info"></slot>
     </p>
-    <img src="../assets/images/icons/reminder.png">
+    <img :src="require(`@/assets/images/icons/${iconName}.png`)" />
 </div>
 </template>
 
@@ -35,6 +35,11 @@ export default {
             return this.activeTab.split("/").join(' ').split(' ');
         }
     },
+    name: "HelloMessage",
+    props: {
+        iconName: String,
+    },  
+    
     data(){
         return {
             name: "Grzegorz",
