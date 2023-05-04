@@ -82,9 +82,8 @@ div {
         font-size: 28px;
     }
 
-    p.hello-message {
-        font-weight: 400;
-        font-size: 16px;
+    p.info {
+        text-align: left;
     }
 
     img {
@@ -92,6 +91,10 @@ div {
         position: absolute;
         bottom: 0;
         right: 0;
+
+        @media (max-width: 768px) { 
+            display: none;
+        }
     }
 
 }
