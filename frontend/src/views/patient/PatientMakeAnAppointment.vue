@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <hello-message></hello-message>
+                    <hello-message icon-name="appointment"><template v-slot:info>Zarezerwuj wizytę do specjalisty</template></hello-message>
                     <div class="appointment-container">
                         <div class="row">
                             <div class="col-md-6">
