@@ -41,7 +41,7 @@
                                     <input type="text" class="form-control" id="street">
                                 </div>         
                                 <base-button type="dark">Zapisz zmiany</base-button>
-                                <router-link to="../profil"><base-button type="light">Anuluj</base-button></router-link>
+                                <router-link to="/profil"><base-button type="light">Anuluj</base-button></router-link>
                             </form>
                             
                         </div>

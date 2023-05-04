@@ -21,7 +21,7 @@
                                     <input type="password" class="form-control" id="repeat-new-password">
                                 </div>  
                                 <base-button type="dark">Zmień hasło</base-button>
-                                <router-link to="../profil"><base-button type="light">Anuluj</base-button></router-link>
+                                <router-link to="/profil"><base-button type="light">Anuluj</base-button></router-link>
                             </form>
                             
                         </div>

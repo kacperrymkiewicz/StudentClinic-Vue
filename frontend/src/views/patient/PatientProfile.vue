@@ -15,8 +15,8 @@
                                     <span>Grzegorz Floryda</span>
                                 </div>
                                 <div class="buttons">
-                                    <router-link to="profil/edycja-profilu"><base-button type="dark">Edytuj profil</base-button></router-link>
-                                    <router-link to="profil/edycja-hasla"><base-button type="dark">Zmień hasło</base-button></router-link>
+                                    <router-link to="/profil/edycja-profilu"><base-button type="dark">Edytuj profil</base-button></router-link>
+                                    <router-link to="/profil/edycja-hasla"><base-button type="dark">Zmień hasło</base-button></router-link>
                                 </div>
                             </div>
                             <div class="row base-cards">
