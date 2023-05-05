@@ -10,7 +10,7 @@
                     <slot name="content"></slot>
                 </div>
             </div>
-            <base-button class="button" type="dark" v-if="this.hasButton">Pokaż szczegóły</base-button>
+            <base-button class="button" type="dark" v-if="this.hasButton"><slot name="button"></slot></base-button>
         </div>
     </div>
 </template>
@@ -36,9 +36,9 @@ div.container {
         display: flex;
         padding: 24px;
         background-color: #F8F9FB;
-        border: 1.5px solid $base-card-elements;
+        border: 1.5px solid $secondary;
         border-radius: 5px;
-        color: $base-card-elements;
+        color: $secondary;
         position: relative;
 
         .title {
