@@ -19,9 +19,9 @@
                                     <router-link to="/profil/edycja-hasla"><base-button type="dark">Zmień hasło</base-button></router-link>
                                 </div>
                             </div>
-                            <div class="row base-cards">
+                            <div class="row base-cards-outer-wrapper">
                                 <div class="col-md-6">
-                                    <base-card>
+                                    <base-card class="base-card">
                                         <template v-slot:title>Dane personalne</template>
                                         <template v-slot:content>
                                             <p><span>Adres email: </span>gregflor@mail.com</p>
@@ -34,14 +34,22 @@
                                     </base-card>
                                 </div>
                                 <div class="col-md-6">
-                                    <base-card>
-                                        <template v-slot:title>Dane personalne</template>
-                                        <template v-slot:content>Lorem ipsum</template>
-                                    </base-card>
-                                    <base-card>
-                                        <template v-slot:title>Alergie</template>
-                                        <template v-slot:content>Lorem ipsum</template>
-                                    </base-card>
+                                    <div class="base-cards-inner-wrapper d-flex flex-column justify-content-between">
+                                        <base-card :has-button="true">
+                                            <template v-slot:title>Przyjmowane leki</template>
+                                            <template v-slot:content>
+                                                <p>Lorem ipsum</p>
+                                                <p>Lorem ipsum</p>
+                                            </template>
+                                        </base-card>
+                                        <base-card :has-button="true">
+                                            <template v-slot:title>Alergie</template>
+                                            <template v-slot:content>
+                                                <p>Lorem ipsum</p>
+                                                <p>Lorem ipsum</p>
+                                            </template>
+                                        </base-card>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -81,7 +89,21 @@
     }
 }
 
-div.base-cards {
+div.base-cards-outer-wrapper {
     margin-top: 20px;
+    .base-card > div:nth-child(1) > div:nth-child(2) > div:nth-child(2)  {
+        p {
+            margin-bottom: 11px !important;
+        }
+    } 
+
+    .base-cards-inner-wrapper {
+        height: 100%;
+    }
+
+
 }
+
+
+
 </style>
