@@ -21,7 +21,7 @@
                             </div>
                             <div class="row base-cards-outer-wrapper">
                                 <div class="col-md-6">
-                                    <base-card class="base-card">
+                                    <base-card class="base-card first">
                                         <template v-slot:title>Dane personalne</template>
                                         <template v-slot:content>
                                             <p><span>Adres email: </span>gregflor@mail.com</p>
@@ -41,6 +41,7 @@
                                                 <p>Lorem ipsum</p>
                                                 <p>Lorem ipsum</p>
                                             </template>
+                                            <template v-slot:button>Pokaż więcej</template>
                                         </base-card>
                                         <base-card :has-button="true">
                                             <template v-slot:title>Alergie</template>
@@ -48,6 +49,7 @@
                                                 <p>Lorem ipsum</p>
                                                 <p>Lorem ipsum</p>
                                             </template>
+                                            <template v-slot:button>Pokaż więcej</template>
                                         </base-card>
                                     </div>
                                 </div>
@@ -62,6 +64,12 @@
 </template>
 
 <style lang="scss" scoped>
+#profile {
+    @media (min-width: 992px) {
+        padding-bottom: 40px;
+    }
+    
+}
 .wrapper {
 
     .name {
@@ -93,7 +101,7 @@ div.base-cards-outer-wrapper {
     margin-top: 20px;
     .base-card > div:nth-child(1) > div:nth-child(2) > div:nth-child(2)  {
         p {
-            margin-bottom: 11px !important;
+            margin-bottom: 12px;
         }
     } 
 
