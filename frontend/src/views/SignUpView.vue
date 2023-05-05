@@ -37,13 +37,7 @@
                     <input type="checkbox" class="form-check-input" id="regulamin">
                     <label class="form-check-label" for="regulamin">Akceptuję <span><router-link class="align-self-start" to="/logowanie">regulamin</router-link></span></label>
                 </div>
-                <base-button type="dark">Zarejestruj się
-                    <span class="span-icon">
-                        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1.66663 6H12.5M8.33329 1L12.744 5.41074C13.0695 5.73618 13.0695 6.26382 12.744 6.58926L8.33329 11" stroke="#F8F9FB" stroke-width="1.5" stroke-linecap="round"/>
-                        </svg>
-                    </span>
-                </base-button>
+                <base-button type="dark" :has-icon="true">Zarejestruj się</base-button>
                 <p>Masz już konto? <router-link to="/logowanie">Zaloguj się</router-link></p>
             </form>
           </div>
@@ -60,14 +54,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/styles/global.scss";
-    button {
-        .span-text {
-            font-weight: 600;
-        }
-        .span-icon {
-            margin-left: 10px;
-        }
-    }
 
     .row {
         p {
@@ -145,19 +131,6 @@ export default {
             letter-spacing: -0.01em;
             color: $button-dark;
         }
-    }
-
-    .base-button {
-        margin: 30px 0;
-
-        .span-icon {
-            display: inline-block;
-            transition: all 0.2s ease-in-out;
-        }
-    }
-
-    .base-button:hover .span-icon {
-        transform: translateX(5px);
     }
 </style>
   

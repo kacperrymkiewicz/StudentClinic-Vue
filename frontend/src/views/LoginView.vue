@@ -13,13 +13,7 @@
                     <label class="align-self-start" for="password">Hasło</label>
                     <input type="password" class="form-control" id="password">
                 </div>
-                <base-button type="dark">Zaloguj się
-                    <span class="span-icon">
-                        <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1.66663 6H12.5M8.33329 1L12.744 5.41074C13.0695 5.73618 13.0695 6.26382 12.744 6.58926L8.33329 11" stroke="#F8F9FB" stroke-width="1.5" stroke-linecap="round"/>
-                        </svg>
-                    </span>
-                </base-button>
+                <base-button type="dark" :has-icon="true">Zaloguj się</base-button>
                 <p>Nie masz konta? <router-link to="/rejestracja">Zarejestruj się</router-link></p>
             </form>
           </div>
@@ -38,16 +32,6 @@
 
 <style lang="scss" scoped>
 @import "@/assets/styles/global.scss";
-    button {
-        .span-text {
-            font-weight: 600;
-        }
-        .span-icon {
-            margin-left: 10px;
-        }
-    }
-
-
     .row {
         p {
             color: $button-dark;
@@ -100,19 +84,6 @@
             letter-spacing: -0.01em;
             color: $button-dark;
         }
-    }
-
-    .base-button {
-        margin: 30px 0;
-
-        .span-icon {
-            display: inline-block;
-            transition: all 0.2s ease-in-out;
-        }
-    }
-
-    .base-button:hover .span-icon {
-        transform: translateX(5px);
     }
 </style>
   
