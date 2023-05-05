@@ -15,7 +15,7 @@
     <p class="info">
         <slot name="info"></slot>
     </p>
-    <img :src="require(`@/assets/images/icons/${iconName}.png`)" />
+    <img v-if="this.iconName" :src="require(`@/assets/images/icons/${iconName}.png`)" />
 </div>
 </template>
 
@@ -37,7 +37,10 @@ export default {
     },
     name: "HelloMessage",
     props: {
-        iconName: String,
+        iconName: {
+            type: String,
+            required: false
+        }
     },  
     
     data(){
