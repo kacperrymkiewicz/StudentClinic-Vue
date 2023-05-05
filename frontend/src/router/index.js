@@ -11,7 +11,7 @@ import PatientVisits from "../views/patient/PatientVisits.vue";
 import PatientProfile from "../views/patient/PatientProfile.vue";
 import PatientProfileEdit from "../views/patient/PatientProfileEdit.vue";
 import PatientProfileEditPassword from "../views/patient/PatientProfileEditPassword.vue";
-
+import ReceptionistPanelVisits from "../views/worker/ReceptionistPanelVisits";
 const routes = [
   {
     path: "/",
@@ -58,6 +58,12 @@ const routes = [
     path: "/profil/edycja-hasla",
     name: "patient-profile-edit-password",
     component: PatientProfileEditPassword,
+  },
+  //Pracownicy
+  {
+    path: "/recepcja",
+    name: "Panel Recepcji",
+    component: ReceptionistPanelVisits,
   },
 ];
 
