@@ -150,7 +150,6 @@ export default {
 
 
 <style lang="scss" scoped>
-  @import "@/assets/styles/global.scss";
   
   h1 {
       margin: 60px 0 20px;

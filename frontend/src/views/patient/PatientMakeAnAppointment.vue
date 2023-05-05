@@ -50,7 +50,6 @@
 </template>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/global.scss";
 
 .form-group {
     margin: 13px 0;

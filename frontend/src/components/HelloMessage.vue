@@ -59,7 +59,6 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "@/assets/styles/global.scss";
 
 div {
     margin: 20px 0;

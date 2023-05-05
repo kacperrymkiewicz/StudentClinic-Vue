@@ -33,7 +33,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/global.scss";
     button {
         padding: 10px 20px;
         font-weight: 500;

@@ -22,7 +22,6 @@
 </template>
 
 <style lang="scss" scoped>
-  @import "@/assets/styles/global.scss";
   .footer-brand img {
     width: 50px;
     margin-right: 10px;

@@ -44,7 +44,6 @@ export default {
 }</script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/global.scss";
 .col-md-6 {
         form {
             .form-group {

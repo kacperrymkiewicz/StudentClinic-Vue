@@ -19,7 +19,6 @@
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/global.scss";
 div.container {
     margin-bottom: 30px;
 
