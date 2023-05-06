@@ -6,7 +6,7 @@ import LoginView from "../views/LoginView.vue";
 
 // pacjent
 import PatientMakeAnAppointment from "../views/patient/PatientMakeAnAppointment.vue";
-import PatientRecommendations from "../views/patient/PatientRecommendations.vue"
+import PatientPrescriptions from "../views/patient/PatientPrescriptions.vue"
 import PatientVisits from "../views/patient/PatientVisits.vue";
 import PatientProfile from "../views/patient/PatientProfile.vue";
 import PatientProfileEdit from "../views/patient/PatientProfileEdit.vue";
@@ -35,9 +35,9 @@ const routes = [
     component: PatientVisits,
   },
   {
-    path: "/zalecenia",
-    name: "recommendations",
-    component: PatientRecommendations,
+    path: "/recepty",
+    name: "patient-prescriptions",
+    component: PatientPrescriptions,
   },
   {
     path: "/umow-wizyte",
