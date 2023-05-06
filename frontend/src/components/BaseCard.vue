@@ -31,6 +31,7 @@ div.container {
     @media (max-width: 992px) { 
         margin-bottom: 30px;
     }
+    margin: 20px;
 
     div.outer-wrapper {
         display: flex;
