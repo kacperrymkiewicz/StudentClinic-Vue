@@ -9,6 +9,7 @@ import store from "./store";
 import BaseButton from "@/components/BaseButton.vue";
 import HelloMessage from "@/components/HelloMessage.vue";
 import BaseCard from "@/components/BaseCard.vue";
+import BaseModal from "@/components/BaseModal.vue";
 
 createApp(App)
 .use(store)
@@ -16,4 +17,5 @@ createApp(App)
 .component('base-button', BaseButton)
 .component('hello-message', HelloMessage)
 .component('base-card', BaseCard)
+.component('base-modal', BaseModal)
 .mount("#app");
