@@ -1,18 +1,18 @@
 <template>
-  <HeaderComponent></HeaderComponent>
+  <TheHeader/>
   <router-view></router-view>
-  <FooterComponent></FooterComponent>
+  <TheFooter/>
 </template>
 
 <script>
 // @ is an alias to /src
-import HeaderComponent from "@/components/HeaderComponent.vue";
-import FooterComponent from "@/components/FooterComponent.vue";
+import TheHeader from "@/components/TheHeader.vue";
+import TheFooter from "@/components/TheFooter.vue";
 
 export default {
   components: {
-    HeaderComponent, 
-    FooterComponent,
+    TheHeader, 
+    TheFooter,
   },
 };
 </script>
@@ -36,4 +36,6 @@ nav {
     color: #2c3e50;
   }
 }
+
+
 </style>
