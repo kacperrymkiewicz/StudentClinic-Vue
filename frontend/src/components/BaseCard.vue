@@ -10,28 +10,16 @@
                     <slot name="content"></slot>
                 </div>
             </div>
-            <base-button class="button" type="dark" v-if="this.hasButton"><slot name="button"></slot></base-button>
         </div>
     </div>
 </template>
-
-<script>
-export default { 
-    props: {
-        hasButton: {
-            type: Boolean,
-            required: false,
-        }
-    }
-}
-</script>
 
 <style lang="scss" scoped>
 div.container {
     @media (max-width: 992px) { 
         margin-bottom: 30px;
     }
-    margin: 20px;
+    margin: 10px;
 
     div.outer-wrapper {
         display: flex;
