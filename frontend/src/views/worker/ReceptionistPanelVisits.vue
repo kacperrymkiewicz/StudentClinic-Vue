@@ -1,4 +1,7 @@
 <template>
+  <div class="container">
+    <div class="row">
+    <div class="col-md-12">
     <div class="search-container">
       <hello-message>
         <template v-slot:info>Oto lista zarezerwowanych wizyt przez pacjentów</template>
@@ -30,8 +33,13 @@
             <td>Jan Kowalski</td>
             <td>dr n. med. Anna Nowak</td>
             <td>Gastrolog</td>
-            <td>Potwierdzona</td>
-            <td><button id="comit">Potwierdź</button><button id="reject">Odrzuć</button></td>
+            <td><span class="dota" id="blue"></span>Zakończona</td>
+            <td>
+              <div class="button-container">
+                <button id="comit">Potwierdź</button>
+                <button id="reject">Odwołaj</button>
+              </div>
+            </td>
           </tr>
           <!-- Drugi wiersz -->
           <tr>
@@ -39,8 +47,13 @@
             <td>Anna Nowak</td>
             <td>dr n. med. Jan Kowalski</td>
             <td>Okulista</td>
-            <td>Oczekująca</td>
-            <td><button id="comit">Potwierdź</button><button id="reject">Odrzuć</button></td>
+            <td><span class="dota" id="yellow"></span>Oczekująca</td>
+            <td>
+              <div class="button-container">
+                <button id="comit">Potwierdź</button>
+                <button id="reject">Odwołaj</button>
+              </div>
+            </td>
           </tr>
           <!-- Trzeci wiersz -->
           <tr>
@@ -48,13 +61,27 @@
             <td>Marcin Zieliński</td>
             <td>dr n. med. Joanna Nowakowska</td>
             <td>internista</td>
-            <td>Anulowana</td>
-            <td><button id="comit">Potwierdź</button><button id="reject">Odrzuć</button></td>
+            <td><span class="dota" id="red"></span>Odwołana</td>
+            <td>
+              <div class="button-container">
+                <button id="comit">Potwierdź</button>
+                <button id="reject">Odwołaj</button>
+              </div>
+            </td>
           </tr>
+      <tr>
+        <td colspan="2">&#9668; Poprzednia strona</td>
+        <td colspan="2" style="text-align: center;">1  2  ...  5  6</td>
+        <td colspan="2" style="text-align: right;">Następna strona &#9658;</td>
+      </tr>
         </tbody>
       </table>
     </div>
     </div>
+    </div>
+  </div>
+  </div>
+  
   </template>
   
   <style>
@@ -62,7 +89,11 @@
     display: flex;
     align-items: center;
   }
-  
+  .button-container {
+  display: flex;
+  gap: 5px;
+}
+
   .search-wrapper {
     display: flex;
     align-items: center;
@@ -84,52 +115,93 @@
 }
 
 table {
-  border-collapse: collapse;
+  border-collapse: separate; 
+  border-spacing: 0;
   width: 100%;
+  background: #F8F9FB;
+  border: 1px solid #D1D9E2;
+  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+  border-radius: 10px;
 }
 
 th, td {
   text-align: left;
   padding: 12px;
+  border-bottom: 1px solid #D1D9E2;
 }
-
+/* 
 th {
   background-color: #f2f2f2;
 }
 
 tr:nth-child(even) {
   background-color: #f2f2f2;
-}
+} */
 
 tr:hover {
   background-color: #ddd;
 }
 
 #comit {
+  display: flex;
+  align-items: center;
+  padding: 2px 8px;
+  gap: 4px;
+  width: 79px;
+  height: 22px;
+  background: #0CE5CF;
+  border-radius: 5px;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 18px;
+  margin-right: 1rem;
+  letter-spacing: -0.001em;
+  color: #FFFFFF;
+  outline: none;
+  border: none; 
+  outline: none;
+}
+.dota {
+  vertical-align: middle;
+  height: 15px;
+  width: 15px;
+  margin-right: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 50%;
+  display: inline-block;
+}
 
-align-items: center;
-padding: 2px 8px;
-gap: 4px;
-width: 79px;
-height: 22px;
-background: #0CE5CF;
-border-radius: 5px;
-
-
+#blue{
+  background: #205594;
+  
+}
+#yellow{
+  background: #F8EE12;
+}
+#green{
+background: #209420;
+}
+#red{
+  background: #F84912;
 }
 #reject {
-align-items: center;
-padding: 2px 8px;
-gap: 4px;
-
-width: 67px;
-height: 22px;
-
-background: #CA5F5F;
-border-radius: 5px;
-
-
-
+  display: flex;
+  align-items: center;
+  padding: 2px 8px;
+  gap: 4px;
+  width: 67px;
+  height: 22px;
+  background: #CA5F5F;
+  border-radius: 5px;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 18px;
+  margin-right: 2rem;
+  letter-spacing: -0.001em;
+  color: #FFFFFF;
+  border: none; 
+  outline: none;
 }
   </style>
   
