@@ -3,26 +3,26 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <hello-message icon-name="clipboard"><template v-slot:info>Zarezerwuj wizytę do specjalisty</template></hello-message>
+                    <hello-message icon-name="appointment"><template v-slot:info>Zarezerwuj wizytę do specjalisty</template></hello-message>
                     <div class="appointment-container">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="wrapper d-flex align-items-center flex-column">
+                                <div class="left-wrapper d-flex align-items-center flex-column">
                                     <div class="form-group d-flex flex-column">
                                         <label class="align-self-start" for="specialization">Wybierz specjalizację</label>
                                         <select class="form-select" aria-label="Wybierz specjalistę" id="specialization">
-                                            <option selected>Okulista</option>
-                                            <option value="1">Dentysta</option>
-                                            <option value="2">Urolog</option>
-                                            <option value="3">Pediatra</option>
+                                            <option selected>Nie wybrano</option>
+                                            <option value="1">Lorem</option>
+                                            <option value="2">Lorem</option>
+                                            <option value="3">Lorem</option>
                                         </select>
                                     </div>
                                     <div class="form-group d-flex flex-column">
                                         <label class="align-self-start" for="doctor">Wybierz lekarza</label>
                                         <select class="form-select" aria-label="Wybierz specjalistę" id="doctor">
-                                            <option selected>Jan Woźniak</option>
-                                            <option value="1">Marek</option>
-                                            <option value="2">Jurek</option>
+                                            <option selected>Nie wybrano</option>
+                                            <option value="1">Lorem</option>
+                                            <option value="2">Lorem</option>
                                         </select>
                                     </div>
 
@@ -52,7 +52,20 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <span>Twój lekarz:</span>
+                                <div class="right-wrapper d-flex flex-column">
+                                    <div class="right-inner-wrapper d-flex flex-column align-items-center">
+                                        <img src="@/assets/images/icons/doctor.png">
+                                        <p>Twój lekarz:</p>
+                                        <p> {{ doctor }}</p>
+                                        <p> {{ specialization }}</p>
+                                        <p><span>Termin:</span> {{ termin }} </p>
+                                        <div class="d-flex">
+                                            <p>Koszt wizyty:</p>
+                                            <span> {{ price }} zł</span>
+                                        </div>
+                                        <base-button type="dark" :has-icon="true">Umów wizytę</base-button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -62,104 +75,177 @@
     </section>
 </template>
 
+<script>
+    export default {
+        data(){
+            return {
+                doctor: 'Lorem Ipsum',
+                specialization: 'Lorem',
+                termin: 'nie wybrano',
+                price: 100,
+                
+            }
+
+        }
+    }
+</script>
+
 <style lang="scss" scoped>
 
-.wrapper {
-    width: 100%;
-    border-right: 1px solid #D1D9E2;
-    padding-bottom: 20px;
-    .form-group {
-        margin: 13px 0;
-        width: 350px;
-    
-    label {
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 30px;
-        letter-spacing: -0.001em;
-        color: $secondary;
-        margin-bottom: 10px;
+div.appointment-container {
+    margin: 40px 0;
+    padding: 50px 0;
+    background-color: $primary;
+    border-radius: 5px;
+    border: 1px solid #D1D9E2;
 
-    }
-    select {
-        box-sizing: border-box;
-        border: 1px solid #5F6D7E;
-        border-radius: 8px;
-        display: flex;
-        padding: 8px 18px;
-        gap: 16px;
-        background-color: #F8F9FB;
+    div.left-wrapper {
+        width: 100%;
+        border-right: 1px solid #D1D9E2;
+        padding-bottom: 20px;
+        div.form-group {
+            margin: 13px 0;
+            width: 350px;
+        
+        label {
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 30px;
+            letter-spacing: -0.001em;
+            color: $secondary;
+            margin-bottom: 10px;
 
-    }
-    
-}
-.appointment-date-picker {
-    .date-picker {
-        span {
-            width: 160px;
         }
-    }
-    .base-button {
-        margin: 10px 0;
-    }
+        select {
+            box-sizing: border-box;
+            border: 1px solid #5F6D7E;
+            border-radius: 8px;
+            display: flex;
+            padding: 8px 18px;
+            gap: 16px;
+            background-color: #F8F9FB;
 
-    a {
-        margin-top: 18px;
-        color: $secondary;
-        font-weight: 600;
-        font-size: 15px;
+        }
+        
     }
+    .appointment-date-picker {
+        .date-picker {
+            svg {
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+            span {
+                width: 160px;
+                line-height: 31px;
+            }
+        }
+        .base-button {
+            margin: 10px 0;
+        }
 
-}
-.form-check {
-    input {
-        border-color: $secondary;
-        &:checked {
-            background-color: $teal;
+        a {
+            margin-top: 18px;
+            color: $secondary;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+    }
+    .form-check {
+        input {
             border-color: $secondary;
+            &:checked {
+                background-color: $teal;
+                border-color: $secondary;
+            }
         }
-    }
 
-    label {
-        margin-left: 10px;
-        font-weight: 500;
-        color: $secondary;
+        label {
+            margin-left: 10px;
+            font-weight: 500;
+            color: $secondary;
 
-        span {
+            span {
 
+                a {
+                    color: $teal;
+                }
+                
+            }
+        }
+
+        p {
+            color: $button-dark;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 22px;
+            letter-spacing: -0.001em;
+            color: $secondary;
+        
             a {
                 color: $teal;
             }
+
+        } 
+    }
+        h1 {
+            margin: 60px 0;
+            font-weight: 700;
+            font-weight: 700;
+            font-size: 52px;
+            line-height: 60px;
+            text-align: center;
+            letter-spacing: -0.01em;
+            color: $button-dark;
+        }
+    }
+
+    div.right-wrapper {
+        height: 100%;
+        justify-content: center;
+        div.right-inner-wrapper{
+            p:nth-child(2){
+                text-transform: uppercase;
+                color: $secondary;
+                margin: 30px 0;
+            }
             
+            p:nth-child(5){
+                margin-bottom: 30px;
+            }
+
+            img {
+                width: 90px;
+            }
+
+            p {
+                span {
+                    font-weight: 600;
+                }
+            }
+
+            div {
+                width: 260px;
+                border-top: 1px solid #D1D9E2;
+                padding: 20px 0;
+                justify-content: space-evenly;
+                align-items: center;
+                font-weight: 700;
+
+                p {
+                    margin-bottom: 0;
+                }
+
+                span {
+                    background-color: $secondary;
+                    padding: 2px 8px;
+                    border-radius: 5px;
+                    color: white;
+                }
+            }
         }
     }
-
-    p {
-        color: $button-dark;
-        font-style: normal;
-        font-weight: 600;
-        font-size: 15px;
-        line-height: 22px;
-        letter-spacing: -0.001em;
-        color: $secondary;
-    
-        a {
-            color: $teal;
-        }
-
-    } 
 }
-    h1 {
-        margin: 60px 0;
-        font-weight: 700;
-        font-weight: 700;
-        font-size: 52px;
-        line-height: 60px;
-        text-align: center;
-        letter-spacing: -0.01em;
-        color: $button-dark;
-    }
-}
-
-
 </style>

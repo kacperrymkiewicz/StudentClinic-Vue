@@ -21,7 +21,7 @@
                             </div>
                             <div class="row base-cards-outer-wrapper">
                                 <div class="col-md-6">
-                                    <base-card class="base-card first">
+                                    <base-card class="base-card">
                                         <template v-slot:title>Dane personalne</template>
                                         <template v-slot:content>
                                             <p><span>Adres email: </span>gregflor@mail.com</p>
