@@ -4,21 +4,19 @@
             <div class="row">
                 <div class="col-md-12">
                     <hello-message icon-name="receipt"><template v-slot:info>Oto lista Twoich recept wraz z zaleceniami lekarskimi</template></hello-message>
-                    <base-card :has-button="true">
+                    <base-card class="base-card" :has-button="true" @click="toggleModalIsOpen">
                         <template v-slot:title>Recepta z dnia {{ date }} o {{ time }}</template>
                         <template v-slot:content>Lekarz: {{ doctor }}</template>
-                        <template v-slot:button>Pokaż szczegóły recepty</template>
                     </base-card>
-                    <base-card :has-button="true">
+                    <base-card class="base-card" :has-button="true" @click="toggleModalIsOpen">
                         <template v-slot:title>Recepta z dnia {{ date }} o {{ time }}</template>
                         <template v-slot:content>Lekarz: {{ doctor }}</template>
-                        <template v-slot:button>Pokaż szczegóły recepty</template>
                     </base-card>
                 </div>
             </div>
         </div>
     </section>
-    <base-modal v-bind:modalIsOpen="modalIsOpen" v-if="modalIsOpen" @close="toggleModalIsOpen">
+    <base-modal v-bind:modalIsOpen="modalIsOpen" v-if="modalIsOpen" @click="toggleModalIsOpen">
         <template v-slot:title>Recepta z dnia {{ this.date }}</template>
         <template v-slot:subtitle>{{ drug_name + " " + drug_size}}</template>
         <template v-slot:content>
@@ -45,15 +43,22 @@
                 receipt_code: "Lorem ipsum",
                 issuer: "Lorem ipsum",
                 recommendations: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam auctor.",
-                modalIsOpen: true
+                modalIsOpen: false,
             }
         },
         methods: {
             toggleModalIsOpen() {
-                return this.modalIsOpen = false;
+                return this.modalIsOpen = !this.modalIsOpen;
             }
         },
     }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+div.container {
+    div.base-card {
+        margin: 50px 0;
+    }
+}
+        
+</style>

@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="base-cards-inner-wrapper d-flex flex-column justify-content-between">
-                                        <base-card :has-button="true">
+                                        <base-card>
                                             <template v-slot:title>Przyjmowane leki</template>
                                             <template v-slot:content>
                                                 <p>Lorem ipsum</p>
@@ -43,7 +43,7 @@
                                             </template>
                                             <template v-slot:button>Pokaż więcej</template>
                                         </base-card>
-                                        <base-card :has-button="true">
+                                        <base-card>
                                             <template v-slot:title>Alergie</template>
                                             <template v-slot:content>
                                                 <p>Lorem ipsum</p>
