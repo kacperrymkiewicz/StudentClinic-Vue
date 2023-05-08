@@ -38,6 +38,7 @@ dialog {
     padding: 0;
     position: fixed;
     left: 50%;
+    margin: 0;
     top: 50%;
     transform: translate(-50%, -50%);
     background-color: rgba(0, 0, 0, 0);

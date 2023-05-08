@@ -21,7 +21,7 @@
                             </div>
                             <div class="row base-cards-outer-wrapper">
                                 <div class="col-md-6">
-                                    <base-card class="base-card">
+                                    <base-card class="base-card" @click="toggleModalIsOpen">
                                         <template v-slot:title>Dane personalne</template>
                                         <template v-slot:content>
                                             <p><span>Adres email: </span>gregflor@mail.com</p>
@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="base-cards-inner-wrapper d-flex flex-column justify-content-between">
-                                        <base-card>
+                                        <base-card @click="toggleModalIsOpen">
                                             <template v-slot:title>Przyjmowane leki</template>
                                             <template v-slot:content>
                                                 <p>Lorem ipsum</p>
@@ -43,7 +43,7 @@
                                             </template>
                                             <template v-slot:button>Pokaż więcej</template>
                                         </base-card>
-                                        <base-card>
+                                        <base-card @click="toggleModalIsOpen">
                                             <template v-slot:title>Alergie</template>
                                             <template v-slot:content>
                                                 <p>Lorem ipsum</p>
@@ -59,17 +59,43 @@
                     </div>
                 </div>
             </div>
-       
     </section>
+    <base-modal class="base-modal" v-bind:modalIsOpen="modalIsOpen" v-if="modalIsOpen" @click="toggleModalIsOpen">
+        <template v-slot:title>Przyjmowane leki</template>
+        <template v-slot:subtitle></template>
+        <template v-slot:content>
+            <p>Lorem Ipsum</p>
+            <p>Lorem Ipsum</p>
+            <p>Lorem Ipsum</p>
+            <p>Lorem Ipsum</p>
+            <p>Lorem Ipsum</p>
+            <p>Lorem Ipsum</p>
+        </template>
+    </base-modal>
 </template>
+
+<script>
+    export default {
+        data(){
+            return {
+                modalIsOpen: false,
+            }
+        },
+        methods: {
+            toggleModalIsOpen() {
+                return this.modalIsOpen = !this.modalIsOpen;
+            }
+        },
+    }
+</script>
 
 <style lang="scss" scoped>
 #profile {
     @media (min-width: 992px) {
         padding-bottom: 40px;
     }
-    
 }
+
 .wrapper {
 
     .name {
@@ -108,10 +134,5 @@ div.base-cards-outer-wrapper {
     .base-cards-inner-wrapper {
         height: 100%;
     }
-
-
 }
-
-
-
 </style>
