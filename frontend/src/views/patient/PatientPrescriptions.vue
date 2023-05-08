@@ -4,14 +4,34 @@
             <div class="row">
                 <div class="col-md-12">
                     <hello-message icon-name="receipt"><template v-slot:info>Oto lista Twoich recept wraz z zaleceniami lekarskimi</template></hello-message>
-                    <base-card class="base-card" :has-button="true" @click="toggleModalIsOpen">
-                        <template v-slot:title>Recepta z dnia {{ date }} o {{ time }}</template>
-                        <template v-slot:content>Lekarz: {{ doctor }}</template>
-                    </base-card>
-                    <base-card class="base-card" :has-button="true" @click="toggleModalIsOpen">
-                        <template v-slot:title>Recepta z dnia {{ date }} o {{ time }}</template>
-                        <template v-slot:content>Lekarz: {{ doctor }}</template>
-                    </base-card>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <base-card class="base-card" :has-button="true" @click="toggleModalIsOpen">
+                                <template v-slot:title>Recepta z dnia {{ date }}</template>
+                                <template v-slot:content>Lekarz: {{ doctor_name }} ({{ doctor_specialization }})</template>
+                            </base-card>
+                        </div>
+                        <div class="col-md-6">
+                            <base-card class="base-card" :has-button="true" @click="toggleModalIsOpen">
+                                <template v-slot:title>Recepta z dnia {{ date }}</template>
+                                <template v-slot:content>Lekarz: {{ doctor_name }} ({{ doctor_specialization }})</template>
+                            </base-card>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <base-card class="base-card" :has-button="true" @click="toggleModalIsOpen">
+                                <template v-slot:title>Recepta z dnia {{ date }}</template>
+                                <template v-slot:content>Lekarz: {{ doctor_name }} ({{ doctor_specialization }})</template>
+                            </base-card>
+                        </div>
+                        <div class="col-md-6">
+                            <base-card class="base-card" :has-button="true" @click="toggleModalIsOpen">
+                                <template v-slot:title>Recepta z dnia {{ date }}</template>
+                                <template v-slot:content>Lekarz: {{ doctor_name }} ({{ doctor_specialization }})</template>
+                            </base-card>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -35,7 +55,8 @@
             return {
                 date: new Date().toISOString().slice(0, 10),
                 time: "9:30",
-                doctor: "Lorem Ipsum",
+                doctor_name: "Lorem Ipsum",
+                doctor_specialization: "lorem",
                 drug_name: "Lorem Ipsum",
                 drug_size: "0.5g",
                 fee: "100%",
@@ -57,7 +78,8 @@
 <style lang="scss" scoped>
 div.container {
     div.base-card {
-        margin: 50px 0;
+        padding: 0 20px;
+        margin: 30px 0;
     }
 }
         
