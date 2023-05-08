@@ -123,6 +123,7 @@ nav {
   border-bottom: 1px solid #D1D9E2;
   background-color: $primary;
   color: $secondary;
+  height: 90px;
 
   @media (min-width: 768px) {
     padding: 15px;
@@ -202,7 +203,7 @@ nav {
           position: absolute;
           border-radius: 0px 0px 10px 10px;
           z-index: 1;
-          bottom: -160px;
+          bottom: -165px;
           left: -32px;
           border-bottom: 1px solid #D1D9E2;
           box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);

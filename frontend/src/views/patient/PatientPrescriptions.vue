@@ -6,13 +6,13 @@
                     <hello-message icon-name="receipt"><template v-slot:info>Oto lista Twoich recept wraz z zaleceniami lekarskimi</template></hello-message>
                     <div class="row">
                         <div class="col-md-6">
-                            <base-card class="base-card" :has-button="true" @click="toggleModalIsOpen">
+                            <base-card class="base-card" @click="toggleModalIsOpen">
                                 <template v-slot:title>Recepta z dnia {{ date }}</template>
                                 <template v-slot:content>Lekarz: {{ doctor_name }} ({{ doctor_specialization }})</template>
                             </base-card>
                         </div>
                         <div class="col-md-6">
-                            <base-card class="base-card" :has-button="true" @click="toggleModalIsOpen">
+                            <base-card class="base-card" @click="toggleModalIsOpen">
                                 <template v-slot:title>Recepta z dnia {{ date }}</template>
                                 <template v-slot:content>Lekarz: {{ doctor_name }} ({{ doctor_specialization }})</template>
                             </base-card>
@@ -20,13 +20,13 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <base-card class="base-card" :has-button="true" @click="toggleModalIsOpen">
+                            <base-card class="base-card" @click="toggleModalIsOpen">
                                 <template v-slot:title>Recepta z dnia {{ date }}</template>
                                 <template v-slot:content>Lekarz: {{ doctor_name }} ({{ doctor_specialization }})</template>
                             </base-card>
                         </div>
                         <div class="col-md-6">
-                            <base-card class="base-card" :has-button="true" @click="toggleModalIsOpen">
+                            <base-card class="base-card" @click="toggleModalIsOpen">
                                 <template v-slot:title>Recepta z dnia {{ date }}</template>
                                 <template v-slot:content>Lekarz: {{ doctor_name }} ({{ doctor_specialization }})</template>
                             </base-card>
