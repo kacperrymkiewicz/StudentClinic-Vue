@@ -26,6 +26,14 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  section {
+    min-height: calc(100vh - 289px);
+  }
+
 }
 
 nav {
