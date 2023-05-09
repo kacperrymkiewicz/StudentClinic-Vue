@@ -99,7 +99,7 @@
 export default {
   data(){
     return {
-      isLoggedIn: true,
+      isLoggedIn: false,
       name: "Lorem Ipsum",
       role: "Pacjent",
       isDropDownMenuOpen: false,
@@ -136,8 +136,7 @@ nav {
         @media (min-width: 992px) {
           margin: 0 10px;
         }
-        
-  
+
         .nav-link {
           padding: 9px 17px;
           font-weight: 500;
@@ -172,7 +171,7 @@ nav {
             
           }
           @media (min-width: 992px) {
-          margin-left: 15px;
+            margin-left: 15px;
           }
           .nav-link {
             border-radius: 5px;
