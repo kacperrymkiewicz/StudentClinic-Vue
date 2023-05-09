@@ -125,16 +125,18 @@ nav {
   color: $secondary;
   height: 90px;
 
-  @media (min-width: 768px) {
-    padding: 15px;
-    padding-left: 35px;
-    padding-right: 35px;
+  @media (min-width: 992px) {
+    padding: 0 35px;
   }
 
   div {
     ul.navbar-nav {
       li.nav-item {
-        margin: 0 5px;
+
+        @media (min-width: 992px) {
+          margin: 0 10px;
+        }
+        
   
         .nav-link {
           padding: 9px 17px;
@@ -164,10 +166,14 @@ nav {
         ul.navbar-nav {
         li.nav-item {
           &:first-child {
-            margin-left: 50px;
+            @media (min-width: 992px) {
+              margin-left: 50px;
+            }   
+            
           }
+          @media (min-width: 992px) {
           margin-left: 15px;
-
+          }
           .nav-link {
             border-radius: 5px;
             &.active-logged-in {
