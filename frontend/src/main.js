@@ -10,12 +10,22 @@ import BaseButton from "@/components/BaseButton.vue";
 import HelloMessage from "@/components/HelloMessage.vue";
 import BaseCard from "@/components/BaseCard.vue";
 import BaseModal from "@/components/BaseModal.vue";
+import BaseTable from "@/components/BaseTable.vue";
+
+
+const capitalizeMixin = {
+    methods: {
+        capitalizeFirstLetter: str => str.charAt(0).toUpperCase() + str.slice(1)
+    }
+}
 
 createApp(App)
 .use(store)
 .use(router)
+.mixin(capitalizeMixin)
 .component('base-button', BaseButton)
 .component('hello-message', HelloMessage)
 .component('base-card', BaseCard)
 .component('base-modal', BaseModal)
+.component('base-table', BaseTable)
 .mount("#app");
