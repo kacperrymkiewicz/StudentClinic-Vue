@@ -123,7 +123,6 @@ nav {
   border-bottom: 1px solid #D1D9E2;
   background-color: $primary;
   color: $secondary;
-  height: 90px;
 
   @media (min-width: 992px) {
     padding: 0 35px;

@@ -124,6 +124,8 @@
                         font-weight: 500;
                         vertical-align: middle;
                         font-size: 14px;
+                        white-space: nowrap;
+
                         span {
                             &:first-child {
                                 margin-right: 16px;
@@ -164,7 +166,7 @@
                 tr {
                     th {
                         border: 0;
-
+                        white-space: nowrap;
                         span.tfoot-text {
                             vertical-align: middle;
                             margin: 0 6px;
