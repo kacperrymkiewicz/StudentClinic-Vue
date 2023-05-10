@@ -4,8 +4,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <hello-message icon-name="reminder"><template v-slot:info>Oto lista Twoich wizyt</template></hello-message>
-                    <div class="table-responsive">
-                        <base-table  :fields="fields" :data="data" :status="status"></base-table>
+                    <div class="table-responsive d-flex flex-column">
+                        <base-table :fields="fields" :data="data" :status="status"></base-table>
                     </div>
                 </div>
             </div>
@@ -21,7 +21,7 @@
                 {data:new Date().toISOString().slice(0, 10), pacjent: "Lorem Esther", lekarz: "Lorem Ipsum", specjalizacja: "lorem", status: "odwołana"},
             ]
             const fields = [
-                'data', 'lekarz', 'specjalizacja', 'status', 'akcje'
+                'data', 'pacjent', 'lekarz', 'specjalizacja', 'status', 'akcje'
             ]
             return { data, fields }
         }

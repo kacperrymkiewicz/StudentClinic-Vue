@@ -1,5 +1,5 @@
 <template>
-    <div class="searchBar">
+    <div v-if="!isPatientView" class="search">
       <div class="input-group mb-5">
         <input type="search" class="form-control" v-model='searchQuery' placeholder="Wyszukaj">
       </div>
@@ -75,6 +75,7 @@ name: 'BaseTable',
       isPatientView: {
             type: Boolean,
             required: false,
+            default: false 
       }
   },
   methods: {
@@ -120,11 +121,23 @@ name: 'BaseTable',
 </script>
 
 <style lang="scss" scoped>
+
+div.search {
+    width: 300px;
+    align-self: flex-end;
+
+    div.input-group {
+        input {
+            //
+        }
+    }
+}
+
 table {
     thead, tfoot {
         tr {
             &:hover {
-                background-color: $primary;
+                background-color: transparent;
             }
             th {
                 padding: 24px;
