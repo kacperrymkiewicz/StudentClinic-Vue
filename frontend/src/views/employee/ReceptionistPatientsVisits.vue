@@ -4,9 +4,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <hello-message icon-name="reminder"><template v-slot:info>Oto lista zarezerwowanych wizyt przez pacjentów</template></hello-message>
-                    <div class="table-responsive d-flex flex-column">
-                        <base-table :fields="fields" :data="data" :status="status"></base-table>
-                    </div>
+                    <base-table :fields="fields" :data="data" :status="status"></base-table>
                 </div>
             </div>
         </div>

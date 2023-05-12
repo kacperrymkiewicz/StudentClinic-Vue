@@ -1,9 +1,7 @@
 <template>
     <div class="container">
         <div class="outer-wrapper">
-            <svg class="info-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 17L12 10M12 6.5794V6.63843M1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12Z" stroke="#5F6D7E" stroke-width="2" stroke-linecap="round"/>
-            </svg>
+            <img class="info-icon" src="@/assets/images/icons/svg/base_card_info.svg">
             <div class="inner-wrapper">
                 <p class="title"><slot name="title"></slot></p>
                 <div class="content">
@@ -30,6 +28,9 @@ div.container {
         color: $secondary;
         position: relative;
 
+        img.info-icon {
+            position: absolute;
+        }
         .title {
             font-weight: 500;
             font-size: 22px;
@@ -39,7 +40,7 @@ div.container {
         }
 
         div.inner-wrapper {
-            margin-left: 20px;
+            margin-left: 35px;
             text-align: left;
 
             div.content {

@@ -8,10 +8,7 @@
                         <div class="col-md-12">  
                             <div class="wrapper d-flex flex-column">
                                 <div class="name d-flex flex-column align-items-center">
-                                    <svg width="90" height="91" viewBox="0 0 90 91" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <rect y="0.5" width="90" height="90" rx="45" fill="#5F6D7E"/>
-                                        <path d="M45.0003 48.8333C49.6027 48.8333 53.3337 45.1024 53.3337 40.5C53.3337 35.8976 49.6027 32.1667 45.0003 32.1667C40.398 32.1667 36.667 35.8976 36.667 40.5C36.667 45.1024 40.398 48.8333 45.0003 48.8333ZM45.0003 48.8333C37.6365 48.8333 31.667 53.3105 31.667 58.8333M45.0003 48.8333C52.3641 48.8333 58.3337 53.3105 58.3337 58.8333" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                                    </svg>
+                                    <img src="@/assets/images/icons/svg/profile.svg">
                                     <span>Grzegorz Floryda</span>
                                 </div>
                                 <div class="buttons">
@@ -96,9 +93,12 @@
     }
 }
 
-.wrapper {
+div.wrapper {
 
-    .name {
+    div.name {
+        img {
+            width: 90px;
+        }
         span {
             font-weight: 700;
             font-size: 32px;
@@ -107,7 +107,7 @@
             margin-top: 20px;
         }
     }
-    .buttons {
+    div.buttons {
         display: flex;
         flex-direction: column;
         align-self: flex-end;

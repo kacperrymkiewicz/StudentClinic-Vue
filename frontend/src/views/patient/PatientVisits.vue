@@ -4,9 +4,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <hello-message icon-name="reminder"><template v-slot:info>Oto lista Twoich wizyt</template></hello-message>
-                    <div class="table-responsive d-flex flex-column">
-                        <base-table :isPatientView="true" :fields="fields" :data="data" :status="status"></base-table>
-                    </div>
+                    <base-table :isPatientView="true" :fields="fields" :data="data" :status="status"></base-table>
                 </div>
             </div>
         </div>

@@ -7,12 +7,22 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="logged-in collapse navbar-collapse" id="navbarSupportedContent" v-if="isLoggedIn" >
-          <ul class="navbar-nav me-auto mb-lg-0 ">
+          <ul class="navbar-nav me-auto mb-lg-0" v-if="isDoctor">
+            <li class="nav-item">
+              <router-link class="nav-link" active-class="active-logged-in" to="/pacjenci">Pacjenci</router-link>
+            </li>
+          </ul>
+          <ul class="navbar-nav me-auto mb-lg-0" v-else-if="isReceptionist">
+            <li class="nav-item">
+              <router-link class="nav-link" active-class="active-logged-in" to="/wizyty">Wizyty</router-link>
+            </li>
+          </ul>
+          <ul class="navbar-nav me-auto mb-lg-0" v-else>
             <li class="nav-item">
               <router-link class="nav-link" active-class="active-logged-in" to="/">Strona główna</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" active-class="active-logged-in" to="/wizyty">Wizyty</router-link>
+              <router-link class="nav-link" active-class="active-logged-in" to="/moje-wizyty">Wizyty</router-link>
             </li>
             <li class="nav-item"> 
               <router-link class="nav-link" active-class="active-logged-in" to="/recepty">Recepty</router-link>
@@ -21,6 +31,7 @@
               <router-link class="nav-link" active-class="active-logged-in" to="/umow-wizyte">Umów wizytę</router-link>
             </li>
           </ul>
+          
           <div class="profile d-flex align-items-center" @click="openDropDownMenu">
             <svg class="profile-icon" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="40" height="40" rx="20" fill="#5F6D7E"/>
@@ -30,9 +41,7 @@
               <p> {{ name }}</p>
               <p> {{ role }}</p>
             </div>
-            <svg class="profile-arrow" width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M11 1.33331L6.58926 5.74406C6.26382 6.0695 5.73618 6.0695 5.41074 5.74406L1 1.33331" stroke="#5F6D7E" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
+            <img class="profile-arrow" src="@/assets/images/icons/svg/drop_down_menu_arrow_down.svg">
             <div class="drop-down-menu" v-if="isDropDownMenuOpen">
               <ul>
                 <router-link to="/profil">
@@ -48,9 +57,7 @@
                 <a href="#">
                   <li>
                     <span>
-                      <svg width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1.94 5.91249L7.94 2.16249C8.58854 1.75716 9.41146 1.75716 10.06 2.16249L16.06 5.91249C16.6448 6.27797 17 6.91891 17 7.60849V13.3915C17 14.0811 16.6448 14.722 16.06 15.0875L10.06 18.8375C9.41146 19.2428 8.58854 19.2428 7.94 18.8375L1.94 15.0875C1.35524 14.722 1 14.0811 1 13.3915V7.60849C1 6.91891 1.35524 6.27797 1.94 5.91249Z" stroke="#5F6D7E" stroke-width="2" stroke-linecap="round"/>
-                      </svg>
+                      <img src="@/assets/images/icons/svg/drop_down_menu_hexagon.svg">
                     </span>
                     Wyloguj
                   </li>
@@ -99,10 +106,23 @@
 export default {
   data(){
     return {
-      isLoggedIn: false,
       name: "Lorem Ipsum",
       role: "Pacjent",
       isDropDownMenuOpen: false,
+    }
+  },
+  props: {
+    isLoggedIn: {
+      type: Boolean,
+      required: false
+    },
+    isDoctor: {
+      type: Boolean,
+      required: false
+    },
+    isReceptionist: {
+      type: Boolean,
+      required: false
     }
   },
   methods: {
@@ -123,6 +143,7 @@ nav {
   border-bottom: 1px solid #D1D9E2;
   background-color: $primary;
   color: $secondary;
+  min-height: 90px;
 
   @media (min-width: 992px) {
     padding: 0 35px;
@@ -130,7 +151,7 @@ nav {
 
   div {
     ul.navbar-nav {
-      li.nav-item {
+      li.nav-item, li.d-md-none {
 
         @media (min-width: 992px) {
           margin: 0 10px;
@@ -185,6 +206,11 @@ nav {
       div.profile {
         position: relative;
         cursor: pointer;
+        display: flex;
+
+        @media (max-width: 768px) { 
+            display: none !important;
+        }
 
         div {
           text-align: left;
@@ -197,7 +223,7 @@ nav {
             font-size: 14px;
           }
         }
-        svg.profile-arrow {
+        img.profile-arrow {
           margin-left: 30px;
         }
 

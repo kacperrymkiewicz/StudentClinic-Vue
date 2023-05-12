@@ -66,26 +66,26 @@
 import { computed, ref } from "vue";
 
 export default {
-name: 'BaseTable',
-  props:{
-      data: {
+    name: 'BaseTable',
+    props:{
+        data: {
             type: Array,
-      },
-      fields:{
+        },
+        fields:{
             type: Array,
-      },
-      isPatientView: {
+        },
+        isPatientView: {
             type: Boolean,
             required: false,
             default: false 
-      },
-      isPatientsListView: {
+        },
+        isPatientsListView: {
             type: Boolean,
             required: false,
             default: false
-      }
-  },
-  methods: {
+        }
+    },
+    methods: {
         setStatusIcon(status) {
             switch(status) {
                 case 'zakończona':
@@ -101,31 +101,31 @@ name: 'BaseTable',
             }
         }
     },
-  setup(props) {
-    let sort = ref(false);
-    let updatedList =  ref([])
-    let searchQuery = ref("");
-    
-    const sortedList = computed(() => {
-      if (sort.value) {
-         return updatedList.value
-      } else {
-         return props.data;
-      }
-    });
-
-    const filteredList = computed(() => {
-        return sortedList.value.filter((product) => {
-            if(product.pacjent){
-                return product.pacjent.toLowerCase().indexOf(searchQuery.value.toLowerCase()) != -1;
-            }
-            return product;
-            
+    setup(props) {
+        let sort = ref(false);
+        let updatedList =  ref([])
+        let searchQuery = ref("");
+        
+        const sortedList = computed(() => {
+        if (sort.value) {
+            return updatedList.value
+        } else {
+            return props.data;
+        }
         });
-    });   
-      
-    return {sortedList, searchQuery, filteredList}
-  }
+
+        const filteredList = computed(() => {
+            return sortedList.value.filter((product) => {
+                if(product.pacjent){
+                    return product.pacjent.toLowerCase().indexOf(searchQuery.value.toLowerCase()) != -1;
+                }
+                return product;
+                
+            });
+        });   
+        
+        return {sortedList, searchQuery, filteredList}
+    }
 }
 </script>
 
@@ -136,12 +136,17 @@ div.wrapper {
         width: 300px;
         align-self: flex-end;
 
+        @media (max-width: 768px) { 
+            align-self: center;
+        }
+
         div.input-group {
             input {
                 background-image: url("@/assets/images/icons/svg/magnifying_glass.svg");
                 background-repeat: no-repeat;
                 background-position-x: 16px;
                 background-position-y: 8px;
+                background-color: $primary;
                 border: 1px solid $secondary;
                 padding-left: 48px;
                 font-weight: 600;
@@ -156,6 +161,7 @@ div.wrapper {
     div.table-responsive {
         border: 1px solid $button-light;
         border-radius: 10px;
+        background-color: $primary;
 
         table {
             margin: 0;
