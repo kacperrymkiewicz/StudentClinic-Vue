@@ -52,15 +52,6 @@ export default {
             breadcrumb: "",
         }
     },
-    data2(){
-        return {
-            name: "Cononi",
-            isPatient: false,
-            activeTab: this.$route.path,
-            info: "",
-            breadcrumb: "",
-        }
-    },
     methods: {
         capitalize(str) {
             return str.charAt(0).toUpperCase(0) + str.slice(1).replace("-", " ");
