@@ -29,10 +29,9 @@
                             <span class="status-icon" :style="{backgroundColor: setStatusIcon(item[field])}" ></span>
                             <span class="status-text">{{ capitalizeFirstLetter(item[field])}}</span>
                         </span>
-                        <button v-else-if="field=='akcje' && isPatientView">Anuluj</button>
                         <span v-else-if="field=='akcje'">
                             <button>Odwołaj</button>
-                            <button>Potwierdź</button>
+                            <button v-if="!isPatientView">Potwierdź</button>
                         </span> 
                         <span v-else>{{ capitalizeFirstLetter(item[field]) }} </span> 
                     </td>
@@ -111,9 +110,11 @@ name: 'BaseTable',
 
     const filteredList = computed(() => {
         return sortedList.value.filter((product) => {
-            return (
-                product.pacjent.toLowerCase().indexOf(searchQuery.value.toLowerCase()) != -1
-            );
+            if(product.pacjent){
+                return product.pacjent.toLowerCase().indexOf(searchQuery.value.toLowerCase()) != -1;
+            }
+            return product;
+            
         });
     });   
       
