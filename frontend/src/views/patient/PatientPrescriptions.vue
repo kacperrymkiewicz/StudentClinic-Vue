@@ -36,17 +36,19 @@
             </div>
         </div>
     </section>
-    <base-modal v-bind:modalIsOpen="modalIsOpen" v-if="modalIsOpen" @click="toggleModalIsOpen">
-        <template v-slot:title>Recepta z dnia {{ this.date }}</template>
-        <template v-slot:subtitle>{{ drug_name + " " + drug_size}}</template>
-        <template v-slot:content>
-            <p><span>Odpłatność: </span> {{ this.fee }}</p>
-            <p><span>Dawkowanie: </span> {{ this.dosage }}</p>
-            <p><span>Kod recepty: </span> {{ this.receipt_code }}</p>
-            <p><span>Wystawca: </span> {{ this.issuer }}</p>
-            <p><span>Zalecenia: </span> {{ this.recommendations }}</p>
-        </template>
-    </base-modal>
+    <div v-if="modalIsOpen">
+        <base-modal @close="toggleModalIsOpen">
+            <template v-slot:title>Recepta z dnia {{ this.date }}</template>
+            <template v-slot:subtitle>{{ drug_name + " " + drug_size}}</template>
+            <template v-slot:content>
+                <p><span>Odpłatność: </span> {{ this.fee }}</p>
+                <p><span>Dawkowanie: </span> {{ this.dosage }}</p>
+                <p><span>Kod recepty: </span> {{ this.receipt_code }}</p>
+                <p><span>Wystawca: </span> {{ this.issuer }}</p>
+                <p><span>Zalecenia: </span> {{ this.recommendations }}</p>
+            </template>
+        </base-modal>
+    </div>
 </template>
 
 <script>
@@ -71,7 +73,7 @@
             toggleModalIsOpen() {
                 return this.modalIsOpen = !this.modalIsOpen;
             }
-        },
+        }
     }
 </script>
 

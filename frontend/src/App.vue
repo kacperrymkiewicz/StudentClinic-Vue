@@ -1,5 +1,5 @@
 <template>
-  <TheHeader is-logged-in/>
+  <TheHeader is-logged-in is-doctor/>
   <router-view></router-view>
   <TheFooter/>
 </template>

@@ -29,7 +29,7 @@
                             </span>
                             <span v-else-if="field=='akcje'">
                                 <span v-if="isPatientsListView">
-                                    <button class="blue-button">Karta pacjenta</button>
+                                    <button @click="$emit('open')" class="blue-button">Karta pacjenta</button>
                                     <button class="teal-button">Wypisz receptę</button>
                                 </span>
                                 <span v-else>
@@ -67,6 +67,7 @@ import { computed, ref } from "vue";
 
 export default {
     name: 'BaseTable',
+    emits: ['open'],
     props:{
         data: {
             type: Array,
@@ -183,6 +184,10 @@ div.wrapper {
                         font-weight: 600;
                         line-height: 18px;
                         color: $secondary;
+
+                        &:last-child {
+                            width: 200px;
+                        }
                     }
                 }
             }
