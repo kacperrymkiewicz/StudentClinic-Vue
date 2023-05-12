@@ -1,7 +1,7 @@
 <template>
     <div v-if="!isPatientView" class="search">
       <div class="input-group mb-5">
-        <input type="search" class="form-control" v-model='searchQuery' placeholder="Wyszukaj">
+        <input type="search" class="form-control" v-model='searchQuery' placeholder="Wyszukaj...">
       </div>
     </div>
     <table class="table">
@@ -128,7 +128,18 @@ div.search {
 
     div.input-group {
         input {
-            //
+            background-image: url(http://localhost:8080/img/magnifying_glass.62385724.svg);
+            background-repeat: no-repeat;
+            background-position-x: 16px;
+            background-position-y: 8px;
+            border: 1px solid $secondary;
+            padding-left: 48px;
+            font-weight: 600;
+            color: $secondary;
+
+            &:focus {
+                box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 2px;
+            }
         }
     }
 }
