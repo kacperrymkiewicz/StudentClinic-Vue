@@ -5,7 +5,7 @@
                 <div class="col-md-12">
                     <hello-message icon-name="reminder"><template v-slot:info>Oto lista Twoich wizyt</template></hello-message>
                     <div class="table-responsive d-flex flex-column">
-                        <base-table :fields="fields" :data="data" :status="status"></base-table>
+                        <base-table :isPatientView="true" :fields="fields" :data="data" :status="status"></base-table>
                     </div>
                 </div>
             </div>
@@ -17,13 +17,19 @@
     export default {
         setup(){
             const data = [
-                {data:new Date().toISOString().slice(0, 10), pacjent: "Abiola Esther", lekarz: "Lorem Ipsum", specjalizacja: "lorem", status: "zakończona"},
-                {data:new Date().toISOString().slice(0, 10), pacjent: "Lorem Esther", lekarz: "Lorem Ipsum", specjalizacja: "lorem", status: "odwołana"},
+                {data:new Date().toISOString().slice(0, 10), lekarz: "Lorem Ipsum", specjalizacja: "lorem", status: "zakończona"},
+                {data:new Date().toISOString().slice(0, 10), lekarz: "Lorem Ipsum", specjalizacja: "lorem", status: "odwołana"},
             ]
             const fields = [
-                'data', 'pacjent', 'lekarz', 'specjalizacja', 'status', 'akcje'
+                'data', 'lekarz', 'specjalizacja', 'status', 'akcje'
             ]
             return { data, fields }
         }
     }
 </script>
+
+<style lang="scss" scoped>
+    div.table-responsive {
+        margin: 40px 0;
+    }
+</style>

@@ -11,7 +11,11 @@ import PatientVisits from "../views/patient/PatientVisits.vue";
 import PatientProfile from "../views/patient/PatientProfile.vue";
 import PatientProfileEdit from "../views/patient/PatientProfileEdit.vue";
 import PatientProfileEditPassword from "../views/patient/PatientProfileEditPassword.vue";
-import ReceptionistPanelVisits from "../views/worker/ReceptionistPanelVisits";
+
+// pracownik
+import ReceptionistPatientsVisits from "../views/employee/ReceptionistPatientsVisits.vue";
+import PatientsList from "../views/employee/PatientsList.vue";
+
 const routes = [
   {
     path: "/",
@@ -30,7 +34,7 @@ const routes = [
   },
   // pacjent
   {
-    path: "/wizyty",
+    path: "/moje-wizyty",
     name: "patient-visits",
     component: PatientVisits,
   },
@@ -59,12 +63,19 @@ const routes = [
     name: "patient-profile-edit-password",
     component: PatientProfileEditPassword,
   },
-  //Pracownicy
+
+  // pracownik
   {
-    path: "/recepcja",
-    name: "Panel Recepcji",
-    component: ReceptionistPanelVisits,
+    path: "/wizyty",
+    name: "receptionist-patients-visits",
+    component: ReceptionistPatientsVisits,
   },
+  {
+    path: "/pacjenci",
+    name: "patients-list",
+    component: PatientsList,
+  },
+
 ];
 
 const router = createRouter({
