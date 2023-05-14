@@ -17,7 +17,7 @@
                                 </div>
                             </div>
                             <div class="row base-cards-outer-wrapper">
-                                <div class="col-md-6">
+                                <div class="col-lg-6">
                                     <base-card class="base-card" @click="toggleModalIsOpen">
                                         <template v-slot:title>Dane personalne</template>
                                         <template v-slot:content>
@@ -30,9 +30,9 @@
                                         </template>
                                     </base-card>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-lg-6">
                                     <div class="base-cards-inner-wrapper d-flex flex-column justify-content-between">
-                                        <base-card @click="toggleModalIsOpen">
+                                        <base-card class="base-card-sm" @click="toggleModalIsOpen">
                                             <template v-slot:title>Przyjmowane leki</template>
                                             <template v-slot:content>
                                                 <p>Lorem ipsum</p>
@@ -40,7 +40,7 @@
                                             </template>
                                             <template v-slot:button>Pokaż więcej</template>
                                         </base-card>
-                                        <base-card @click="toggleModalIsOpen">
+                                        <base-card class="base-card-sm" @click="toggleModalIsOpen">
                                             <template v-slot:title>Alergie</template>
                                             <template v-slot:content>
                                                 <p>Lorem ipsum</p>
@@ -125,14 +125,26 @@ div.wrapper {
 
 div.base-cards-outer-wrapper {
     margin-top: 20px;
-    .base-card > div:nth-child(1) > div:nth-child(2) > div:nth-child(2)  {
-        p {
-            margin-bottom: 12px;
-        }
-    } 
+        .base-card > div:nth-child(1) > div:nth-child(2) > div:nth-child(2)  {
+            p {
+                margin-bottom: 12px;
+            }
+        } 
 
-    .base-cards-inner-wrapper {
-        height: 100%;
+        .base-cards-inner-wrapper {
+            height: 100%;
+        }
+}
+
+@media (max-width: 992px) { 
+    .col-lg-6, .base-cards-inner-wrapper {
+    
+        div.base-card, .base-card-sm {
+            margin: 20px 0;
+            
+        }
     }
 }
+
+
 </style>

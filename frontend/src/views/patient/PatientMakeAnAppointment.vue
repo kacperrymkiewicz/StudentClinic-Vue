@@ -7,7 +7,7 @@
                     <div class="appointment-container">
                         <div class="row">
                             <div class="col-lg-6">
-                                <div class="left-wrapper d-flex align-items-center flex-column">
+                                <div class="left-outer-wrapper d-flex align-items-center flex-column">
                                     <div class="left-inner-wrapper d-flex flex-column align-items-center">
                                         <div class="form-group d-flex flex-column">
                                             <label class="align-self-start" for="specialization">Wybierz specjalizację</label>
@@ -101,7 +101,7 @@ div.appointment-container {
     border-radius: 5px;
     border: 1px solid $button-light;
 
-    div.left-wrapper {
+    div.left-outer-wrapper {
         width: 100%;
         border-right: 1px solid $button-light;
         margin-bottom: 40px;
