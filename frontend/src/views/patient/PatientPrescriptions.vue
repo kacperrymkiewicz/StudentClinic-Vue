@@ -3,6 +3,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
+                    <breadcrumbs is-patient>
+                        <router-link to="/recepty">Recepty</router-link>
+                    </breadcrumbs>
                     <hello-message icon-name="receipt"><template v-slot:info>Oto lista Twoich recept wraz z zaleceniami lekarskimi</template></hello-message>
                     <div class="row">
                         <div class="col-md-6">

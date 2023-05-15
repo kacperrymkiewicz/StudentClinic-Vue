@@ -3,6 +3,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
+                    <breadcrumbs>
+                        <router-link to="/wizyty">Wizyty</router-link>
+                    </breadcrumbs>
                     <hello-message icon-name="reminder"><template v-slot:info>Oto lista zarezerwowanych wizyt przez pacjentów</template></hello-message>
                     <base-table :fields="fields" :data="data" :status="status"></base-table>
                 </div>

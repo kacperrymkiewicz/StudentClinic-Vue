@@ -3,6 +3,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
+                    <breadcrumbs is-patient>
+                        <router-link to="/profil">Mój profil</router-link>
+                    </breadcrumbs>
                     <hello-message icon-name="clipboard"><template v-slot:info>Tutaj możesz zobaczyć swój profil pacjenta</template></hello-message>
                     <div class="d-flex flex-column align-items-center"> 
                         <div class="col-md-12">  
