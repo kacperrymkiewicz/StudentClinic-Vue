@@ -33,21 +33,8 @@ export default {
 <style lang="scss" scoped>
 
 div {
-    margin: 50px 0;
+    margin: 25px 0 50px;
     position: relative;
-    p.breadcrumbs {
-    
-        span.span-text {
-            font-weight: 600;
-            font-size: 14px;
-            color: $secondary;
-
-
-            span.span-icon {
-                margin: 0 10px;
-            }
-        }
-    }
 
     h1 {
         font-size: 28px;
