@@ -7,7 +7,7 @@
                         <router-link to="/profil">Mój profil</router-link>
                         <router-link to="/profil/edycja-profilu">Edycja profilu</router-link>
                     </breadcrumbs>
-                    <hello-message icon-name="clipboard"><template v-slot:info>Tutaj możesz edytować swoje dane personalne oraz dodać przyjmowane leki</template></hello-message>
+                    <hello-message name="Mariusz" icon-name="clipboard"><template v-slot:info>Tutaj możesz edytować swoje dane personalne oraz dodać przyjmowane leki</template></hello-message>
                     <div class="d-flex flex-column align-items-center"> 
                         <div class="col-md-6">
                             <h1>Edycja profilu</h1>

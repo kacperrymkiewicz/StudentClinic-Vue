@@ -3,7 +3,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    
                     <hello-message icon-name="appointment"><template v-slot:info>Zarezerwuj wizytę do specjalisty</template></hello-message>
                     <div class="appointment-container">
                         <div class="row">
@@ -79,6 +78,7 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
     export default {
         data(){
             return {
@@ -89,6 +89,14 @@
                 
             }
 
+        },
+        computed: {
+            ...mapGetters(['user', 'isLoggedIn'])
+        },
+        beforeCreate () {
+            if (this.$store.state.user) {
+                this.$router.replace("/logowanie");
+            }
         }
     }
 </script>

@@ -6,13 +6,13 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="logged-in collapse navbar-collapse" id="navbarSupportedContent" v-if="isLoggedIn" >
-          <ul class="navbar-nav me-auto mb-lg-0" v-if="isDoctor">
+        <div class="logged-in collapse navbar-collapse" id="navbarSupportedContent" v-if="user">
+          <ul class="navbar-nav me-auto mb-lg-0" v-if="user.accountType == 'Doctor'">
             <li class="nav-item">
               <router-link class="nav-link" active-class="active-logged-in" to="/pacjenci">Pacjenci</router-link>
             </li>
           </ul>
-          <ul class="navbar-nav me-auto mb-lg-0" v-else-if="isReceptionist">
+          <ul class="navbar-nav me-auto mb-lg-0" v-else-if="user.accountType == 'Receptionist'">
             <li class="nav-item">
               <router-link class="nav-link" active-class="active-logged-in" to="/wizyty">Wizyty</router-link>
             </li>
@@ -38,8 +38,8 @@
               <path d="M20 21.3334C21.8409 21.3334 23.3333 19.841 23.3333 18C23.3333 16.1591 21.8409 14.6667 20 14.6667C18.159 14.6667 16.6666 16.1591 16.6666 18C16.6666 19.841 18.159 21.3334 20 21.3334ZM20 21.3334C17.0544 21.3334 14.6666 23.1242 14.6666 25.3334M20 21.3334C22.9455 21.3334 25.3333 23.1242 25.3333 25.3334" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
             <div>
-              <p> {{ name }}</p>
-              <p> {{ role }}</p>
+              <p> {{ capitalizeFirstLetter(user.firstName) }} {{ capitalizeFirstLetter(user.lastName) }}</p>
+              <p> {{ accountType }}</p>
             </div>
             <img class="profile-arrow" src="@/assets/images/icons/svg/drop_down_menu_arrow_down.svg">
             <div class="drop-down-menu" v-if="isDropDownMenuOpen">
@@ -54,7 +54,7 @@
                     Mój profil
                   </li>
                 </router-link>
-                <a href="#">
+                <a href="#" @click="logout">
                   <li>
                     <span>
                       <img src="@/assets/images/icons/svg/drop_down_menu_hexagon.svg">
@@ -102,20 +102,18 @@
   </header>
 </template>
 <script>
+import router from '@/router';
+import { mapGetters } from 'vuex';
+
 
 export default {
   data(){
     return {
-      name: "Lorem Ipsum",
       role: "Pacjent",
       isDropDownMenuOpen: false,
     }
   },
   props: {
-    isLoggedIn: {
-      type: Boolean,
-      required: false
-    },
     isDoctor: {
       type: Boolean,
       required: false
@@ -125,11 +123,36 @@ export default {
       required: false
     }
   },
-  methods: {
-      openDropDownMenu(){
-        this.isDropDownMenuOpen = !this.isDropDownMenuOpen;
+  computed: {
+    ...mapGetters(['user']),
+
+    accountType(){
+      switch(this.user.accountType){
+        case "Patient":
+          return "Pacjent"
+        case "Doctor":
+          return "Lekarz"
+        case "Receptionist":
+          return "Recepcjonista"
+        default:
+          return '';
       }
+      
+      
+    },
+
+  },
+  methods: {
+    openDropDownMenu(){
+      this.isDropDownMenuOpen = !this.isDropDownMenuOpen;
+    },
+    logout(){
+      localStorage.removeItem('token');
+      this.$store.dispatch('user', null);
+      router.push("/logowanie");
     }
+  }
+  
 };
 </script>
 

@@ -4,7 +4,7 @@
         <div class="row d-flex flex-column align-content-center">
           <div class="col-md-5">
             <h1>Rejestracja</h1>
-            <form>
+            <form @submit.prevent="submitForm">
                 <div class="form-group d-flex flex-column">
                     <label class="align-self-start" for="name">Imię</label>
                     <input type="text" class="form-control" id="name">
@@ -47,9 +47,27 @@
   </template>
   
   <script>
+
 export default {
     name: "SignUpView",
+    data(){
+        return {
+            emailAddress: "",
+            password: "",
+        }
+    },
+    methods: {
+        async submitForm(){
+            await this.$store.dispatch('signup', {
+                emailAddress: this.email,
+                password: this.password
+            });
+            console.log(this.emailAddress)
+        }
+    }
+
 };
+
 </script>
 
 <style lang="scss" scoped>

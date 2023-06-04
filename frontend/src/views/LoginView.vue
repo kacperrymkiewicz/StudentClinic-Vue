@@ -1,34 +1,56 @@
 <template>
     <section id="login">
-      <div class="container">
-        <div class="row d-flex justify-content-center">
-          <div class="col-md-5">
-            <h1>Logowanie</h1>
-            <form>
-                <div class="form-group d-flex flex-column">
-                    <label class="align-self-start" for="email">Adres email</label>
-                    <input type="email" class="form-control" id="email">
-                </div>
-                <div class="form-group d-flex flex-column">
-                    <label class="align-self-start" for="password">Hasło</label>
-                    <input type="password" class="form-control" id="password">
-                </div>
-                <base-button type="dark" :has-icon="true">Zaloguj się</base-button>
-                <p>Nie masz konta? <router-link to="/rejestracja">Zarejestruj się</router-link></p>
-            </form>
-          </div>
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+            <div class="inner-container col-sm-10 col-md-8 col-lg-6">
+                <h1>Logowanie</h1>
+                <form @submit.prevent="submitForm">
+                    <div class="form-group d-flex flex-column align-items-center">
+                        <label for="email">Adres email</label>
+                        <input type="email" class="form-control" id="email" v-model="emailAddress">
+                    </div>
+                    <div class="form-group d-flex flex-column align-items-center">
+                        <label for="password">Hasło</label>
+                        <input type="password" class="form-control" id="password" v-model="password">
+                    </div>
+                    <base-button type="dark" :has-icon="true">Zaloguj się</base-button>
+                    <p>Nie masz konta? <router-link to="/rejestracja">Zarejestruj się</router-link></p>
+                    <p>Zapomniałeś hasła? <router-link to="/resetuj-haslo">Ustaw nowe</router-link></p>
+                </form>
+            </div>
+            </div>
         </div>
-      </div>
     </section>
-  </template>
+</template>
   
-  <script>
+<script>
+//import store from '@/store/index.js';
+import axios from 'axios';
 
-
-  export default {
+export default {
     name: "LoginView",
-  };
-  </script>
+    data(){
+        return {
+            emailAddress: "",
+            password: "",
+        }
+    },
+
+    methods: {    
+        async submitForm(){
+            const response = await axios.post('/Auth/Login', {
+                emailAddress: this.emailAddress,
+                password: this.password,
+            });
+            
+            localStorage.setItem('token', response.data.data);
+
+            this.$router.replace('/profil');
+        }
+    },
+
+};
+</script>
 
 <style lang="scss" scoped>
     .row {
@@ -47,9 +69,9 @@
         }
     } 
 
-    .col-md-5 {
+    div.inner-container  {
         form {
-            .form-group {
+            div.form-group {
                 margin: 13px 0;
 
                 label {
@@ -58,8 +80,9 @@
                     line-height: 30px;
                     letter-spacing: -0.001em;
                     color: $secondary;
-
+                    align-self: flex-start;
                 }
+
                 input {
                     box-sizing: border-box;
                     border: 1px solid #5F6D7E;
@@ -68,7 +91,6 @@
                     padding: 8px 18px;
                     gap: 16px;
                     background: #F8F9FB;
-
                 }
             }
         

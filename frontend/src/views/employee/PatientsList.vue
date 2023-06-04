@@ -31,6 +31,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+    import jwt_decode from "jwt-decode";
+    import { mapGetters } from 'vuex'
     export default {
         data(){
             return {
@@ -52,6 +55,19 @@
             ]
             return { data, fields }
         },
+
+        computed: {
+            ...mapGetters(['user', 'isLoggedIn'])
+        },
+
+        async created(){
+            const token = localStorage.getItem('token');
+            
+            const token_decoded = jwt_decode(token);
+            const response = await axios.get(`user/${token_decoded.nameid}`);
+            console.log(response);
+            await this.$store.dispatch('user', response.data.data);
+        }
         
     }
 
