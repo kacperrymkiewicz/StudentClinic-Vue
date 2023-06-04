@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import SignUpView from "../views/SignUpView.vue";
 import LoginView from "../views/LoginView.vue";
+import store from "@/store/index.js"
 
 // pacjent
 import PatientMakeAnAppointment from "../views/patient/PatientMakeAnAppointment.vue";
@@ -37,6 +38,9 @@ const routes = [
     path: "/moje-wizyty",
     name: "patient-visits",
     component: PatientVisits,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/recepty",
@@ -47,11 +51,17 @@ const routes = [
     path: "/umow-wizyte",
     name: "patient-make-an-appointment",
     component: PatientMakeAnAppointment,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/profil",
     name: "patient-profile",
     component: PatientProfile,
+    meta: {
+      requiresAuth: true
+    },
   },
   {
     path: "/profil/edycja-profilu",
@@ -85,5 +95,12 @@ const router = createRouter({
     return { top: 0, left: 0 }
   }
 });
+
+router.beforeEach((to) => {
+  if(to.path == "/umow-wizyte" && !store.getters.user){
+    return  {name: "login"} ;
+  }
+  return true
+})
 
 export default router;
