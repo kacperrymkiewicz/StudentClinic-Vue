@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex flex-column align-items-start">
-    <h1>Witaj {{ this.name }}</h1>
+    <h1 v-if="name">Witaj {{ capitalizeFirstLetter(this.name) }}</h1>
     <p class="info">
         <slot name="info"></slot>
     </p>
@@ -9,23 +9,25 @@
 </template>
 
 <script>
-//import router from '@/router';
-
 export default {
+    
     name: "HelloMessage",
     props: {
         iconName: {
             type: String,
             required: false
+        },
+        name: {
+            type: String,
+            required: true
         }
     },  
     
     data(){
         return {
-            name: "Grzegorz",
             info: "",
         }
-    }
+    },
 }
 </script>
 
