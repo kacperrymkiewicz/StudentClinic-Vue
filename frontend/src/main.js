@@ -4,7 +4,8 @@ import "bootstrap";
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import store from "./store";
+import store from "@/store/index.js";
+import './axios.js';
 
 import BaseButton from "@/components/BaseButton.vue";
 import HelloMessage from "@/components/HelloMessage.vue";
@@ -12,7 +13,6 @@ import BaseCard from "@/components/BaseCard.vue";
 import BaseModal from "@/components/BaseModal.vue";
 import BaseTable from "@/components/BaseTable.vue";
 import Breadcrumbs from "@/components/Breadcrumbs.vue";
-
 
 const capitalizeMixin = {
     methods: {
