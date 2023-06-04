@@ -45,7 +45,7 @@ export default {
             
             localStorage.setItem('token', response.data.data);
 
-            this.$router.replace('/profil');
+            this.$router.replace('/umow-wizyte');
         }
     },
 

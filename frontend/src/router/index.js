@@ -46,32 +46,35 @@ const routes = [
     path: "/recepty",
     name: "patient-prescriptions",
     component: PatientPrescriptions,
-  },
-  {
-    path: "/umow-wizyte",
-    name: "patient-make-an-appointment",
-    component: PatientMakeAnAppointment,
     meta: {
       requiresAuth: true
     }
   },
   {
+    path: "/umow-wizyte",
+    name: "patient-make-an-appointment",
+    component: PatientMakeAnAppointment,
+  },
+  {
     path: "/profil",
     name: "patient-profile",
     component: PatientProfile,
-    meta: {
-      requiresAuth: true
-    },
   },
   {
     path: "/profil/edycja-profilu",
     name: "patient-profile-edit",
     component: PatientProfileEdit,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/profil/edycja-hasla",
     name: "patient-profile-edit-password",
     component: PatientProfileEditPassword,
+    meta: {
+      requiresAuth: true
+    }
   },
 
   // pracownik
@@ -79,11 +82,17 @@ const routes = [
     path: "/wizyty",
     name: "receptionist-patients-visits",
     component: ReceptionistPatientsVisits,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/pacjenci",
     name: "patients-list",
     component: PatientsList,
+    meta: {
+      requiresAuth: true
+    }
   },
 
 ];
@@ -97,7 +106,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to) => {
-  if(to.path == "/umow-wizyte" && !store.getters.user){
+  if(to.meta.requiresAuth && !store.getters.user){
     return  {name: "login"} ;
   }
   return true

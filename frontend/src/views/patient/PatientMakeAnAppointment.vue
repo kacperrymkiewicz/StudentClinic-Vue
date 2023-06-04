@@ -3,7 +3,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <hello-message icon-name="appointment"><template v-slot:info>Zarezerwuj wizytę do specjalisty</template></hello-message>
+                    <breadcrumbs is-patient>
+                        <router-link to="/umow-wizyte">Umów wizytę</router-link>
+                    </breadcrumbs>
+                    <hello-message v-if="user" :name="user.firstName" icon-name="appointment"><template v-slot:info>Zarezerwuj wizytę do specjalisty</template></hello-message>
                     <div class="appointment-container">
                         <div class="row">
                             <div class="col-lg-6">
@@ -78,27 +81,34 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
-    export default {
-        data(){
-            return {
-                doctor: 'Lorem Ipsum',
-                specialization: 'Lorem',
-                termin: 'nie wybrano',
-                price: 100,
-                
-            }
+import { mapGetters } from 'vuex';
+import axios from 'axios'
+import jwt_decode from "jwt-decode";
 
-        },
-        computed: {
-            ...mapGetters(['user', 'isLoggedIn'])
-        },
-        beforeCreate () {
-            if (this.$store.state.user) {
-                this.$router.replace("/logowanie");
-            }
+export default {
+    data(){
+        return {
+            doctor: 'Lorem Ipsum',
+            specialization: 'Lorem',
+            termin: 'nie wybrano',
+            price: 100,
         }
-    }
+    },
+    computed: {
+        ...mapGetters(['user'])
+    },
+
+    async created(){
+            const token = localStorage.getItem('token');
+            const token_decoded = jwt_decode(token);
+
+            const response = await axios.get(`Patient`);
+            //const response2 = await axios.get(`User/${token_decoded.nameid}`);
+
+            await this.$store.dispatch('patient', response.data.data[token_decoded.nameid-1])
+            await this.$store.dispatch('user', response.data.data[token_decoded.nameid-1].user);
+        }
+}
 </script>
 
 <style lang="scss" scoped>
