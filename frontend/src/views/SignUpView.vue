@@ -1,71 +1,152 @@
 <template>
     <section id="signup">
-      <div class="container">
+        <div class="container">
         <div class="row d-flex flex-column align-content-center">
-          <div class="col-md-5">
+            <div class="col-md-5">
             <h1>Rejestracja</h1>
             <form @submit.prevent="submitForm">
                 <div class="form-group d-flex flex-column">
                     <label class="align-self-start" for="name">Imię</label>
-                    <input type="text" class="form-control" id="name">
+                    <input type="text" class="form-control" id="name" v-model.trim="firstName" required @change="validateFirstName">
                 </div>
+                <p v-if="errorFirstName"> {{ errorFirstName }} </p>
                 <div class="form-group d-flex flex-column">
                     <label class="align-self-start" for="surname">Nazwisko</label>
-                    <input type="text" class="form-control" id="surname">
+                    <input type="text" class="form-control" id="surname" v-model.trim="lastName" required @change="validateLastName">
                 </div>
+                <p v-if="errorLastName"> {{ errorLastName }} </p>
                 <div class="form-group d-flex flex-column">
                     <label class="align-self-start" for="email">Adres email</label>
-                    <input type="email" class="form-control" id="email">
+                    <input type="email" class="form-control" id="email" v-model.trim="emailAddress" required @change="validateEmailAddress">
                 </div>
+                <p v-if="errorEmailAddress"> {{ errorEmailAddress }} </p>
                 <div class="form-group d-flex flex-column">
                     <label class="align-self-start" for="pass">Hasło</label>
-                    <input type="password" class="form-control" id="pass">
+                    <input 
+                        type="password" 
+                        class="form-control" 
+                        id="pass" 
+                        v-model.trim="password" 
+                        @change="validatePassword"
+                        @input="validatePasswordAfterChange"
+                        required
+                    >
                 </div>
+                <p v-if="errorPassword"> {{ errorPassword }} </p>
                 <div class="form-group d-flex flex-column">
                     <label class="align-self-start" for="repeat-pass">Powtórz hasło</label>
-                    <input type="password" class="form-control" id="repeat-pass">
+                    <input 
+                        type="password" 
+                        class="form-control" 
+                        id="repeat-pass" 
+                        v-model.trim="repeatPassword" 
+                        @input="validateRepeatedPassword"
+                        required 
+                    >
                 </div>
+                <p v-if="errorPasswordsCompare"> {{ errorPasswordsCompare }} </p>
                 <div class="form-group d-flex flex-column">
                     <label class="align-self-start" for="tel">Telefon kontaktowy</label>
-                    <input type="tel" class="form-control" id="tel">
+                    <input type="tel" class="form-control" id="tel" v-model.trim="phoneNumber" @change="validatePhoneNumber" required>
                 </div>
+                <p v-if="errorPhoneNumber"> {{ errorPhoneNumber }} </p>
                 <div class="form-group d-flex flex-column">
                     <label class="align-self-start" for="pesel">PESEL</label>
-                    <input type="text" class="form-control" id="pesel">
+                    <input type="text" class="form-control" id="pesel" v-model.trim="pesel" @change="validatePESEL" required>
                 </div>
+                <p v-if="errorPESEL"> {{ errorPESEL }} </p>
                 <div class="form-check d-flex">
-                    <input type="checkbox" class="form-check-input" id="regulamin">
-                    <label class="form-check-label" for="regulamin">Akceptuję <span><router-link class="align-self-start" to="/logowanie">regulamin</router-link></span></label>
+                    <input type="checkbox" class="form-check-input" id="regulamin" required>
+                    <label class="form-check-label" for="regulamin">Akceptuję <span><router-link class="align-self-start" to="#">regulamin</router-link></span></label>
                 </div>
                 <base-button type="dark" :has-icon="true">Zarejestruj się</base-button>
                 <p>Masz już konto? <router-link to="/logowanie">Zaloguj się</router-link></p>
             </form>
-          </div>
+            </div>
         </div>
-      </div>
+        </div>
     </section>
-  </template>
-  
-  <script>
+</template>
+
+<script>
+import axios from 'axios';
 
 export default {
     name: "SignUpView",
+    computed: {
+        emailAddressRegex: () =>  /^[^@]+@\w+(\.\w+)+\w$/,
+        phoneNumberRegex: () => /^\d{9}$/,
+        peselRegex: () => /^\d{11}$/
+    },
     data(){
         return {
+            firstName: "",
+            lastName: "",
             emailAddress: "",
             password: "",
+            repeatPassword: "",
+            phoneNumber: "",
+            pesel: "",
+            
+            errorFirstName: null,
+            errorLastName: null,
+            errorEmailAddress: null,
+            errorPassword: null,
+            errorPasswordsCompare: null,
+            errorPasswordCounter: 0,
+            errorPhoneNumber: null,
+            errorPESEL: null,
+            errorEmptyInput: "Pole nie może być puste"
         }
     },
     methods: {
+        validateFirstName() {
+            this.firstName.length == 0 ? this.errorFirstName = this.errorEmptyInput : 
+            this.firstName.length < 2 ? this.errorFirstName = "Podane imię jest zbyt krótkie" : this.errorFirstName = null
+        },
+        
+        validateLastName () {
+            this.lastName.length == 0 ? this.errorLastName = this.errorEmptyInput :
+            this.lastName.length < 2 ? this.errorLastName = "Podane nazwisko jest zbyt krótkie" : this.errorLastName = null
+        },
+        validateEmailAddress () {
+            this.emailAddress.length == 0 ? this.errorEmailAddress = this.errorEmptyInput :
+            !this.emailAddressRegex.test(this.emailAddress) ? this.errorEmailAddress = "Nieprawidłowy adres email" : this.errorEmailAddress = null;
+        },
+        validatePassword() {
+            this.password.length == 0 ? this.errorPassword = this.errorEmptyInput :
+            this.password.length < 8 ? this.errorPassword = "Hasło powinno mieć co najmniej 8 znaków" : this.errorPassword = null
+            this.errorPasswordCounter += 1;
+        },
+        validatePasswordAfterChange(){
+            this.errorPasswordCounter >= 1 && this.password.length < 8 ? this.errorPassword = "Hasło powinno mieć co najmniej 8 znaków" : this.errorPassword = null
+        },
+        validateRepeatedPassword() {
+            this.repeatPassword.length == 0 ? this.errorPasswordCompare = this.errorEmptyInput :
+            this.password != this.repeatPassword ? this.errorPasswordsCompare = "Hasła muszą być jednakowe" : this.errorPasswordsCompare = null
+        },
+        validatePhoneNumber() {
+            this.phoneNumber.length == 0 ? this.errorPhoneNumber = this.errorEmptyInput :
+            !this.phoneNumberRegex.test(this.phoneNumber) ? this.errorPhoneNumber = "Nieprawidłowy numer telefonu" : this.errorPhoneNumber = null
+        },
+        validatePESEL() {
+            this.pesel.length == 0 ? this.errorPESEL = this.errorEmptyInput :
+            !this.peselRegex.test(this.pesel) ? this.errorPESEL = "Nieprawidłowy PESEL" : this.errorPESEL = null
+        },
+        
         async submitForm(){
-            await this.$store.dispatch('signup', {
-                emailAddress: this.email,
-                password: this.password
+            const response = await axios.post('/Auth/Register', {
+                firstName: this.firstName,
+                lastName: this.lastName,
+                emailAddress: this.emailAddress,
+                password: this.password,
             });
-            console.log(this.emailAddress)
+
+            if(response.status == 200) {
+                this.$router.replace({name: "login"});
+            }
         }
     }
-
 };
 
 </script>
@@ -147,6 +228,11 @@ export default {
             text-align: center;
             letter-spacing: -0.01em;
             color: $button-dark;
+        }
+        
+        div + p {
+            margin: 0;
+            color: $button-red;
         }
     }
 </style>
