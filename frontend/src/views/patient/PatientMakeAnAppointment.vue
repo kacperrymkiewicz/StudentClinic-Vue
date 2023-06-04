@@ -84,7 +84,6 @@
 import { mapGetters } from 'vuex';
 import axios from 'axios'
 import jwt_decode from "jwt-decode";
-
 export default {
     data(){
         return {

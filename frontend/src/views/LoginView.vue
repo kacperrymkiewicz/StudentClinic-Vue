@@ -15,7 +15,6 @@
                     </div>
                     <base-button type="dark" :has-icon="true">Zaloguj się</base-button>
                     <p>Nie masz konta? <router-link to="/rejestracja">Zarejestruj się</router-link></p>
-                    <p>Zapomniałeś hasła? <router-link to="/resetuj-haslo">Ustaw nowe</router-link></p>
                 </form>
             </div>
             </div>
@@ -24,7 +23,6 @@
 </template>
   
 <script>
-//import store from '@/store/index.js';
 import axios from 'axios';
 
 export default {
@@ -45,9 +43,9 @@ export default {
             
             localStorage.setItem('token', response.data.data);
 
-            this.$router.replace('/umow-wizyte');
+            this.$router.replace('/');
         }
-    },
+    }
 
 };
 </script>
