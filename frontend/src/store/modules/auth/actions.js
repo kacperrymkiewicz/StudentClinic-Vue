@@ -5,7 +5,11 @@ export default {
     patient(context, user) {
         context.commit('patient', user)
     },
-    isLoggedIn(context, isLoggedIn) {
-        context.commit('isLoggedIn', isLoggedIn)
-    }
+    patientsList(context, patients){
+        context.commit('patientsList', patients)
+    },
+
+    // isLoggedIn(context, isLoggedIn) {
+    //     context.commit('isLoggedIn', isLoggedIn)
+    // },
 };

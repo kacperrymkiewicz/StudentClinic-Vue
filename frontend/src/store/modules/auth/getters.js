@@ -5,7 +5,10 @@ export default {
     patient: state => {
         return state.patient;
     },
-    isLoggedIn: state => {
-        return state.isLoggedIn;
+    patientsList: state => {
+        return state.patientsList;
     }
+    // isLoggedIn: state => {
+    //     return state.isLoggedIn;
+    // }
 }

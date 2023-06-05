@@ -6,7 +6,7 @@
                     <breadcrumbs>
                         <router-link to="/pacjenci">Pacjenci</router-link>
                     </breadcrumbs>
-                    <hello-message icon-name="agenda"><template v-slot:info>Oto lista zarezerwowanych wizyt przez pacjentów</template></hello-message>
+                    <hello-message v-if="user" :name="user.firstName" icon-name="agenda"><template v-slot:info>Oto lista Twoich pacjentów</template></hello-message>
                     <base-table @open="toggleModalIsOpen" :isPatientsListView="true" :fields="fields" :data="data" :status="status"></base-table>
                 </div>
             </div>
@@ -32,44 +32,58 @@
 
 <script>
 import axios from 'axios'
-    import jwt_decode from "jwt-decode";
-    import { mapGetters } from 'vuex'
-    export default {
-        data(){
-            return {
-                modalIsOpen: false,
-            }
-        },
-        methods: {
-            toggleModalIsOpen() {
-                return this.modalIsOpen = !this.modalIsOpen;
-            }
-        },
-        setup(){
-            const data = [
-                {pacjent: "Grzegorz Floryda"},
-                {pacjent: "Lorem Ipsum"},
-            ]
-            const fields = [
-                'pacjent', 'akcje'
-            ]
-            return { data, fields }
-        },
+//import jwt_decode from "jwt-decode";
+import { mapGetters } from 'vuex'
 
-        computed: {
-            ...mapGetters(['user', 'isLoggedIn'])
-        },
-
-        async created(){
-            const token = localStorage.getItem('token');
-            
-            const token_decoded = jwt_decode(token);
-            const response = await axios.get(`user/${token_decoded.nameid}`);
-            console.log(response);
-            await this.$store.dispatch('user', response.data.data);
+export default {
+    data(){
+        return {
+            modalIsOpen: false,
+            patientsList: [],
+            fields: [],
+            data: []
         }
+    },
+    methods: {
+        toggleModalIsOpen() {
+            return this.modalIsOpen = !this.modalIsOpen;
+        }
+    },
+    //setup(){
+        
+        
+    //},
+
+    computed: {
+        ...mapGetters(['user', 'patientsList'])
+    },
+
+    async created(){
+        //const token = localStorage.getItem('token');
+        
+        //const token_decoded = jwt_decode(token);
+        const response = await axios.get('Patient');
+        
+        console.log(response);
+        await this.$store.dispatch('patientsList', response.data.data);
+        this.patientsList = this.$store.getters.patientsList.filter(user => user.user.accountType == 'Patient');
+        
+        //this.fields = this.patientsList(name => name.user.firstName);
+        //for(let name of this.patientsList.data.data.firstName){
+        //   this.fields.push(name)
+        //}
+        console.log(Object.entries(this.patientsList));
+        const rel = Object.entries(JSON.parse(JSON.stringify(JSON.parse(JSON.stringify(this.patientsList)))));
+        console.log(rel[1]);
+        console.log(rel[1][1]);
+        console.log(rel[1][1].user.firstName);
+
+        //this.data = Object.entries(this.patientsList).map(([pacjent, imiona]) => ({pacjent, ...this.patientsList.user.firstName}))
         
     }
+    
+    
+}
 
         
     

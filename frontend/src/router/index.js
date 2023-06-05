@@ -54,11 +54,17 @@ const routes = [
     path: "/umow-wizyte",
     name: "patient-make-an-appointment",
     component: PatientMakeAnAppointment,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/profil",
     name: "patient-profile",
     component: PatientProfile,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/profil/edycja-profilu",
@@ -107,7 +113,7 @@ const router = createRouter({
 
 router.beforeEach((to) => {
   if(to.meta.requiresAuth && !store.getters.user){
-    return  {name: "login"} ;
+    return  { name: "login" } ;
   }
   return true
 })

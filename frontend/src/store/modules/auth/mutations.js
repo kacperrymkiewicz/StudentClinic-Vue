@@ -5,7 +5,10 @@ export default {
     patient (state, patient) {
         state.patient = patient;
     },
-    isLoggedIn(state, isLoggedIn){
-        state.isLoggedIn = isLoggedIn;
-    }
+    patientsList (state, patients) {
+        state.patientsList = patients
+    },
+    // isLoggedIn(state, isLoggedIn){
+    //     state.isLoggedIn = isLoggedIn;
+    // }
 };

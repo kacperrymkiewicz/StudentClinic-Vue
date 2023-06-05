@@ -106,7 +106,7 @@ export default {
 
             await this.$store.dispatch('patient', response.data.data[token_decoded.nameid-1])
             await this.$store.dispatch('user', response.data.data[token_decoded.nameid-1].user);
-        }
+    }
 }
 </script>
 
