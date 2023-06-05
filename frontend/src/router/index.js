@@ -111,8 +111,8 @@ const router = createRouter({
   }
 });
 
-router.beforeEach(() => {
-  if(!localStorage.getItem('token')){
+router.beforeEach((to) => {
+  if(to.meta.requiresAuth && !localStorage.getItem('token')){
     return  { name: "login" } ;
   }
   return true
