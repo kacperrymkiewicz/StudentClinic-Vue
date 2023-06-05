@@ -10,16 +10,19 @@
                     <input type="text" class="form-control" id="name" v-model.trim="firstName" required @change="validateFirstName">
                 </div>
                 <p v-if="errorFirstName"> {{ errorFirstName }} </p>
+
                 <div class="form-group d-flex flex-column">
                     <label class="align-self-start" for="surname">Nazwisko</label>
                     <input type="text" class="form-control" id="surname" v-model.trim="lastName" required @change="validateLastName">
                 </div>
                 <p v-if="errorLastName"> {{ errorLastName }} </p>
+
                 <div class="form-group d-flex flex-column">
                     <label class="align-self-start" for="email">Adres email</label>
                     <input type="email" class="form-control" id="email" v-model.trim="emailAddress" required @change="validateEmailAddress">
                 </div>
                 <p v-if="errorEmailAddress"> {{ errorEmailAddress }} </p>
+
                 <div class="form-group d-flex flex-column">
                     <label class="align-self-start" for="pass">Hasło</label>
                     <input 
@@ -33,6 +36,7 @@
                     >
                 </div>
                 <p v-if="errorPassword"> {{ errorPassword }} </p>
+
                 <div class="form-group d-flex flex-column">
                     <label class="align-self-start" for="repeat-pass">Powtórz hasło</label>
                     <input 
@@ -45,21 +49,46 @@
                     >
                 </div>
                 <p v-if="errorPasswordsCompare"> {{ errorPasswordsCompare }} </p>
+
                 <div class="form-group d-flex flex-column">
                     <label class="align-self-start" for="tel">Telefon kontaktowy</label>
                     <input type="tel" class="form-control" id="tel" v-model.trim="phoneNumber" @change="validatePhoneNumber" required>
                 </div>
                 <p v-if="errorPhoneNumber"> {{ errorPhoneNumber }} </p>
+
                 <div class="form-group d-flex flex-column">
                     <label class="align-self-start" for="pesel">PESEL</label>
                     <input type="text" class="form-control" id="pesel" v-model.trim="pesel" @change="validatePESEL" required>
                 </div>
                 <p v-if="errorPESEL"> {{ errorPESEL }} </p>
+
+                <div class="form-group d-flex flex-column">
+                    <label class="align-self-start" for="city">Miasto</label>
+                    <input type="text" class="form-control" id="city" v-model.trim="city" @change="validateCity" required>
+                </div>
+                <p v-if="errorCity"> {{ errorCity }} </p>
+
+                <div class="form-group d-flex flex-column">
+                    <label class="align-self-start" for="postal-code">Kod pocztowy</label>
+                    <input type="text" class="form-control" id="postal-code" v-model.trim="postalCode" @change="validatePostalCode" placeholder="00-000" required>
+                </div>
+                <p v-if="errorPostalCode"> {{ errorPostalCode }} </p>
+
+                <div class="form-group d-flex flex-column">
+                    <label class="align-self-start" for="street">Ulica</label>
+                    <input type="text" class="form-control" id="street" v-model.trim="street" @change="validateStreet" required>
+                </div>
+                <p v-if="errorStreet"> {{ errorStreet }} </p>
+
                 <div class="form-check d-flex">
-                    <input type="checkbox" class="form-check-input" id="regulamin" required>
+                    <input type="checkbox" class="form-check-input" id="regulamin" v-model="regulationsAccepted" @change="validateCheckbox" required>
                     <label class="form-check-label" for="regulamin">Akceptuję <span><router-link class="align-self-start" to="#">regulamin</router-link></span></label>
                 </div>
-                <base-button type="dark" :has-icon="true">Zarejestruj się</base-button>
+                <p v-if="errorRegulationsAccepted"> {{ errorRegulationsAccepted }} </p>
+
+                <base-button type="dark" :has-icon="true"
+                @click="validateInputs"
+                >Zarejestruj się</base-button>
                 <p>Masz już konto? <router-link to="/logowanie">Zaloguj się</router-link></p>
             </form>
             </div>
@@ -76,7 +105,8 @@ export default {
     computed: {
         emailAddressRegex: () =>  /^[^@]+@\w+(\.\w+)+\w$/,
         phoneNumberRegex: () => /^\d{9}$/,
-        peselRegex: () => /^\d{11}$/
+        peselRegex: () => /^\d{11}$/,
+        postalCodeRegex: () => /^[0-9]{2}-[0-9]{3}/
     },
     data(){
         return {
@@ -87,6 +117,10 @@ export default {
             repeatPassword: "",
             phoneNumber: "",
             pesel: "",
+            city: "",
+            postalCode: "",
+            street: "",
+            regulationsAccepted: false,
             
             errorFirstName: null,
             errorLastName: null,
@@ -96,7 +130,12 @@ export default {
             errorPasswordCounter: 0,
             errorPhoneNumber: null,
             errorPESEL: null,
+            errorCity: null,
+            errorPostalCode: null,
+            errorStreet: null,
+            errorRegulationsAccepted: null,
             errorEmptyInput: "Pole nie może być puste"
+
         }
     },
     methods: {
@@ -104,7 +143,6 @@ export default {
             this.firstName.length == 0 ? this.errorFirstName = this.errorEmptyInput : 
             this.firstName.length < 2 ? this.errorFirstName = "Podane imię jest zbyt krótkie" : this.errorFirstName = null
         },
-        
         validateLastName () {
             this.lastName.length == 0 ? this.errorLastName = this.errorEmptyInput :
             this.lastName.length < 2 ? this.errorLastName = "Podane nazwisko jest zbyt krótkie" : this.errorLastName = null
@@ -133,6 +171,21 @@ export default {
             this.pesel.length == 0 ? this.errorPESEL = this.errorEmptyInput :
             !this.peselRegex.test(this.pesel) ? this.errorPESEL = "Nieprawidłowy PESEL" : this.errorPESEL = null
         },
+        validateCity(){
+            this.city.length == 0 ? this.errorCity = this.errorEmptyInput :
+            this.city.length < 3 ? this.errorCity = "Nieprawidłowa nazwa miasta" : this.errorCity = null
+        },
+        validatePostalCode() {
+            this.postalCode.length == 0 ? this.errorPostalCode = this.errorEmptyInput :
+            !this.postalCodeRegex.test(this.postalCode) ? this.errorPostalCode = "Nieprawidłowy kod pocztowy" : this.errorPostalCode = null
+        },
+        validateStreet(){
+            this.street.length == 0 ? this.errorStreet = this.errorEmptyInput :
+            this.street.length < 3 ? this.errorStreet = "Nieprawidłowa nazwa ulicy" : this.errorStreet = null
+        },
+        validateCheckbox(){
+            !this.regulationsAccepted ? this.errorRegulationsAccepted = "Regulamin musi być zaakceptowany" : this.errorRegulationsAccepted = false;
+        },
         
         async submitForm(){
             const response = await axios.post('/Auth/Register', {
@@ -140,11 +193,29 @@ export default {
                 lastName: this.lastName,
                 emailAddress: this.emailAddress,
                 password: this.password,
+                phoneNumber: this.phoneNumber,
+                pesel: this.pesel,
+                city: this.city,
+                postalCode: this.postalCode,
+                streetAddress: this.street
             });
-
             if(response.status == 200) {
                 this.$router.replace({name: "login"});
             }
+        },
+        validateInputs(){
+            this.validateFirstName ();
+            this.validateLastName ();
+            this.validateEmailAddress ();
+            this.validatePassword() ;
+            this.validatePasswordAfterChange()
+            this.validateRepeatedPassword();    
+            this.validatePhoneNumber();
+            this.validatePESEL();
+            this.validateCity();
+            this.validatePostalCode();
+            this.validateStreet();
+            this.validateCheckbox();
         }
     }
 };
@@ -195,6 +266,7 @@ export default {
             }
 
             .form-check {
+                margin: 30px 0;
                 input {
                     border-color: $secondary;
                     &:checked {
