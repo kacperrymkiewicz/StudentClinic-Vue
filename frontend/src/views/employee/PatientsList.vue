@@ -6,8 +6,8 @@
                     <breadcrumbs>
                         <router-link to="/pacjenci">Pacjenci</router-link>
                     </breadcrumbs>
-                    <hello-message v-if="user" :name="user.firstName" icon-name="agenda"><template v-slot:info>Oto lista Twoich pacjentów</template></hello-message>
-                    <base-table @open="toggleModalIsOpen" :isPatientsListView="true" :fields="fields" :data="data" :status="status"></base-table>
+                    <hello-message icon-name="agenda"><template v-slot:info>Oto lista zarezerwowanych wizyt przez pacjentów</template></hello-message>
+                    <base-table v-if="data.length" @open="toggleModalIsOpen" :isPatientsListView="true" :fields="fields" :data="data" :status="status"></base-table>
                 </div>
             </div>
         </div>
@@ -32,58 +32,66 @@
 
 <script>
 import axios from 'axios'
-//import jwt_decode from "jwt-decode";
-import { mapGetters } from 'vuex'
+    //import jwt_decode from "jwt-decode";
 
-export default {
-    data(){
-        return {
-            modalIsOpen: false,
-            patientsList: [],
-            fields: [],
-            data: []
-        }
-    },
-    methods: {
-        toggleModalIsOpen() {
-            return this.modalIsOpen = !this.modalIsOpen;
-        }
-    },
-    //setup(){
-        
-        
-    //},
+    import { mapGetters } from 'vuex'
+    export default {
+        data(){
+            return {
+                modalIsOpen: false,
+                data: [],
+                //dataLoaded: false,
+            }
+        },
+        methods: {
+            toggleModalIsOpen() {
+                return this.modalIsOpen = !this.modalIsOpen;
+            },
+        },
+        setup(){
+            // const data = []
+            const fields = [
+                'pacjent', 'akcje'
+            ]
+            return { fields }
+        },
 
-    computed: {
-        ...mapGetters(['user', 'patientsList'])
-    },
+        computed: {
+            ...mapGetters(['user', 'isLoggedIn'])
+        },
 
-    async created(){
-        //const token = localStorage.getItem('token');
-        
-        //const token_decoded = jwt_decode(token);
-        const response = await axios.get('Patient');
-        
-        console.log(response);
-        await this.$store.dispatch('patientsList', response.data.data);
-        this.patientsList = this.$store.getters.patientsList.filter(user => user.user.accountType == 'Patient');
-        
-        //this.fields = this.patientsList(name => name.user.firstName);
-        //for(let name of this.patientsList.data.data.firstName){
-        //   this.fields.push(name)
-        //}
-        console.log(Object.entries(this.patientsList));
-        const rel = Object.entries(JSON.parse(JSON.stringify(JSON.parse(JSON.stringify(this.patientsList)))));
-        console.log(rel[1]);
-        console.log(rel[1][1]);
-        console.log(rel[1][1].user.firstName);
+        async created(){
+            
+        },
+        async mounted(){
+            const response = await axios.get('Patients');
 
-        //this.data = Object.entries(this.patientsList).map(([pacjent, imiona]) => ({pacjent, ...this.patientsList.user.firstName}))
-        
+            
+            console.log(response);
+            this.data = response;
+
+            //const arr = Array.from(response.data.data);
+            console.log(response.data.data.length);
+
+            for(let i; i < response.data.data.length; i++){
+                this.data.push(response.data.data[i].user.firstName);
+            }
+
+            console.log(this.data);
+            
+
+            //console.log(this.data);
+            //const token = localStorage.getItem('token');
+            
+            //const token_decoded = jwt_decode(token);
+            
+            //await this.$store.dispatch('user', response.data.data);
+            //const Obj = { pacjent: "Grzegorz Floryda" };
+            //this.data.push(Obj);
+
+            
+        },
     }
-    
-    
-}
 
         
     

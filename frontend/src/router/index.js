@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import SignUpView from "../views/SignUpView.vue";
 import LoginView from "../views/LoginView.vue";
-import store from "@/store/index.js"
+// import store from "@/store/index.js"
 
 // pacjent
 import PatientMakeAnAppointment from "../views/patient/PatientMakeAnAppointment.vue";
@@ -111,11 +111,13 @@ const router = createRouter({
   }
 });
 
-router.beforeEach((to) => {
-  if(to.meta.requiresAuth && !store.getters.user){
+router.beforeEach(() => {
+  if(!localStorage.getItem('token')){
     return  { name: "login" } ;
   }
   return true
+
+  
 })
 
 export default router;
