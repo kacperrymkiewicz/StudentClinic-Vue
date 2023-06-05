@@ -12,14 +12,14 @@
                             <div class="wrapper d-flex flex-column">
                                 <div class="name d-flex flex-column align-items-center">
                                     <img src="@/assets/images/icons/svg/profile.svg">
-                                    <span v-if="user"> {{ capitalizeFirstLetter(user.firstName)  }} {{ capitalizeFirstLetter(patient.user.lastName)}}</span>
+                                    <span v-if="patient"> {{ capitalizeFirstLetter(patient.user.firstName)  }} {{ capitalizeFirstLetter(patient.user.lastName)}}</span>
                                 </div>
                                 <div class="buttons">
                                     <router-link to="/profil/edycja-profilu"><base-button type="dark">Edytuj profil</base-button></router-link>
                                     <router-link to="/profil/edycja-hasla"><base-button type="dark">Zmień hasło</base-button></router-link>
                                 </div>
                             </div>
-                            <div v-if="patient" class="row base-cards-outer-wrapper">
+                            <div class="row base-cards-outer-wrapper">
                                 <div class="col-lg-6">
                                     <base-card class="base-card" @click="toggleModalIsOpen">
                                         <template v-slot:title>Dane personalne</template>
@@ -27,9 +27,9 @@
                                             <p><span>Adres email: </span> {{ patient.user.emailAddress }}</p>
                                             <p><span>Telefon kontaktowy: </span> {{ patient.phoneNumber}} </p>
                                             <p><span>PESEL: </span> {{ patient.pesel }} </p>
-                                            <p><span>Miejscowość: </span>Sandomierz</p>
-                                            <p><span>Kod pocztowy: </span>00-000</p>
-                                            <p><span>Ulica i nr budynku: </span>Baczyńskiego 116</p>
+                                            <p><span>Miejscowość: </span> {{ patient.city }} </p>
+                                            <p><span>Kod pocztowy: </span> {{ patient.postalCode}}</p>
+                                            <p><span>Ulica i nr budynku: </span> {{ patient.streetAddress }}</p>
                                         </template>
                                     </base-card>
                                 </div>
@@ -75,25 +75,36 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
+import jwt_decode from "jwt-decode";
+import axios from 'axios'
 
-    export default {
-        data(){
-            return {
-                modalIsOpen: false, 
-            }
-        },
-
-        methods: {
-            toggleModalIsOpen() {
-                return this.modalIsOpen = !this.modalIsOpen;
-            },  
-        },
-
-        computed: {
-            ...mapGetters(['user', 'isLoggedIn', 'patient'])
+export default {
+    data(){
+        return {
+            modalIsOpen: false, 
         }
-    } 
+    },
+
+    methods: {
+        toggleModalIsOpen() {
+            return this.modalIsOpen = !this.modalIsOpen;
+        },  
+    },
+
+    computed: {
+        ...mapGetters(['user', 'patient'])
+    },
+    async created(){
+        const token = localStorage.getItem('token');
+        const tokenDecoded = jwt_decode(token);
+        const getUserInfo = await axios.get(`Users/${tokenDecoded.nameid}`); // wymagane do działania nawigacji
+        const getPatientInfo = await axios.get(`Patients/${tokenDecoded.nameid}`);
+        
+        await this.$store.dispatch('user', getUserInfo.data.data);
+        await this.$store.dispatch('patient', getPatientInfo.data.data);
+    },
+} 
 </script>
 
 <style lang="scss" scoped>

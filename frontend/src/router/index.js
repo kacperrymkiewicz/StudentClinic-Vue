@@ -62,9 +62,6 @@ const routes = [
     path: "/profil",
     name: "patient-profile",
     component: PatientProfile,
-    meta: {
-      requiresAuth: true
-    }
   },
   {
     path: "/profil/edycja-profilu",
