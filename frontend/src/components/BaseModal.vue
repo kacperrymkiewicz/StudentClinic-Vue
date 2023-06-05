@@ -19,7 +19,7 @@ div.overlay {
     left: 0;
     height: 100vh;
     width: 100%;
-    z-index: 0;
+    z-index: 1;
     background-color: rgba(0, 0, 0, 0.35);
 }
 dialog {
