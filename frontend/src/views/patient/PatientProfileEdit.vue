@@ -88,7 +88,7 @@ export default {
             .put(`Patients`, {
                 id: this.patient.id,
                 user: {
-                    id: 2,
+                    id: this.patient.id,
                     firstName: this.patient.user.firstName,
                     lastName: this.patient.user.lastName,
                     emailAddress: this.patient.user.emailAddress,
@@ -101,33 +101,13 @@ export default {
                 postalCode: this.patient.postalCode,
                 streetAddress: this.patient.street
             })
-            .then((response) => {
+            .then(() => {
                 this.$router.replace('/profil');
-                console.log(response)
             })
             .catch((error) => {
-                this.error = "Nieprawidłowe dane logowania"
                 console.log(error)
             })
-        },
-
-        // {
-        //     "id": 2,
-        //     "user": {
-        //         "id": 2,
-        //         "firstName": "string",
-        //         "lastName": "string",
-        //         "emailAddress": "string",
-        //         "accountType": "Patient"
-        //     },
-        //     "pesel": "string",
-        //     "phoneNumber": "string",
-        //     "allergies": "string",
-        //     "city": "string",
-        //     "postalCode": "string",
-        //     "streetAddress": "string"
-        //     }
-        
+        },  
     }
 }
 

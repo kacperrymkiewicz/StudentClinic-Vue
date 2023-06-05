@@ -45,7 +45,8 @@
                                         <base-card class="base-card-sm" @click="toggleModalIsOpen">
                                             <template v-slot:title>Alergie</template>
                                             <template v-slot:content>
-                                                <p>{{ patient.allergies }}</p>
+                                                <p v-if="patient.allergies"> {{ patient.allergies }}</p>
+                                                <p v-else>Brak alergii (możesz je dodać edytując profil)</p>
                                             </template>
                                             <template v-slot:button>Pokaż więcej</template>
                                         </base-card>
@@ -57,21 +58,7 @@
                     </div>
                 </div>
             </div>
-            
     </section>
-    <base-modal class="base-modal" v-bind:modalIsOpen="modalIsOpen" v-if="modalIsOpen" @click="toggleModalIsOpen">
-        <template v-slot:title>Przyjmowane leki</template>
-        <template v-slot:subtitle></template>
-        <template v-slot:content>
-            <p>Lorem Ipsum</p>
-            <p>Lorem Ipsum</p>
-            <p>Lorem Ipsum</p>
-            <p>Lorem Ipsum</p>
-            <p>Lorem Ipsum</p>
-            <p>Lorem Ipsum</p>
-        </template>
-    </base-modal>
-
 </template>
 
 <script>
@@ -80,18 +67,6 @@ import jwt_decode from "jwt-decode";
 import axios from 'axios'
 
 export default {
-    data(){
-        return {
-            modalIsOpen: false, 
-        }
-    },
-
-    methods: {
-        toggleModalIsOpen() {
-            return this.modalIsOpen = !this.modalIsOpen;
-        },  
-    },
-
     computed: {
         ...mapGetters(['user', 'patient'])
     },
@@ -103,6 +78,7 @@ export default {
         
         await this.$store.dispatch('user', getUserInfo.data.data);
         await this.$store.dispatch('patient', getPatientInfo.data.data);
+        console.log(getPatientInfo);
     },
 } 
 </script>

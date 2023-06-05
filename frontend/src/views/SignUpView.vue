@@ -63,7 +63,7 @@
                 <p v-if="errorPESEL"> {{ errorPESEL }} </p>
 
                 <div class="form-group d-flex flex-column">
-                    <label class="align-self-start" for="city">Miasto</label>
+                    <label class="align-self-start" for="city">Miejscowość</label>
                     <input type="text" class="form-control" id="city" v-model.trim="city" @change="validateCity" required>
                 </div>
                 <p v-if="errorCity"> {{ errorCity }} </p>
@@ -75,7 +75,7 @@
                 <p v-if="errorPostalCode"> {{ errorPostalCode }} </p>
 
                 <div class="form-group d-flex flex-column">
-                    <label class="align-self-start" for="street">Ulica</label>
+                    <label class="align-self-start" for="street">Ulica i nr budynku</label>
                     <input type="text" class="form-control" id="street" v-model.trim="street" @change="validateStreet" required>
                 </div>
                 <p v-if="errorStreet"> {{ errorStreet }} </p>

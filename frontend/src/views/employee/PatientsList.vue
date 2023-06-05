@@ -33,7 +33,7 @@
                                             </span>
                                             <span v-else>
                                                 <span >
-                                                    <button class="blue-button">Karta pacjenta</button>
+                                                    <button @click="toggleModalIsOpen" class="blue-button">Karta pacjenta</button>
                                                     <button class="teal-button">Wypisz receptę</button>
                                                 </span>
                                                 
@@ -104,7 +104,7 @@
                 <img class="profile-icon" src="@/assets/images/icons/svg/profile.svg">
                 <p> Lorem ipsum </p>
                 <div class="patient-info">
-                    <p><span>Telefon komórkowy:</span> 000000000</p>
+                    <p><span>Telefon komórkowy:</span> asd</p>
                     <p><span>PESEL:</span> 00000000000</p>
                     <p><span>Przyjmowane leki:</span> lorem ipsum, lorem ipsum, lorem ipsum</p>
                     <p><span>Alergie:</span> lorem ipsum</p>
@@ -190,6 +190,7 @@ export default {
         //const visitInfo = await axios.get('Visits');
         //console.log(visitInfo);
         this.patients = patientInfo.data.data;
+        console.log(patientInfo)
     }
 }
 </script>

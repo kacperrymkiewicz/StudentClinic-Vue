@@ -31,6 +31,7 @@ dialog {
     top: 50%;
     transform: translate(-50%, -50%);
     background-color: rgba(0, 0, 0, 0);
+    z-index: 2;
     div.outer-wrapper {
         border: 1.5px solid $secondary;
         background-color: $base-modal-background;
