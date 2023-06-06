@@ -14,19 +14,23 @@
                                     <div class="left-inner-wrapper d-flex flex-column align-items-center">
                                         <div class="form-group d-flex flex-column">
                                             <label class="align-self-start" for="specialization">Wybierz specjalizację</label>
-                                            <select class="form-select" aria-label="Wybierz specjalistę" id="specialization">
-                                                <option selected>Nie wybrano</option>
-                                                <option value="1">Lorem</option>
-                                                <option value="2">Lorem</option>
-                                                <option value="3">Lorem</option>
+                                            <select class="form-select" aria-label="Wybierz specjalistę" id="specialization" @change="onSpecializationChange($event)" v-model="specialization">
+                                                <option selected disabled hidden>Nie wybrano</option>
+                                                <option v-for="specialization in specialization_data" :key="specialization" :value="specialization">
+                                                    {{ specialization }}
+                                                </option>
                                             </select>
                                         </div>
                                         <div class="form-group d-flex flex-column">
                                             <label class="align-self-start" for="doctor">Wybierz lekarza</label>
-                                            <select class="form-select" aria-label="Wybierz specjalistę" id="doctor">
-                                                <option selected>Nie wybrano</option>
-                                                <option value="1">Lorem</option>
-                                                <option value="2">Lorem</option>
+                                            <select class="form-select" aria-label="Wybierz specjalistę" id="doctor" v-model="doctor" disabled v-if="specialization == 'Nie wybrano'">
+                                                <option selected disabled hidden>Nie wybrano</option>
+                                            </select>
+                                            <select class="form-select" aria-label="Wybierz specjalistę" id="doctor" v-model="doctor" v-else>
+                                                <option selected disabled hidden>Nie wybrano</option>
+                                                <option v-for="doctor in doctor_data" :key=doctor.id v-bind:value="{ id: doctor.id, firstname: doctor.user.firstName, lastname: doctor.user.lastName }">
+                                                    {{ doctor.user.firstName }} {{ doctor.user.lastName }}
+                                                </option>
                                             </select>
                                         </div>
 
@@ -34,13 +38,13 @@
                                             <div class="form-group d-flex flex-column">
                                                 <label class="align-self-start">Wybierz termin</label>
                                                 <div class="date-picker d-flex justify-content-evenly">
-                                                    <svg width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <svg @click="previousDay()" width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <rect width="30" height="30" rx="15" transform="matrix(-1 0 0 1 30 0.5)" fill="white"/>
                                                         <rect width="30" height="30" rx="15" transform="matrix(-1 0 0 1 30 0.5)" fill="black" fill-opacity="0.2"/>
                                                         <path d="M17.5 8L10.8839 14.6161C10.3957 15.1043 10.3957 15.8957 10.8839 16.3839L17.5 23" stroke="#5F6D7E" stroke-width="1.5" stroke-linecap="round"/>
                                                     </svg>
-                                                    <span>11 marca 2023</span>
-                                                    <svg width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <VueDatePicker v-model="date" input-class-name="datepicker-input" :format="format" locale="pl" :disabled-week-days="[6, 0]" :enable-time-picker="false" select-text="Wybierz" cancel-text="Anuluj" hide-input-icon auto-apply :min-date="new Date()" :clearable="false">{{ date }}</VueDatePicker>
+                                                    <svg @click="nextDay()" width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <rect y="0.5" width="30" height="30" rx="15" fill="white"/>
                                                         <rect y="0.5" width="30" height="30" rx="15" fill="black" fill-opacity="0.2"/>
                                                         <path d="M12.5 8L19.1161 14.6161C19.6043 15.1043 19.6043 15.8957 19.1161 16.3839L12.5 23" stroke="#5F6D7E" stroke-width="1.5" stroke-linecap="round"/>
@@ -61,9 +65,10 @@
                                     <div class="right-inner-wrapper d-flex flex-column align-items-center">
                                         <img src="@/assets/images/icons/doctor.png">
                                         <p>Twój lekarz:</p>
-                                        <p> {{ doctor }}</p>
-                                        <p> {{ specialization }}</p>
-                                        <p><span>Termin:</span> {{ termin }} </p>
+                                        <p v-if="doctor != 'Nie wybrano'"> {{ doctor.firstname }} {{ doctor.lastname }}</p>
+                                        <p v-if="specialization != 'Nie wybrano'"> {{ specialization }}</p>
+                                        <p v-if="doctor != 'Nie wybrano'"><span>Termin:</span> {{ date.toLocaleDateString('pl', { weekday:"long", year:"numeric", month:"long", day:"numeric"}) }} </p>
+                                        <p v-else><span>Termin: </span> Wybierz termin</p>
                                         <div class="d-flex">
                                             <p>Koszt wizyty:</p>
                                             <span> {{ price }} zł</span>
@@ -84,34 +89,78 @@
 import { mapGetters } from 'vuex';
 import axios from 'axios'
 import jwt_decode from "jwt-decode";
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+
 export default {
+    components: { VueDatePicker },
     data(){
         return {
-            doctor: 'Lorem Ipsum',
-            specialization: 'Lorem',
-            termin: 'nie wybrano',
+            doctor: "Nie wybrano",
+            specialization: "Nie wybrano",
+            termin: 'Nie wybrano',
             price: 100,
+            specialization_data: [],
+            doctor_data: {},
+            date: new Date()//.toLocaleDateString('pl', { weekday:"long", year:"numeric", month:"short", day:"numeric"}),
         }
     },
+    methods: {
+        async onSpecializationChange(event) {
+            await axios.get('Doctors/' + event.target.value).
+                then(response => (this.doctor_data = response.data.data));
+        },
+
+        nextDay() {
+            if(this.date.getDay() == 5) {
+                this.date = new Date(this.date.setDate(this.date.getDate()+3));
+            }
+            else {
+                this.date = new Date(this.date.setDate(this.date.getDate()+1));
+            }
+        },
+
+        previousDay() {
+            if(!(this.date < new Date())) {
+                if(this.date.getDay() == 1) {
+                this.date = new Date(this.date.setDate(this.date.getDate()-3));
+                }
+                else {
+                    this.date = new Date(this.date.setDate(this.date.getDate()-1));
+                }
+            }
+        },
+
+        format() {
+            return this.date.toLocaleDateString('pl', { weekday:"long", year:"numeric", month:"short", day:"numeric"});
+        }
+    },
+
     computed: {
         ...mapGetters(['user'])
     },
 
     async created(){
-            const token = localStorage.getItem('token');
-            const token_decoded = jwt_decode(token);
 
-            const response = await axios.get(`Patient`);
-            //const response2 = await axios.get(`User/${token_decoded.nameid}`);
 
-            await this.$store.dispatch('patient', response.data.data[token_decoded.nameid-1])
-            await this.$store.dispatch('user', response.data.data[token_decoded.nameid-1].user);
-    }
+        const token = localStorage.getItem('token');
+        const token_decoded = jwt_decode(token);
+
+        const response = await axios.get(`Patients`);
+        //const response2 = await axios.get(`User/${token_decoded.nameid}`);
+
+        await this.$store.dispatch('patient', response.data.data[token_decoded.nameid-1])
+        await this.$store.dispatch('user', response.data.data[token_decoded.nameid-1].user);
+    },
+
+    async mounted(){
+        await axios.get('Doctors/Specializations').
+            then(response => (this.specialization_data = response.data.data));
+    },
 }
 </script>
 
 <style lang="scss" scoped>
-
 div.appointment-container {
     margin: 40px 0;
     padding: 50px 0;
@@ -284,4 +333,36 @@ div.appointment-container {
         }
     }
 }
+</style>
+
+<style>
+    .dp__theme_light {
+    --dp-background-color: #f8f9fb;
+    --dp-text-color: #2C3E50;
+    --dp-hover-color: #f3f3f3;
+    --dp-hover-text-color: #2C3E50;
+    --dp-hover-icon-color: #959595;
+    --dp-primary-color: rgb(105, 226, 207);
+    --dp-primary-text-color: #f8f5f5;
+    --dp-secondary-color: #c0c4cc;
+    --dp-border-color: #f8f9fb;
+    --dp-menu-border-color: #ddd;
+    --dp-border-color-hover: #f8f9fb;
+    --dp-disabled-color: #f6f6f6;
+    --dp-scroll-bar-background: #f3f3f3;
+    --dp-scroll-bar-color: #959595;
+    --dp-success-color: #76d275;
+    --dp-success-color-disabled: #a3d9b1;
+    --dp-icon-color: #959595;
+    --dp-danger-color: #ff6f60;
+    --dp-highlight-color: rgba(25, 118, 210, 0.1);
+    --dp-font-family: 'Inter', sans-serif;
+    }
+
+    .datepicker-input {
+        text-align: center!important;
+        line-height: 31px!important;
+        padding: 0!important;
+        align-items: center;
+    }
 </style>
