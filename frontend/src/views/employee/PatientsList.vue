@@ -13,9 +13,6 @@
                                 <input type="search" class="form-control" v-model='searchQuery' placeholder="Wyszukaj...">
                             </div>
                         </div>
-                        <!-- <base-button v-for="date in available_dates.slice(0, 4)" @click="selectDate({ id: date.id, starttime: date.startTime, endtime: date.endTime, status: date.status })" :key="date.id" :type="date.status ? 'light' : 'inaccessible'">
-                        {{ date.startTime.slice(0, 5) }} - {{ date.endTime.slice(0, 5) }}
-                        </base-button> -->
                         <div class="table-responsive d-flex flex-column">  
                             <table class="table">
                                 <thead>
@@ -37,7 +34,7 @@
                                             <span v-else>
                                                 <span >
                                                     <button @click="openPatientCardModal(patient)" class="blue-button">Karta pacjenta</button>
-                                                    <button class="teal-button">Wypisz receptę</button>
+                                                    <button @click="openWriteAPrescriptionModal(patient)" class="teal-button">Wypisz receptę</button>
                                                 </span>
                                             </span> 
                                         </td>
@@ -67,6 +64,7 @@
         </div>
     </section>
     <patient-card-modal @close-patient-card-modal="patientCardModalIsOpen = false" v-if="patientCardModalData && patientCardModalIsOpen" :data="patientCardModalData"></patient-card-modal>
+    <write-a-prescription-modal @close-write-a-prescription-modal="writeAPrescriptionModalIsOpen = false" v-if="writeAPrescriptionModalIsOpen" :data="writeAPrescriptionModalData"></write-a-prescription-modal>
 </template>
 
 <script>
@@ -75,30 +73,36 @@ import { mapGetters } from 'vuex'
 import { computed, ref } from "vue";
 import jwt_decode from "jwt-decode";
 import PatientCardModal from '@/components/PatientCardModal.vue';
+import WriteAPrescriptionModal from '@/components/WriteAPrescriptionModal.vue';
 
 export default {
     data(){
         return {
             patients: [],
             fields: ['pacjent', 'akcje'],
-            activePatient: null,
             patientInfo: [],
             patientCardModalData: [],
             patientCardModalIsOpen: false,
-            
+            writeAPrescriptionModalData: [],
+            writeAPrescriptionModalIsOpen: false,
         }
     },
     components: {
         PatientCardModal,
+        WriteAPrescriptionModal
     },
     methods: {
         openPatientCardModal(patientInfo) {
             this.patientCardModalData = patientInfo;
             this.patientCardModalIsOpen = true;
+        },
+        openWriteAPrescriptionModal(patientInfo){
+            this.writeAPrescriptionModalData = patientInfo;
+            this.writeAPrescriptionModalIsOpen = true;
         }
     },
     computed: {
-        ...mapGetters(['user', 'isLoggedIn', 'activePatient'])
+        ...mapGetters(['user', 'isLoggedIn'])
     },
 
     setup(props) {
@@ -134,8 +138,6 @@ export default {
     },
     async mounted(){
         const patientInfo = await axios.get('Patients');
-        //const visitInfo = await axios.get('Visits');
-        //console.log(visitInfo);
         this.patients = patientInfo.data.data;
         console.log(patientInfo)
     },
