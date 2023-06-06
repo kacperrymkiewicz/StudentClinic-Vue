@@ -8,6 +8,9 @@ export default {
     patientsList(context, patients){
         context.commit('patientsList', patients)
     },
+    visitsList(context, visits) {
+        context.commit('visitsList', visits)
+    }
 
     // isLoggedIn(context, isLoggedIn) {
     //     context.commit('isLoggedIn', isLoggedIn)

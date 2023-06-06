@@ -8,6 +8,9 @@ export default {
     patientsList (state, patients) {
         state.patientsList = patients
     },
+    visitsList (state, visits) {
+        state.visitsList = visits
+    }
     // isLoggedIn(state, isLoggedIn){
     //     state.isLoggedIn = isLoggedIn;
     // }
