@@ -10,6 +10,12 @@ export default {
     },
     visitsList: state => {
         return state.visitsList;
+    },
+    activePatient: state => {
+        return state.activePatient
+    },
+    patientVisitsList: state => {
+        return state.patientVisitsList
     }
     // isLoggedIn: state => {
     //     return state.isLoggedIn;

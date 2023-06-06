@@ -11,6 +11,8 @@ export default {
             patient: null,
             patientsList: [],
             visitsList: [],
+            activePatient: null,
+            patientVisitsList: [],
         }
     },
     actions, 
