@@ -53,7 +53,7 @@
                                                 <span class="status-text">{{ capitalizeFirstLetter(setStatus(visit.status)) }}</span>
                                             </span>
                                             <span v-else>
-                                                <span >
+                                                <span>
                                                     <button @click="toggleModalIsOpen" class="blue-button">Karta pacjenta</button>
                                                     <button class="teal-button">Wypisz receptę</button>
                                                 </span>
@@ -61,35 +61,6 @@
                                         </td>
                                     </tr>
                                 </tbody>
-                                <!-- <tbody>
-                                    <tr v-for="item in filteredList" :key='item'>
-                                        <td v-for="field in fields" :key='field'> 
-                                            <span v-if="field=='lekarz' || field == 'pacjent'">
-                                                <span>
-                                                    <img src="@/assets/images/icons/svg/profile.svg">
-                                                </span>
-                                                <span>
-                                                    {{ capitalizeFirstLetter(data.user.firstName) }}
-                                                </span>
-                                            </span>
-                                            <span v-else-if="field=='status'">
-                                                <span class="status-icon" :style="{backgroundColor: setStatusIcon(item[field])}" ></span>
-                                                <span class="status-text">{{ capitalizeFirstLetter(item[field])}}</span>
-                                            </span>
-                                            <span v-else-if="field=='akcje'">
-                                                <span v-if="isPatientsListView">
-                                                    <button @click="$emit('open')" class="blue-button">Karta pacjenta</button>
-                                                    <button class="teal-button">Wypisz receptę</button>
-                                                </span>
-                                                <span v-else>
-                                                    <button class="red-button">Odwołaj</button>
-                                                    <button class="teal-button" v-if="!isPatientView">Potwierdź</button>
-                                                </span>
-                                            </span> 
-                                            <span v-else>{{ capitalizeFirstLetter(data.user.firstName) }} </span> 
-                                        </td>
-                                    </tr>
-                                </tbody> -->
                                 <tfoot>
                                     <tr>
                                         <th>
@@ -107,7 +78,6 @@
                                     </tr>
                                 </tfoot>
                             </table>
-
                         </div>
                     </div>
                 </div>
@@ -120,21 +90,19 @@
 import axios from 'axios'
 import jwt_decode from "jwt-decode";
 import { mapGetters } from 'vuex';
+import { computed, ref } from "vue";
 
 export default {
+    data(){
+        return {
+            fields: ['data', 'pacjent', 'lekarz', 'specjalizacja', 'status', 'akcje'],
+            //filteredList: 
+        }
+    },
     computed: {
         ...mapGetters(['user', 'visitsList']),
     },
-    setup(){
-        const data = [
-            {data:new Date().toISOString().slice(0, 10), pacjent: "Abiola Esther", lekarz: "Lorem Ipsum", specjalizacja: "lorem", status: "zakończona"},
-            {data:new Date().toISOString().slice(0, 10), pacjent: "Lorem Esther", lekarz: "Lorem Ipsum", specjalizacja: "lorem", status: "odwołana"},
-        ]
-        const fields = [
-            'data', 'pacjent', 'lekarz', 'specjalizacja', 'status', 'akcje'
-        ]
-        return { data, fields }
-    },
+    
     methods: {
         setSpecialization(specialization){
             switch(specialization){
@@ -165,6 +133,31 @@ export default {
                 default:
                     return "#FFF";
             }
+        },
+        search(props){
+            let sort = ref(false);
+            let updatedList =  ref([])
+            let searchQuery = ref("");
+            
+            const sortedList = computed(() => {
+                if (sort.value) {
+                    return updatedList.value
+                } else {
+                    return props.data;
+                }
+            });
+
+            const filteredList = computed(() => {
+                return sortedList.value.filter((product) => {
+                    if(product.value){
+                        return product.value.toLowerCase().indexOf(searchQuery.value.toLowerCase()) != -1;
+                    }
+                    return product;
+                    
+                });
+            });   
+        
+            return { sortedList, searchQuery, filteredList }
         }
     },
     async created(){
@@ -176,6 +169,7 @@ export default {
 
         await this.$store.dispatch('user', getUserInfo.data.data);
         await this.$store.dispatch('visitsList', getVisitsInfo.data.data);
+
         console.log(getVisitsInfo);
     },
 }

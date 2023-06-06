@@ -105,7 +105,6 @@ export default {
     },
 
     setup(props) {
-        
         let sort = ref(false);
         let updatedList =  ref([])
         let searchQuery = ref("");
