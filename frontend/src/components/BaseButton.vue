@@ -27,6 +27,7 @@ export default {
             return {
                 'button-dark': this.type === 'dark',
                 'button-light': this.type === 'light',
+                'button-inaccessible' : this.type === 'inaccesible',
             };
         },
     },
@@ -68,6 +69,19 @@ export default {
         &:hover, &:active {
             background-color: $button-light-hover;
             border-color: $button-light-hover;
+        }
+    }
+
+    .button-inaccessible {
+        background-color: #ebebeb;
+        border-color: #9ea2aa;
+        color: $secondary;
+        text-decoration: line-through;
+        cursor: not-allowed;
+
+        &:hover, &:active {
+            background-color: #ebebeb;
+            border-color: #9ea2aa;
         }
     }
 </style>
