@@ -9,6 +9,7 @@
                 <div class="patient-info">
                     <p><span>Telefon komórkowy:</span> {{ data.phoneNumber}}</p>
                     <p><span>PESEL:</span> {{ data.pesel }}</p>
+                    <p><span>Adres zamieszkania:</span> {{ data.streetAddress }} {{ data.postalCode}} {{ data.city}}</p>
                     <p><span>Przyjmowane leki:</span> lorem ipsum, lorem ipsum, lorem ipsum</p>
                     <p v-if="data.allergies"><span>Alergie:</span> {{ data.allergies }}</p>
                     <p v-else><span>Alergie:</span> brak </p>
@@ -60,9 +61,9 @@ export default {
                 background-color: $base-modal-background;
                 border-radius: 10px;
                 filter: drop-shadow(0 0 30px #999);
-                padding: 30px;
+                padding: 50px;
                 position: relative;
-                max-width: 500px;
+                max-width: 600px;
 
                 img {
                     &.profile-icon {

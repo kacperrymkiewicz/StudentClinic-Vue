@@ -6,7 +6,9 @@
                     <breadcrumbs is-patient>
                         <router-link to="/profil">Mój profil</router-link>
                     </breadcrumbs>
-                    <hello-message :name="user.firstName" icon-name="clipboard"><template v-slot:info>Tutaj możesz zobaczyć swój profil pacjenta</template></hello-message>
+                    <hello-message :name="user.firstName" icon-name="clipboard">
+                        <template v-slot:info>Tutaj możesz zobaczyć swój profil pacjenta</template>
+                    </hello-message>
                     <div class="d-flex flex-column align-items-center"> 
                         <div class="col-md-12">  
                             <div class="wrapper d-flex flex-column">
@@ -73,6 +75,7 @@ export default {
     async created(){
         const token = localStorage.getItem('token');
         const tokenDecoded = jwt_decode(token);
+
         const getUserInfo = await axios.get(`Users/${tokenDecoded.nameid}`); // wymagane do działania nawigacji
         const getPatientInfo = await axios.get(`Patients/${tokenDecoded.nameid}`);
         

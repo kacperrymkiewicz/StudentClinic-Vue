@@ -6,8 +6,9 @@
                     <breadcrumbs>
                         <router-link to="/wizyty">Wizyty</router-link>
                     </breadcrumbs>
-                    <hello-message v-if="user" :name="user.firstName" icon-name="reminder"><template v-slot:info>Oto lista zarezerwowanych wizyt przez pacjentów</template></hello-message>
-                    <!-- <base-table :fields="fields" :data="data" :status="status"></base-table> -->
+                    <hello-message v-if="user" :name="user.firstName" icon-name="reminder">
+                        <template v-slot:info>Oto lista zarezerwowanych wizyt przez pacjentów</template>
+                    </hello-message>
                     <div class="wrapper d-flex flex-column">
                         <div class="search">
                             <div class="input-group mb-5">

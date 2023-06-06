@@ -7,7 +7,6 @@
                         <router-link to="/moje-wizyty">Moje wizyty</router-link>
                     </breadcrumbs>
                     <hello-message v-if="user" :name="user.firstName" icon-name="reminder"><template v-slot:info>Oto lista Twoich wizyt</template></hello-message>
-                    <!-- <base-table :isPatientView="true" :fields="fields" :data="data" :status="status"></base-table> -->
                     <div class="wrapper d-flex flex-column">
                         <div class="search">
                             <div class="input-group mb-5">
