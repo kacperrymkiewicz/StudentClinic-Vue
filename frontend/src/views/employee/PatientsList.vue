@@ -33,7 +33,7 @@
                                             </span>
                                             <span v-else>
                                                 <span >
-                                                    <button @click="toggleModalIsOpen" class="blue-button">Karta pacjenta</button>
+                                                    <button @click="toggleModalIsOpen(patient.id)" class="blue-button">Karta pacjenta</button>
                                                     <button class="teal-button">Wypisz receptę</button>
                                                 </span>
                                             </span> 
@@ -71,7 +71,7 @@
                 <img class="profile-icon" src="@/assets/images/icons/svg/profile.svg">
                 <p> Lorem ipsum </p>
                 <div class="patient-info">
-                    <p><span>Telefon komórkowy:</span> asd</p>
+                    <p><span >Telefon komórkowy:</span> as </p>
                     <p><span>PESEL:</span> 00000000000</p>
                     <p><span>Przyjmowane leki:</span> lorem ipsum, lorem ipsum, lorem ipsum</p>
                     <p><span>Alergie:</span> lorem ipsum</p>
@@ -93,15 +93,19 @@ export default {
             modalIsOpen: false,
             patients: [],
             fields: ['pacjent', 'akcje'],
+            activePatient: null
         }
     },
     methods: {
         toggleModalIsOpen() {
+            // const activePatient = await axios.get(`Patients/${id}`)
+            // console.log(activePatient.data.data)
+            // await this.$store.dispatch('activePatient', activePatient.data.data);
             return this.modalIsOpen = !this.modalIsOpen;
         },
     },
     computed: {
-        ...mapGetters(['user', 'isLoggedIn'])
+        ...mapGetters(['user', 'isLoggedIn', 'activePatient'])
     },
 
     setup(props) {
