@@ -54,8 +54,8 @@
                                             </span>
                                             <span v-else>
                                                 <span>
-                                                    <button class="teal-button">Potwierdź</button>
-                                                    <button class="red-button">Odwołaj</button>
+                                                    <button :class="['teal-button', {'disabled-teal-button': visit.status == 'Finished' || visit.status == 'Cancelled' || visit.status == 'Confirmed'}]">Potwierdź</button>
+                                                    <button :class="['red-button', {'disabled-red-button': visit.status == 'Finished' || visit.status == 'Cancelled'}]">Odwołaj</button>
                                                 </span>
                                             </span> 
                                         </td>
@@ -99,7 +99,7 @@ export default {
             fields: ['data', 'pacjent', 'lekarz', 'specjalizacja', 'status', 'akcje'],
             //filteredList: 
         }
-    },
+    },  
     computed: {
         ...mapGetters(['user', 'visitsList']),
     },
@@ -110,27 +110,33 @@ export default {
                 case 'oculist':
                     return "okulista"  
                 default:
-                    return "none"
+                    return "niezdefiniowana"
             } 
         },
         setStatus(status){
             switch(status){
+                case 'Confirmed':
+                    return "Potwierdzona"
                 case 'Unconfirmed':
-                    return "niepotwierdzona"
+                    return "Niepotwierdzona"
+                case 'Cancelled':
+                    return "Odwołana"
+                case 'Finished':
+                    return "Zakończona"
                 default:
-                    return "none"
+                    return "niezdefiniowany"
             }
         },
         setStatusIcon(status) {
             switch(status) {
-                case 'Unconfirmed':
-                    return "#205594"
-                case 'potwierdzona':
+                case 'Confirmed':
                     return "#209420";
-                case 'odwołana':
-                    return "#F84912";
-                case 'czeka na potwierdzenie':
+                case 'Unconfirmed':
                     return "#F8EE12"
+                case 'Cancelled':
+                    return "#F84912";
+                case 'Finished':
+                    return "#205594"
                 default:
                     return "#FFF";
             }
@@ -291,6 +297,14 @@ div.wrapper {
                             margin-right: 20px;
                             transition: all .2s ease-in-out;
 
+                            &.disabled-teal-button {
+                                cursor: not-allowed;
+                                background-color: $button-teal-hover !important;
+                            }
+                            &.disabled-red-button {
+                                cursor: not-allowed;
+                                background-color: $button-red-hover !important; 
+                            }
                             &.blue-button {
                                 background-color: $button-blue;
 

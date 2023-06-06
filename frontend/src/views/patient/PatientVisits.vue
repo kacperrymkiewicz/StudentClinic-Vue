@@ -46,8 +46,7 @@
                                             </span>
                                             <span v-else>
                                                 <span>
-                                                    <button :class="[teal-button, {disabled: visit.status='Unconfirmed'}]">Potwierdź</button>
-                                                    <button class="red-button">Odwołaj</button>
+                                                    <button @click="updateStatus(visit.id)" :class="['red-button', {'disabled-red-button': visit.status == 'Finished' || visit.status == 'Cancelled'}]">Odwołaj</button>
                                                 </span>
                                             </span> 
                                         </td>
@@ -108,33 +107,42 @@ export default {
         setSpecialization(specialization){
             switch(specialization){
                 case 'oculist':
-                    return "okulista"
+                    return "Okulista"
                 default:
-                    return "none"
+                    return "niezdefiniowana"
             } 
         },
         setStatus(status){
             switch(status){
+                case 'Confirmed':
+                    return "Potwierdzona"
                 case 'Unconfirmed':
-                    return "niepotwierdzona"
+                    return "Niepotwierdzona"
+                case 'Cancelled':
+                    return "Odwołana"
+                case 'Finished':
+                    return "Zakończona"
                 default:
-                    return "none"
+                    return "niezdefiniowany"
             }
         },
         setStatusIcon(status) {
             switch(status) {
-                case 'Unconfirmed':
-                    return "#205594"
-                case 'potwierdzona':
+                case 'Confirmed':
                     return "#209420";
-                case 'odwołana':
-                    return "#F84912";
-                case 'czeka na potwierdzenie':
+                case 'Unconfirmed':
                     return "#F8EE12"
+                case 'Cancelled':
+                    return "#F84912";
+                case 'Finished':
+                    return "#205594"
                 default:
                     return "#FFF";
             }
         },
+        // updateStatus(id){
+            
+        // }
     }
 }
 </script>
@@ -251,10 +259,9 @@ export default {
                             border: 0;
                             margin-right: 20px;
                             transition: all .2s ease-in-out;
-
-                            &.disabled {
+                            &.disabled-red-button {
                                 cursor: not-allowed;
-                                background-color: $button-teal-hover;
+                                background-color: $button-red-hover !important; 
                             }
 
                             &.blue-button {
