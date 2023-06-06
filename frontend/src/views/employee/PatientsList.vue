@@ -23,7 +23,7 @@
                                 <tbody>
                                     <tr v-for="patient in patients" :key="patient.id">
                                         <td v-for="field in fields" :key='field'> 
-                                            <span v-if="field=='lekarz' || field == 'pacjent'">
+                                            <span v-if="field == 'pacjent'">
                                                 <span>
                                                     <img src="@/assets/images/icons/svg/profile.svg">
                                                 </span>
@@ -36,41 +36,10 @@
                                                     <button @click="toggleModalIsOpen" class="blue-button">Karta pacjenta</button>
                                                     <button class="teal-button">Wypisz receptę</button>
                                                 </span>
-                                                
                                             </span> 
-
                                         </td>
                                     </tr>
                                 </tbody>
-                                <!-- <tbody>
-                                    <tr v-for="item in filteredList" :key='item'>
-                                        <td v-for="field in fields" :key='field'> 
-                                            <span v-if="field=='lekarz' || field == 'pacjent'">
-                                                <span>
-                                                    <img src="@/assets/images/icons/svg/profile.svg">
-                                                </span>
-                                                <span>
-                                                    {{ capitalizeFirstLetter(data.user.firstName) }}
-                                                </span>
-                                            </span>
-                                            <span v-else-if="field=='status'">
-                                                <span class="status-icon" :style="{backgroundColor: setStatusIcon(item[field])}" ></span>
-                                                <span class="status-text">{{ capitalizeFirstLetter(item[field])}}</span>
-                                            </span>
-                                            <span v-else-if="field=='akcje'">
-                                                <span v-if="isPatientsListView">
-                                                    <button @click="$emit('open')" class="blue-button">Karta pacjenta</button>
-                                                    <button class="teal-button">Wypisz receptę</button>
-                                                </span>
-                                                <span v-else>
-                                                    <button class="red-button">Odwołaj</button>
-                                                    <button class="teal-button" v-if="!isPatientView">Potwierdź</button>
-                                                </span>
-                                            </span> 
-                                            <span v-else>{{ capitalizeFirstLetter(data.user.firstName) }} </span> 
-                                        </td>
-                                    </tr>
-                                </tbody> -->
                                 <tfoot>
                                     <tr>
                                         <th>
@@ -88,10 +57,8 @@
                                     </tr>
                                 </tfoot>
                             </table>
-
                         </div>
                     </div>
-                
                 </div>
             </div>
         </div>
@@ -132,22 +99,6 @@ export default {
         toggleModalIsOpen() {
             return this.modalIsOpen = !this.modalIsOpen;
         },
-        setStatusIcon(status) {
-            switch(status) {
-                case 'zakończona':
-                    return "#205594"
-                case 'potwierdzona':
-                    return "#209420";
-                case 'odwołana':
-                    return "#F84912";
-                case 'czeka na potwierdzenie':
-                    return "#F8EE12"
-                default:
-                    return "#FFF";
-            }
-            
-        },
-
     },
     computed: {
         ...mapGetters(['user', 'isLoggedIn'])
@@ -196,8 +147,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    
-
     div {
         div.overlay {
             position: fixed;
