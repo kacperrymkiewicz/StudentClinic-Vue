@@ -13,6 +13,9 @@
                                 <input type="search" class="form-control" v-model='searchQuery' placeholder="Wyszukaj...">
                             </div>
                         </div>
+                        <!-- <base-button v-for="date in available_dates.slice(0, 4)" @click="selectDate({ id: date.id, starttime: date.startTime, endtime: date.endTime, status: date.status })" :key="date.id" :type="date.status ? 'light' : 'inaccessible'">
+                        {{ date.startTime.slice(0, 5) }} - {{ date.endTime.slice(0, 5) }}
+                        </base-button> -->
                         <div class="table-responsive d-flex flex-column">  
                             <table class="table">
                                 <thead>
@@ -33,7 +36,7 @@
                                             </span>
                                             <span v-else>
                                                 <span >
-                                                    <button @click="toggleModalIsOpen(patient.id)" class="blue-button">Karta pacjenta</button>
+                                                    <button @click="openPatientCardModal(patient)" class="blue-button">Karta pacjenta</button>
                                                     <button class="teal-button">Wypisz receptę</button>
                                                 </span>
                                             </span> 
@@ -63,22 +66,7 @@
             </div>
         </div>
     </section>
-    <div v-if="modalIsOpen">
-        <div @click="toggleModalIsOpen" class="overlay"></div>
-        <dialog @close="toggleModalIsOpen" open>
-            <div class="wrapper d-flex flex-column align-items-center">
-                <img class="close-button" @click="toggleModalIsOpen" src="@/assets/images/icons/svg/base_modal_close.svg">
-                <img class="profile-icon" src="@/assets/images/icons/svg/profile.svg">
-                <p> Lorem ipsum </p>
-                <div class="patient-info">
-                    <p><span >Telefon komórkowy:</span> as </p>
-                    <p><span>PESEL:</span> 00000000000</p>
-                    <p><span>Przyjmowane leki:</span> lorem ipsum, lorem ipsum, lorem ipsum</p>
-                    <p><span>Alergie:</span> lorem ipsum</p>
-                </div>
-            </div>
-        </dialog>    
-    </div>
+    <patient-card-modal @close-patient-card-modal="patientCardModalIsOpen = false" v-if="patientCardModalData && patientCardModalIsOpen" :data="patientCardModalData"></patient-card-modal>
 </template>
 
 <script>
@@ -86,23 +74,28 @@ import axios from 'axios'
 import { mapGetters } from 'vuex'
 import { computed, ref } from "vue";
 import jwt_decode from "jwt-decode";
+import PatientCardModal from '@/components/PatientCardModal.vue';
 
 export default {
     data(){
         return {
-            modalIsOpen: false,
             patients: [],
             fields: ['pacjent', 'akcje'],
-            activePatient: null
+            activePatient: null,
+            patientInfo: [],
+            patientCardModalData: [],
+            patientCardModalIsOpen: false,
+            
         }
     },
+    components: {
+        PatientCardModal,
+    },
     methods: {
-        toggleModalIsOpen() {
-            // const activePatient = await axios.get(`Patients/${id}`)
-            // console.log(activePatient.data.data)
-            // await this.$store.dispatch('activePatient', activePatient.data.data);
-            return this.modalIsOpen = !this.modalIsOpen;
-        },
+        openPatientCardModal(patientInfo) {
+            this.patientCardModalData = patientInfo;
+            this.patientCardModalIsOpen = true;
+        }
     },
     computed: {
         ...mapGetters(['user', 'isLoggedIn', 'activePatient'])
@@ -145,81 +138,11 @@ export default {
         //console.log(visitInfo);
         this.patients = patientInfo.data.data;
         console.log(patientInfo)
-    }
+    },
 }
 </script>
 
 <style lang="scss" scoped>
-    div {
-        div.overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
-            width: 100%;
-            z-index: 0;
-            background-color: rgba(0, 0, 0, 0.35);
-        }
-        
-        dialog {
-            border: 0;
-            padding: 0;
-            position: fixed;
-            left: 50%;
-            margin: 0;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0);
-
-            div.wrapper {
-                border: 1.5px solid $secondary;
-                background-color: $base-modal-background;
-                border-radius: 10px;
-                filter: drop-shadow(0 0 30px #999);
-                padding: 30px;
-                position: relative;
-                max-width: 500px;
-
-                img {
-                    &.profile-icon {
-                        width: 70px;
-                    }
-                    &.close-button {
-                        width: 30px;
-                        position: absolute;
-                        right: 30px;
-                        top: 30px;
-                        cursor: pointer;
-                    }
-                }
-
-                p {
-                    font-weight: 700;
-                    font-size: 32px;
-                    line-height: 40px;
-                    text-align: center;
-                    letter-spacing: -0.02em;
-                    color: #2E3646;
-                    margin-top: 24px;
-                }
-
-                div.patient-info {
-                    margin-top: 0px;
-
-                    p {
-                        text-align: left;
-                        font-size: 20px;
-                        color: $secondary;
-                        font-weight: 400;
-                        margin: 0;
-                        span {
-                            font-weight: 600;
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     div.wrapper {
     margin: 40px 0;
