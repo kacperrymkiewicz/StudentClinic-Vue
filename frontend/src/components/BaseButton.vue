@@ -27,7 +27,7 @@ export default {
             return {
                 'button-dark': this.type === 'dark',
                 'button-light': this.type === 'light',
-                'button-inaccessible' : this.type === 'inaccesible',
+                'button-inaccessible' : this.type === 'inaccessible',
             };
         },
     },

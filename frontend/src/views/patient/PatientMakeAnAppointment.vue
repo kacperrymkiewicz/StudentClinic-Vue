@@ -26,7 +26,7 @@
                                             <select class="form-select" aria-label="Wybierz specjalistę" id="doctor" v-model="doctor" disabled v-if="specialization == 'Nie wybrano'">
                                                 <option selected disabled hidden>Nie wybrano</option>
                                             </select>
-                                            <select class="form-select" aria-label="Wybierz specjalistę" id="doctor" v-model="doctor" v-else>
+                                            <select class="form-select" aria-label="Wybierz specjalistę" id="doctor" v-model="doctor" @change="getAvailableDates()" v-else>
                                                 <option selected disabled hidden>Nie wybrano</option>
                                                 <option v-for="doctor in doctor_data" :key=doctor.id v-bind:value="{ id: doctor.id, firstname: doctor.user.firstName, lastname: doctor.user.lastName }">
                                                     {{ doctor.user.firstName }} {{ doctor.user.lastName }}
@@ -43,7 +43,7 @@
                                                         <rect width="30" height="30" rx="15" transform="matrix(-1 0 0 1 30 0.5)" fill="black" fill-opacity="0.2"/>
                                                         <path d="M17.5 8L10.8839 14.6161C10.3957 15.1043 10.3957 15.8957 10.8839 16.3839L17.5 23" stroke="#5F6D7E" stroke-width="1.5" stroke-linecap="round"/>
                                                     </svg>
-                                                    <VueDatePicker v-model="date" input-class-name="datepicker-input" :format="format" locale="pl" :disabled-week-days="[6, 0]" :enable-time-picker="false" select-text="Wybierz" cancel-text="Anuluj" hide-input-icon auto-apply :min-date="new Date()" :clearable="false">{{ date }}</VueDatePicker>
+                                                    <VueDatePicker v-model="date" @update:model-value="getAvailableDates()" input-class-name="datepicker-input" :format="format" locale="pl" :disabled-week-days="[6, 0]" :enable-time-picker="false" select-text="Wybierz" cancel-text="Anuluj" hide-input-icon auto-apply :min-date="new Date()" :clearable="false">{{ date }}</VueDatePicker>
                                                     <svg @click="nextDay()" width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                         <rect y="0.5" width="30" height="30" rx="15" fill="white"/>
                                                         <rect y="0.5" width="30" height="30" rx="15" fill="black" fill-opacity="0.2"/>
@@ -51,11 +51,25 @@
                                                     </svg>
                                                 </div>
                                             </div>
-                                            <base-button class="base-button" type="light">09:00 - 09:30</base-button>
-                                            <base-button type="light">09:30 - 10:00</base-button>
-                                            <base-button type="light">10:00 - 10:30</base-button>
-                                            <base-button type="light">10:30 - 11:00</base-button>
-                                            <a href="#">Pokaż więcej godzin</a>
+                                            <div class="appointment-dates d-flex flex-column">
+                                                <div v-if="doctor == 'Nie wybrano'" style="filter: blur(3px)" class="d-flex flex-column">
+                                                    <base-button type='inaccessible' style="text-decoration: none;">09:00 - 09:30</base-button>
+                                                    <base-button type='inaccessible' style="text-decoration: none;">09:30 - 10:00</base-button>
+                                                    <base-button type='inaccessible' style="text-decoration: none;">10:00 - 10:30</base-button>
+                                                    <base-button type='inaccessible' style="text-decoration: none;">10:30 - 11:00</base-button>
+                                                    <!-- <a class="dates-button">Pokaż więcej godzin</a>      -->
+                                                </div>
+                                                <template v-else>
+                                                    <template v-if="showLess">
+                                                    <base-button v-for="date in available_dates.slice(0, 4)" @click="selectDate({ id: date.id, starttime: date.startTime, endtime: date.endTime, status: date.status })" :class="{ 'active': date.id === this.slot_id }" :key="date.id" :type="date.status ? 'light' : 'inaccessible'">{{ date.startTime.slice(0, 5) }} - {{ date.endTime.slice(0, 5) }}</base-button>
+                                                    <a @click="showLess=false" class="dates-button">Pokaż więcej godzin</a>
+                                                    </template>
+                                                    <template v-else>
+                                                        <base-button v-for="date in available_dates" @click="selectDate({ id: date.id, starttime: date.startTime, endtime: date.endTime, status: date.status })" :class="{ 'active': date.id === this.slot_id }" :key="date.id" :type="date.status ? 'light' : 'inaccessible'">{{ date.startTime.slice(0, 5) }} - {{ date.endTime.slice(0, 5) }}</base-button>
+                                                        <a @click="showLess=true" class="dates-button">Pokaż mniej godzin</a>
+                                                    </template>
+                                                </template>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -67,13 +81,13 @@
                                         <p>Twój lekarz:</p>
                                         <p v-if="doctor != 'Nie wybrano'"> {{ doctor.firstname }} {{ doctor.lastname }}</p>
                                         <p v-if="specialization != 'Nie wybrano'"> {{ specialization }}</p>
-                                        <p v-if="doctor != 'Nie wybrano'"><span>Termin:</span> {{ date.toLocaleDateString('pl', { weekday:"long", year:"numeric", month:"long", day:"numeric"}) }} </p>
+                                        <p v-if="doctor != 'Nie wybrano'"><span>Termin:</span> {{ date.toLocaleDateString('pl', { weekday:"long", year:"numeric", month:"long", day:"numeric"}) }}<template v-if="slot != null">, {{ slot.starttime.slice(0, 5) }}</template></p>
                                         <p v-else><span>Termin: </span> Wybierz termin</p>
                                         <div class="d-flex">
                                             <p>Koszt wizyty:</p>
                                             <span> {{ price }} zł</span>
                                         </div>
-                                        <base-button type="dark" :has-icon="true">Umów wizytę</base-button>
+                                        <base-button @click="submitForm()" type="dark" :has-icon="true">Umów wizytę</base-button>
                                     </div>
                                 </div>
                             </div>
@@ -90,7 +104,7 @@ import { mapGetters } from 'vuex';
 import axios from 'axios'
 import jwt_decode from "jwt-decode";
 import VueDatePicker from '@vuepic/vue-datepicker';
-import '@vuepic/vue-datepicker/dist/main.css'
+import '@vuepic/vue-datepicker/dist/main.css';
 
 export default {
     components: { VueDatePicker },
@@ -99,16 +113,41 @@ export default {
             doctor: "Nie wybrano",
             specialization: "Nie wybrano",
             termin: 'Nie wybrano',
+            showLess: true,
             price: 100,
             specialization_data: [],
-            doctor_data: {},
-            date: new Date()//.toLocaleDateString('pl', { weekday:"long", year:"numeric", month:"short", day:"numeric"}),
+            doctor_data: [],
+            available_dates: [],
+            date: new Date(),//.toLocaleDateString('pl', { weekday:"long", year:"numeric", month:"short", day:"numeric"}),
+            slot: null,
+            slot_id: -1
         }
     },
     methods: {
         async onSpecializationChange(event) {
             await axios.get('Doctors/' + event.target.value).
                 then(response => (this.doctor_data = response.data.data));
+        },
+
+        async getAvailableDates() {
+            if(this.doctor != "Nie wybrano") {
+                this.slot_id = -1;
+                this.slot = null;
+                const parameters = { doctorId: this.doctor.id, date: this.date.toLocaleDateString("sv") };
+                await axios.post('Visits/Slots', parameters).
+                    then(response => (this.available_dates = response.data.data));
+            } 
+        },
+
+        async submitForm(){
+            const response = await axios.post('Visits', {
+                patientId: 1,
+                doctorId: this.doctor.id,
+                date: this.date.toLocaleDateString("sv"),
+                slotId: this.slot.id,
+            });
+
+            console.log(response);
         },
 
         nextDay() {
@@ -118,16 +157,25 @@ export default {
             else {
                 this.date = new Date(this.date.setDate(this.date.getDate()+1));
             }
+            this.getAvailableDates();
         },
 
         previousDay() {
             if(!(this.date < new Date())) {
                 if(this.date.getDay() == 1) {
-                this.date = new Date(this.date.setDate(this.date.getDate()-3));
+                    this.date = new Date(this.date.setDate(this.date.getDate()-3));
                 }
                 else {
                     this.date = new Date(this.date.setDate(this.date.getDate()-1));
                 }
+            }
+            this.getAvailableDates();
+        },
+
+        selectDate(object) {
+            if(object.status) {
+                this.slot = object;
+                this.slot_id = object.id;
             }
         },
 
@@ -141,8 +189,6 @@ export default {
     },
 
     async created(){
-
-
         const token = localStorage.getItem('token');
         const token_decoded = jwt_decode(token);
 
@@ -225,7 +271,7 @@ div.appointment-container {
                 }
             }
             .base-button {
-                margin: 10px 0;
+                margin: 10px;
             }
 
             a {
@@ -235,6 +281,42 @@ div.appointment-container {
                 font-size: 15px;
             }
 
+        }
+
+        .appointment-dates {
+            height: 305px;
+            overflow-y: auto;
+            .dates-button {
+                text-decoration: underline;
+                cursor: pointer;
+                user-select: none;
+            }
+
+            &::-webkit-scrollbar {
+                width: 7px;
+                height: 7px;
+                left:-100px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background-color: white;
+                margin-left: 5px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: #5f6d7e;
+                border-radius: 8px;
+            }
+
+            &::-webkit-scrollbar-thumb:hover {
+                background-color: rgba(12, 229, 207, 1);
+            }
+
+            button.active {
+                background-color: rgb(48, 54, 69);
+                border-color: rgb(48, 54, 69);
+                color: white;
+            }
         }
         .form-check {
             input {
@@ -303,12 +385,14 @@ div.appointment-container {
 
             img {
                 width: 90px;
+                user-select: none;
             }
 
             p {
                 span {
                     font-weight: 600;
                 }
+                user-select: none;
             }
 
             div {
