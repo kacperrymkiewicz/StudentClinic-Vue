@@ -65,14 +65,16 @@ export default {
     computed: {
         ...mapGetters['user'],
         doctorId(){
+            console.log(this.doctorIdProp);
             return this.doctorIdProp;
+            
         }
     },
     methods: {
         submitForm(){
             axios.post('Doctors/Prescriptions', {
                 patientId: this.data.id,
-                doctorId: 1,
+                doctorId: this.doctorId,
                 drug: this.drug,
                 dosage: this.dosage,
                 prescriptionCode: '1222',

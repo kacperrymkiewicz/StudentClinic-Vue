@@ -133,7 +133,7 @@ export default {
     async created(){
         const token = localStorage.getItem('token');
         const token_decoded = jwt_decode(token);
-        const response = await axios.get(`Users/${token_decoded.nameid}`);
+        const response = await axios.get(`Users/${token_decoded.roleId}`);
         await this.$store.dispatch('user', response.data.data);
     },
     async mounted(){
