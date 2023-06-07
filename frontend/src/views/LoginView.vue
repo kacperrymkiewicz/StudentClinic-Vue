@@ -15,7 +15,7 @@
                         <input type="password" class="form-control" id="password" v-model="password">
                     </div>
                     <p v-if="error"> {{ error }} </p>
-                    <base-button type="dark" :has-icon="true" @click="validateLogin">Zaloguj się</base-button>
+                    <base-button type="dark" :has-icon="true">Zaloguj się</base-button>
                     <p>Nie masz konta? <router-link to="/rejestracja">Zarejestruj się</router-link></p>
                 </form>
             </div>
@@ -50,18 +50,26 @@ export default {
             .post('/Auth/Login', {
                 emailAddress: this.emailAddress,
                 password: this.password,
-            })
+            }) 
             .then(response => {
                 localStorage.setItem('token', response.data.data);
                 const responseDecoded = jwt_decode(response.data.data);
-                this.isLoggedIn = true;
                 this.accountType = responseDecoded.role;
+            })
+            .then(() => {
+                this.$store.dispatch('user');
+            })
+            .then(() => {
+                this.isLoggedIn = true;
+            })
+            .then(() => {
+                this.redirectAfterSuccessfullLogin()
             })
             .catch(() => {
                 this.error = "Nieprawidłowe dane logowania"
             })
         },
-        async validateLogin(){
+        redirectAfterSuccessfullLogin(){
             if(this.isLoggedIn && this.accountType == 'Patient'){
                 this.$router.replace({name: 'home'});
             }
