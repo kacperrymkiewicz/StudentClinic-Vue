@@ -6,9 +6,10 @@ export default {
     state(){
         return {
             user: null,
+            patient: null,
+            doctor: null,
             accountType: null,
             isLoggedIn: false,
-            patient: null,
             patientsList: [],
             visitsList: [],
             activePatient: null,

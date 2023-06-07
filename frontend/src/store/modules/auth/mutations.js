@@ -5,6 +5,9 @@ export default {
     patient (state, patient) {
         state.patient = patient;
     },
+    doctor(state, doctor) {
+        state.doctor = doctor;
+    },
     patientsList (state, patients) {
         state.patientsList = patients
     },

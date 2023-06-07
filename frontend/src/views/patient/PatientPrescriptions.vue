@@ -6,78 +6,62 @@
                     <breadcrumbs is-patient>
                         <router-link to="/recepty">Recepty</router-link>
                     </breadcrumbs>
-                    <hello-message icon-name="receipt"><template v-slot:info>Oto lista Twoich recept wraz z zaleceniami lekarskimi</template></hello-message>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <base-card class="base-card" @click="toggleModalIsOpen">
-                                <template v-slot:title>Recepta z dnia {{ date }}</template>
-                                <template v-slot:content>Lekarz: {{ doctor_name }} ({{ doctor_specialization }})</template>
-                            </base-card>
-                        </div>
-                        <div class="col-md-6">
-                            <base-card class="base-card" @click="toggleModalIsOpen">
-                                <template v-slot:title>Recepta z dnia {{ date }}</template>
-                                <template v-slot:content>Lekarz: {{ doctor_name }} ({{ doctor_specialization }})</template>
+                    <hello-message v-if='user' :name="user.firstName" icon-name="receipt"><template v-slot:info>Oto lista Twoich recept wraz z zaleceniami lekarskimi</template></hello-message>
+                    <div class="row" v-if="patient.prescriptions.length > 0">
+                        <div class="col-md-6" v-for="prescription in patient.prescriptions" :key="prescription" @click="openPrescriptionModal(prescription)">
+                            <base-card v-if='prescription' class="base-card">
+                                <template v-slot:title>Recepta z dnia {{ new Date(prescription.date).toLocaleDateString('pl', { year:"numeric", month:"long", day:"numeric"}) }}</template>
+                                <template v-slot:content>Wystawca: {{ prescription.doctor.user.firstName }} {{ prescription.doctor.user.lastName }} ({{ prescription.doctor.specialization }})</template>
                             </base-card>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <base-card class="base-card" @click="toggleModalIsOpen">
-                                <template v-slot:title>Recepta z dnia {{ date }}</template>
-                                <template v-slot:content>Lekarz: {{ doctor_name }} ({{ doctor_specialization }})</template>
-                            </base-card>
-                        </div>
-                        <div class="col-md-6">
-                            <base-card class="base-card" @click="toggleModalIsOpen">
-                                <template v-slot:title>Recepta z dnia {{ date }}</template>
-                                <template v-slot:content>Lekarz: {{ doctor_name }} ({{ doctor_specialization }})</template>
-                            </base-card>
-                        </div>
+                    <div class='no-results' v-else>
+                        <p>Nie masz wystawionych recept</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <div v-if="modalIsOpen">
-        <base-modal @close="toggleModalIsOpen">
-            <template v-slot:title>Recepta z dnia {{ this.date }}</template>
-            <template v-slot:subtitle>{{ drug_name + " " + drug_size}}</template>
-            <template v-slot:content>
-                <p><span>Odpłatność: </span> {{ this.fee }}</p>
-                <p><span>Dawkowanie: </span> {{ this.dosage }}</p>
-                <p><span>Kod recepty: </span> {{ this.receipt_code }}</p>
-                <p><span>Wystawca: </span> {{ this.issuer }}</p>
-                <p><span>Zalecenia: </span> {{ this.recommendations }}</p>
-            </template>
-        </base-modal>
-    </div>
+    <prescription-modal v-if="prescriptionModalIsOpen" :data="prescriptionModalData" @close-prescription-modal="prescriptionModalIsOpen = false"></prescription-modal>
 </template>
 
 <script>
-    export default {
-        data(){
-            return {
-                date: new Date().toISOString().slice(0, 10),
-                time: "9:30",
-                doctor_name: "Lorem Ipsum",
-                doctor_specialization: "lorem",
-                drug_name: "Lorem Ipsum",
-                drug_size: "0.5g",
-                fee: "100%",
-                dosage: "Lorem ipsum",
-                receipt_code: "Lorem ipsum",
-                issuer: "Lorem ipsum",
-                recommendations: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam auctor.",
-                modalIsOpen: false,
-            }
-        },
-        methods: {
-            toggleModalIsOpen() {
-                return this.modalIsOpen = !this.modalIsOpen;
-            }
+import { mapGetters } from 'vuex';
+import axios from 'axios';
+import jwt_decode from "jwt-decode";
+import PrescriptionModal from "@/components/PrescriptionModal.vue"
+
+export default {
+    data(){
+        return {
+            prescriptionModalData: [],
+            prescriptionModalIsOpen: false,
         }
-    }
+    },
+    components: {
+        PrescriptionModal
+    },
+    methods: {
+        openPrescriptionModal(prescription) {
+            this.prescriptionModalData = prescription;
+            return this.prescriptionModalIsOpen = true;
+        }
+    },
+    computed: {
+        ...mapGetters(['user', 'patient'])
+    },
+    async created(){
+      const token = localStorage.getItem('token');
+      const tokenDecoded = jwt_decode(token);
+      const getUserInfo = await axios.get(`Users/${tokenDecoded.nameid}`); // wymagane do działania nawigacji
+      const getPatientInfo = await axios.get(`Patients/${tokenDecoded.nameid}`);
+      
+      await this.$store.dispatch('user', getUserInfo.data.data);
+      await this.$store.dispatch('patient', getPatientInfo.data.data);
+
+      console.log(getPatientInfo)
+    },
+}
 </script>
 
 <style lang="scss" scoped>
@@ -85,6 +69,14 @@ div.container {
     div.base-card {
         padding: 0 20px;
         margin: 30px 0;
+    }
+}
+
+div {
+    &.no-results {
+        p {
+            font-size: 30px;
+        }
     }
 }
         

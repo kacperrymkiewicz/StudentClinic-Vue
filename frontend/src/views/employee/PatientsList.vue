@@ -34,7 +34,7 @@
                                             <span v-else>
                                                 <span >
                                                     <button @click="openPatientCardModal(patient)" class="blue-button">Karta pacjenta</button>
-                                                    <button @click="openWriteAPrescriptionModal(patient)" class="teal-button">Wypisz receptę</button>
+                                                    <button @click="openWritePrescriptionModal(patient)" class="teal-button">Wypisz receptę</button>
                                                 </span>
                                             </span> 
                                         </td>
@@ -64,7 +64,7 @@
         </div>
     </section>
     <patient-card-modal @close-patient-card-modal="patientCardModalIsOpen = false" v-if="patientCardModalData && patientCardModalIsOpen" :data="patientCardModalData"></patient-card-modal>
-    <write-a-prescription-modal @close-write-a-prescription-modal="writeAPrescriptionModalIsOpen = false" v-if="writeAPrescriptionModalIsOpen" :data="writeAPrescriptionModalData"></write-a-prescription-modal>
+    <write-prescription-modal @close-write-prescription-modal="writePrescriptionModalIsOpen = false" v-if="writePrescriptionModalIsOpen" :data="writePrescriptionModalData" :doctor-id-prop="doctor.id"></write-prescription-modal>
 </template>
 
 <script>
@@ -73,36 +73,36 @@ import { mapGetters } from 'vuex'
 import { computed, ref } from "vue";
 import jwt_decode from "jwt-decode";
 import PatientCardModal from '@/components/PatientCardModal.vue';
-import WriteAPrescriptionModal from '@/components/WriteAPrescriptionModal.vue';
+import WritePrescriptionModal from '@/components/WritePrescriptionModal.vue';
 
 export default {
     data(){
         return {
             patients: [],
             fields: ['pacjent', 'akcje'],
-            patientInfo: [],
+            //patientInfo: [],
             patientCardModalData: [],
             patientCardModalIsOpen: false,
-            writeAPrescriptionModalData: [],
-            writeAPrescriptionModalIsOpen: false,
+            writePrescriptionModalData: [],
+            writePrescriptionModalIsOpen: false,
         }
     },
     components: {
         PatientCardModal,
-        WriteAPrescriptionModal
+        WritePrescriptionModal
     },
     methods: {
         openPatientCardModal(patientInfo) {
             this.patientCardModalData = patientInfo;
             this.patientCardModalIsOpen = true;
         },
-        openWriteAPrescriptionModal(patientInfo){
-            this.writeAPrescriptionModalData = patientInfo;
-            this.writeAPrescriptionModalIsOpen = true;
+        openWritePrescriptionModal(patientInfo){
+            this.writePrescriptionModalData = patientInfo;
+            this.writePrescriptionModalIsOpen = true;
         }
     },
     computed: {
-        ...mapGetters(['user', 'isLoggedIn'])
+        ...mapGetters(['user', 'doctor', 'isLoggedIn'])
     },
 
     setup(props) {
@@ -132,14 +132,19 @@ export default {
     },
     async created(){
         const token = localStorage.getItem('token');
-        const token_decoded = jwt_decode(token);
-        const response = await axios.get(`Users/${token_decoded.nameid}`);
-        await this.$store.dispatch('user', response.data.data);
+        const tokenDecoded = jwt_decode(token);
+        console.log(tokenDecoded)
+        const responseUserId = await axios.get(`Users/${tokenDecoded.nameid}`);
+        const responseDoctorId = await axios.get(`Doctors/${tokenDecoded.roleId}`);
+        console.log(responseUserId)
+        await this.$store.dispatch('user', responseUserId.data.data);
+        await this.$store.dispatch('doctor', responseDoctorId.data.data);
+    
     },
     async mounted(){
         const patientInfo = await axios.get('Patients');
         this.patients = patientInfo.data.data;
-        console.log(patientInfo)
+        console.log(patientInfo.data.data)
     },
 }
 </script>

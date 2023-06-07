@@ -1,9 +1,12 @@
 export default {
     user: state => {
         return state.user;
-    },
+    },  
     patient: state => {
         return state.patient;
+    },
+    doctor: state => {
+        return state.doctor;
     },
     patientsList: state => {
         return state.patientsList;

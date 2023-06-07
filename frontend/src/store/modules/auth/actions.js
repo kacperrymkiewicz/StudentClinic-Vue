@@ -6,6 +6,9 @@ export default {
     patient(context, user) {
         context.commit('patient', user)
     },
+    doctor(context, doctor) {
+        context.commit('doctor', doctor)
+    },
     // panel lekarza > lista pacjentów
     patientsList(context, patients){
         context.commit('patientsList', patients)

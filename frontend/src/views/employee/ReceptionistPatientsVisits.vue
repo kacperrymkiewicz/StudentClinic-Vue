@@ -55,8 +55,8 @@
                                             </span>
                                             <span v-else>
                                                 <span>
-                                                    <button :class="['teal-button', {'disabled-teal-button': visit.status == 'Finished' || visit.status == 'Cancelled' || visit.status == 'Confirmed'}]">Potwierdź</button>
-                                                    <button :class="['red-button', {'disabled-red-button': visit.status == 'Finished' || visit.status == 'Cancelled'}]">Odwołaj</button>
+                                                    <button @click="confirmVisit(visit.id)" :class="['teal-button', {'disabled-teal-button': visit.status == 'Finished' || visit.status == 'Canceled' || visit.status == 'Confirmed'}]">Potwierdź</button>
+                                                    <button @click="cancelVisit(visit.id)" :class="['red-button', {'disabled-red-button': visit.status == 'Finished' || visit.status == 'Canceled'}]">Odwołaj</button>
                                                 </span>
                                             </span> 
                                         </td>
@@ -111,6 +111,12 @@ export default {
     },
     
     methods: {
+        cancelVisit(id){
+            axios.get(`Visits/${id}/Cancel`);
+        },
+        confirmVisit(id){
+            axios.get(`Visits/${id}/Confirm`)
+        },
         setSpecialization(specialization){
             switch(specialization){
                 case 'oculist':
@@ -125,7 +131,7 @@ export default {
                     return "Potwierdzona"
                 case 'Unconfirmed':
                     return "Niepotwierdzona"
-                case 'Cancelled':
+                case 'Canceled':
                     return "Odwołana"
                 case 'Finished':
                     return "Zakończona"
@@ -139,7 +145,7 @@ export default {
                     return "#209420";
                 case 'Unconfirmed':
                     return "#F8EE12"
-                case 'Cancelled':
+                case 'Canceled':
                     return "#F84912";
                 case 'Finished':
                     return "#205594"
