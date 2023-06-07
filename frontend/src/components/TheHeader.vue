@@ -57,7 +57,9 @@
                 <a href="#" @click="logout">
                   <li>
                     <span>
-                      <img src="@/assets/images/icons/svg/drop_down_menu_hexagon.svg">
+                      <svg width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1.94 5.91249L7.94 2.16249C8.58854 1.75716 9.41146 1.75716 10.06 2.16249L16.06 5.91249C16.6448 6.27797 17 6.91891 17 7.60849V13.3915C17 14.0811 16.6448 14.722 16.06 15.0875L10.06 18.8375C9.41146 19.2428 8.58854 19.2428 7.94 18.8375L1.94 15.0875C1.35524 14.722 1 14.0811 1 13.3915V7.60849C1 6.91891 1.35524 6.27797 1.94 5.91249Z" stroke="#5F6D7E" stroke-width="2" stroke-linecap="round"/>
+                      </svg>
                     </span>
                     Wyloguj
                   </li>
@@ -104,9 +106,14 @@
 <script>
 import router from '@/router';
 import { mapGetters } from 'vuex';
-
+import { useToast } from "vue-toastification";
 
 export default {
+  setup() {
+        const toast = useToast();
+        return { toast }
+    },
+
   data(){
     return {
       role: "Pacjent",
@@ -147,6 +154,10 @@ export default {
       this.isDropDownMenuOpen = !this.isDropDownMenuOpen;
     },
     logout(){
+      this.toast("Wylogowano pomyślnie", {
+        timeout: 2500,
+        position: "bottom-right",
+      });
       localStorage.removeItem('token');
       this.$store.dispatch('user', null);
       router.push("/logowanie");

@@ -102,7 +102,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import axios from 'axios'
-import jwt_decode from "jwt-decode";
+// import jwt_decode from "jwt-decode";
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 
@@ -189,14 +189,14 @@ export default {
     },
 
     async created(){
-        const token = localStorage.getItem('token');
-        const token_decoded = jwt_decode(token);
+        // const token = localStorage.getItem('token');
+        // const token_decoded = jwt_decode(token);
 
-        const response = await axios.get(`Patients`);
-        //const response2 = await axios.get(`User/${token_decoded.nameid}`);
+        // const response = await axios.get(`Patients`);
+        // //const response2 = await axios.get(`User/${token_decoded.nameid}`);
 
-        await this.$store.dispatch('patient', response.data.data[token_decoded.nameid-1])
-        await this.$store.dispatch('user', response.data.data[token_decoded.nameid-1].user);
+        // await this.$store.dispatch('patient', response.data.data[token_decoded.nameid-1])
+        // await this.$store.dispatch('user', response.data.data[token_decoded.nameid-1].user);
     },
 
     async mounted(){

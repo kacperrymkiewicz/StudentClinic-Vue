@@ -6,6 +6,8 @@ import App from "./App.vue";
 import router from "./router";
 import store from "@/store/index.js";
 import './axios.js';
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
 import BaseButton from "@/components/BaseButton.vue";
 import HelloMessage from "@/components/HelloMessage.vue";
@@ -20,9 +22,15 @@ const capitalizeMixin = {
     }
 }
 
+const options = {
+    transition: "Vue-Toastification__slideBlurred",
+    maxToasts: 3,  
+};
+
 createApp(App)
 .use(store)
 .use(router)
+.use(Toast, options)
 .mixin(capitalizeMixin)
 .component('base-button', BaseButton)
 .component('hello-message', HelloMessage)
