@@ -31,8 +31,8 @@
               <router-link class="nav-link" active-class="active-logged-in" to="/umow-wizyte">Umów wizytę</router-link>
             </li>
           </ul>
-          
-          <div class="profile d-flex align-items-center" @click="openDropDownMenu">
+          <div class="overlay" v-if="isDropDownMenuOpen" @click="toggleDropDownMenu"></div>
+          <div class="profile d-flex align-items-center" @click="toggleDropDownMenu">
             <svg class="profile-icon" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="40" height="40" rx="20" fill="#5F6D7E"/>
               <path d="M20 21.3334C21.8409 21.3334 23.3333 19.841 23.3333 18C23.3333 16.1591 21.8409 14.6667 20 14.6667C18.159 14.6667 16.6666 16.1591 16.6666 18C16.6666 19.841 18.159 21.3334 20 21.3334ZM20 21.3334C17.0544 21.3334 14.6666 23.1242 14.6666 25.3334M20 21.3334C22.9455 21.3334 25.3333 23.1242 25.3333 25.3334" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
@@ -43,8 +43,8 @@
             </div>
             <img class="profile-arrow" src="@/assets/images/icons/svg/drop_down_menu_arrow_down.svg">
             <div class="drop-down-menu" v-if="isDropDownMenuOpen">
-              <ul v-if="user.accountType=='Patient'">
-                <router-link to="/profil">
+              <ul>
+                <router-link to="/profil" v-if="user.accountType=='Patient'">
                   <li>
                     <span>
                       <svg width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -54,16 +54,6 @@
                     Mój profil
                   </li>
                 </router-link>
-                <a href="#" @click="logout">
-                  <li>
-                    <span>
-                      <img src="@/assets/images/icons/svg/drop_down_menu_hexagon.svg">
-                    </span>
-                    Wyloguj
-                  </li>
-                </a>
-              </ul>
-              <ul v-else>
                 <a href="#" @click="logout">
                   <li>
                     <span>
@@ -147,13 +137,10 @@ export default {
         default:
           return '';
       }
-      
-      
     },
-
   },
   methods: {
-    openDropDownMenu(){
+    toggleDropDownMenu(){
       this.isDropDownMenuOpen = !this.isDropDownMenuOpen;
     },
     logout(){
@@ -167,6 +154,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+div.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 1;
+}
 .nav-logo {
   width: 50px;
   margin-right: 20px;
