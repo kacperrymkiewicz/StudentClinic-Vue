@@ -7,7 +7,7 @@
                         <router-link to="/wizyty">Wizyty</router-link>
                     </breadcrumbs>
                     <hello-message v-if="user" :name="user.firstName" icon-name="reminder">
-                        <template v-slot:info>Oto lista zarezerwowanych wizyt przez pacjentów</template>
+                        <template v-slot:info>Oto lista umówionych wizyt przez pacjentów</template>
                     </hello-message>
                     <div class="wrapper d-flex flex-column">
                         <div class="search">
@@ -22,7 +22,7 @@
                                         <th v-for="field in fields" :key='field'> {{ capitalizeFirstLetter(field) }} </th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody v-if="visitsList.length > 0">
                                     <tr v-for="visit in visitsList" :key="visit.id">
                                         <td v-for="field in fields" :key='field'>
                                             <span v-if="field == 'data'">
@@ -60,6 +60,11 @@
                                                 </span>
                                             </span> 
                                         </td>
+                                    </tr>
+                                </tbody>
+                                <tbody class="no-results" v-else>
+                                    <tr>
+                                        <td colspan="6">Brak umówionych wizyt</td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
@@ -329,6 +334,14 @@ div.wrapper {
                                     background-color: $button-red-hover;
                                 }
                             }       
+                        }
+                    }
+                }
+
+                &.no-results {
+                    tr {
+                        td {
+                            text-align: center;
                         }
                     }
                 }

@@ -20,7 +20,7 @@
                                         <th v-for="field in fields" :key='field'> {{ capitalizeFirstLetter(field) }} </th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody v-if="patientVisitsList.length > 0">
                                     <tr v-for="visit in patientVisitsList" :key="visit.id">
                                         <td v-for="field in fields" :key='field'>
                                             <span v-if="field == 'data'">
@@ -49,6 +49,11 @@
                                                 </span>
                                             </span> 
                                         </td>
+                                    </tr>
+                                </tbody>
+                                <tbody class="no-results" v-else>
+                                    <tr>
+                                        <td colspan='5'>Brak umówionych wizyt</td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
@@ -286,6 +291,14 @@ export default {
                                     background-color: $button-red-hover;
                                 }
                             }       
+                        }
+                    } 
+                }
+                &.no-results {
+                    
+                    tr {
+                        td {
+                            text-align: center;
                         }
                     }
                 }
