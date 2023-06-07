@@ -21,8 +21,11 @@ export default {
     // panel pacjenta > lista wizyt
     patientVisitsList(context, patientVisits){
         context.commit('patientVisitsList', patientVisits)
-    }
-    // isLoggedIn(context, isLoggedIn) {
-    //     context.commit('isLoggedIn', isLoggedIn)
-    // },
+    },
+    isLoggedIn(context, isLoggedIn) {
+        context.commit('isLoggedIn', isLoggedIn)
+    },
+    accountType(context, type) {
+        context.commit('accountType', type)
+    },
 };

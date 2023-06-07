@@ -27,6 +27,8 @@
 <script>
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
+import { mapGetters } from 'vuex'
+// import store from "@/store"
 
 export default {
     name: "LoginView",
@@ -39,7 +41,9 @@ export default {
             accountType: null,
         }
     },
-
+    computed: {
+        ...mapGetters(['isLoggedIn', 'accountType'])
+    },
     methods: {    
         submitForm(){
             axios
@@ -49,16 +53,15 @@ export default {
             })
             .then(response => {
                 localStorage.setItem('token', response.data.data);
-                const response_decoded = jwt_decode(response.data.data);
+                const responseDecoded = jwt_decode(response.data.data);
                 this.isLoggedIn = true;
-                //this.$store.dispatch('isLoggedIn', response.data.data);
-                this.accountType = response_decoded.role;
+                this.accountType = responseDecoded.role;
             })
             .catch(() => {
                 this.error = "Nieprawidłowe dane logowania"
             })
         },
-        validateLogin(){
+        async validateLogin(){
             if(this.isLoggedIn && this.accountType == 'Patient'){
                 this.$router.replace({name: 'home'});
             }

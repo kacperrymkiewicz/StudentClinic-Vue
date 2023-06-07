@@ -7,7 +7,7 @@ export default {
         return {
             user: null,
             accountType: null,
-            //isLoggedIn: true,
+            isLoggedIn: false,
             patient: null,
             patientsList: [],
             visitsList: [],

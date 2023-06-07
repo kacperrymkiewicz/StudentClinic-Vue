@@ -16,8 +16,11 @@ export default {
     },
     patientVisitsList: state => {
         return state.patientVisitsList
-    }
-    // isLoggedIn: state => {
-    //     return state.isLoggedIn;
-    // }
+    },
+    isLoggedIn: state => {
+        return state.isLoggedIn;
+    },
+    accountType: state => {
+        return state.accountType;
+    },
 }
