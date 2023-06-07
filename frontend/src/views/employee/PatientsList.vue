@@ -64,7 +64,7 @@
         </div>
     </section>
     <patient-card-modal @close-patient-card-modal="patientCardModalIsOpen = false" v-if="patientCardModalData && patientCardModalIsOpen" :data="patientCardModalData"></patient-card-modal>
-    <write-prescription-modal @close-write-prescription-modal="writePrescriptionModalIsOpen = false" v-if="writePrescriptionModalIsOpen" :data="writePrescriptionModalData"></write-prescription-modal>
+    <write-prescription-modal @close-write-prescription-modal="writePrescriptionModalIsOpen = false" v-if="writePrescriptionModalIsOpen" :data="writePrescriptionModalData" :doctor-id-prop="user.id"></write-prescription-modal>
 </template>
 
 <script>
@@ -139,7 +139,7 @@ export default {
     async mounted(){
         const patientInfo = await axios.get('Patients');
         this.patients = patientInfo.data.data;
-        console.log(patientInfo)
+        console.log(patientInfo);
     },
 }
 </script>
