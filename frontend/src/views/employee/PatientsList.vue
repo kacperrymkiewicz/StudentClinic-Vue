@@ -64,7 +64,7 @@
         </div>
     </section>
     <patient-card-modal @close-patient-card-modal="patientCardModalIsOpen = false" v-if="patientCardModalData && patientCardModalIsOpen" :data="patientCardModalData"></patient-card-modal>
-    <write-prescription-modal @close-write-prescription-modal="writePrescriptionModalIsOpen = false" v-if="writePrescriptionModalIsOpen" :data="writePrescriptionModalData" :doctor-id-prop="user.id"></write-prescription-modal>
+    <write-prescription-modal @close-write-prescription-modal="writePrescriptionModalIsOpen = false" v-if="writePrescriptionModalIsOpen" :data="writePrescriptionModalData" :doctor-id-prop="doctor.id"></write-prescription-modal>
 </template>
 
 <script>
@@ -80,7 +80,7 @@ export default {
         return {
             patients: [],
             fields: ['pacjent', 'akcje'],
-            patientInfo: [],
+            //patientInfo: [],
             patientCardModalData: [],
             patientCardModalIsOpen: false,
             writePrescriptionModalData: [],
@@ -102,7 +102,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['user', 'isLoggedIn'])
+        ...mapGetters(['user', 'doctor', 'isLoggedIn'])
     },
 
     setup(props) {
@@ -132,14 +132,19 @@ export default {
     },
     async created(){
         const token = localStorage.getItem('token');
-        const token_decoded = jwt_decode(token);
-        const response = await axios.get(`Users/${token_decoded.roleId}`);
-        await this.$store.dispatch('user', response.data.data);
+        const tokenDecoded = jwt_decode(token);
+        console.log(tokenDecoded)
+        const responseUserId = await axios.get(`Users/${tokenDecoded.nameid}`);
+        const responseDoctorId = await axios.get(`Doctors/${tokenDecoded.roleId}`);
+        console.log(responseUserId)
+        await this.$store.dispatch('user', responseUserId.data.data);
+        await this.$store.dispatch('doctor', responseDoctorId.data.data);
+    
     },
     async mounted(){
         const patientInfo = await axios.get('Patients');
         this.patients = patientInfo.data.data;
-        console.log(patientInfo);
+        console.log(patientInfo.data.data)
     },
 }
 </script>

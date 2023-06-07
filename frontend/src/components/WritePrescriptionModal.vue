@@ -63,11 +63,13 @@ export default {
         }
     },
     computed: {
-        ...mapGetters['user'],
+        ...mapGetters['user', 'doctor'],
         doctorId(){
             console.log(this.doctorIdProp);
             return this.doctorIdProp;
-            
+        },
+        generatePrescriptionCode(){
+            return Math.floor(1000 + Math.random() * 9000).toString();
         }
     },
     methods: {
@@ -77,7 +79,7 @@ export default {
                 doctorId: this.doctorId,
                 drug: this.drug,
                 dosage: this.dosage,
-                prescriptionCode: '1222',
+                prescriptionCode: this.generatePrescriptionCode,
                 recommendations: this.recommendations
             })
             .then(response => {

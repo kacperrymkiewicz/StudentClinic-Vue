@@ -57,7 +57,7 @@ export default {
                 this.accountType = responseDecoded.role;
             })
             .then(() => {
-                this.$store.dispatch('user');
+                //this.$store.dispatch('user');
             })
             .then(() => {
                 this.isLoggedIn = true;
