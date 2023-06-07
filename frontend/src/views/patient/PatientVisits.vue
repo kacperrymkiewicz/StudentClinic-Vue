@@ -40,12 +40,11 @@
                                                 {{ capitalizeFirstLetter(visit.doctor.specialization) }}
                                             </span>
                                             <span v-else-if="field == 'status'">
-                                                <span class="status-icon" :style="{backgroundColor: setStatusIcon(visit.status)}"></span>
-                                                <span class="status-text">{{ capitalizeFirstLetter(setStatus(visit.status)) }}</span>
+                                                <visit-status :status="visit.status"></visit-status>
                                             </span>
                                             <span v-else>
                                                 <span>
-                                                    <button @click="updateStatus(visit.id)" :class="['red-button', {'disabled-red-button': visit.status == 'Finished' || visit.status == 'Cancelled'}]">Odwołaj</button>
+                                                    <button @click="cancelVisit(visit.id)" :class="['red-button', {'disabled-red-button': visit.status == 'Finished' || visit.status == 'Canceled'}]">Odwołaj</button>
                                                 </span>
                                             </span> 
                                         </td>
@@ -85,12 +84,17 @@
 import axios from 'axios'
 import jwt_decode from "jwt-decode";
 import { mapGetters } from 'vuex';
+import VisitStatus from "@/components/VisitStatus.vue"
 
 export default {
     data(){
         return {
-            fields: ['data', 'lekarz', 'specjalizacja', 'status', 'akcje']
+            fields: ['data', 'lekarz', 'specjalizacja', 'status', 'akcje'],
+            rerenderStatus: 0,
         }
+    },
+    components: {
+        VisitStatus
     },
     computed: {
         ...mapGetters(['user', 'patientVisitsList']),
@@ -108,6 +112,9 @@ export default {
         console.log(getPatientVisits);
     },
     methods: {
+        forceRerenderStatus(){
+            this.rerenderStatus += 1;
+        },
         setSpecialization(specialization){
             switch(specialization){
                 case 'oculist':
@@ -116,37 +123,9 @@ export default {
                     return "niezdefiniowana"
             } 
         },
-        setStatus(status){
-            switch(status){
-                case 'Confirmed':
-                    return "Potwierdzona"
-                case 'Unconfirmed':
-                    return "Niepotwierdzona"
-                case 'Cancelled':
-                    return "Odwołana"
-                case 'Finished':
-                    return "Zakończona"
-                default:
-                    return "niezdefiniowany"
-            }
-        },
-        setStatusIcon(status) {
-            switch(status) {
-                case 'Confirmed':
-                    return "#209420";
-                case 'Unconfirmed':
-                    return "#F8EE12"
-                case 'Cancelled':
-                    return "#F84912";
-                case 'Finished':
-                    return "#205594"
-                default:
-                    return "#FFF";
-            }
-        },
-        // updateStatus(id){
-            
-        // }
+        cancelVisit(id){
+            axios.get(`Visits/${id}/Cancel`);
+        }
     }
 }
 </script>

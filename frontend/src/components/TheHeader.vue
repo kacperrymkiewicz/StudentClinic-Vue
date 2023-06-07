@@ -43,7 +43,7 @@
             </div>
             <img class="profile-arrow" src="@/assets/images/icons/svg/drop_down_menu_arrow_down.svg">
             <div class="drop-down-menu" v-if="isDropDownMenuOpen">
-              <ul>
+              <ul v-if="user.accountType=='Patient'">
                 <router-link to="/profil">
                   <li>
                     <span>
@@ -54,6 +54,16 @@
                     Mój profil
                   </li>
                 </router-link>
+                <a href="#" @click="logout">
+                  <li>
+                    <span>
+                      <img src="@/assets/images/icons/svg/drop_down_menu_hexagon.svg">
+                    </span>
+                    Wyloguj
+                  </li>
+                </a>
+              </ul>
+              <ul v-else>
                 <a href="#" @click="logout">
                   <li>
                     <span>
@@ -256,8 +266,8 @@ nav {
           position: absolute;
           border-radius: 0px 0px 10px 10px;
           z-index: 1;
-          bottom: -165px;
-          left: -32px;
+          top: 67px;
+          right: -32px;
           border-bottom: 1px solid #D1D9E2;
           box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15);
 
