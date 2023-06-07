@@ -6,20 +6,22 @@
                     <breadcrumbs is-patient>
                         <router-link to="/profil">Mój profil</router-link>
                     </breadcrumbs>
-                    <hello-message :name="user.firstName" icon-name="clipboard"><template v-slot:info>Tutaj możesz zobaczyć swój profil pacjenta</template></hello-message>
+                    <hello-message :name="user.firstName" icon-name="clipboard">
+                        <template v-slot:info>Tutaj możesz zobaczyć swój profil pacjenta</template>
+                    </hello-message>
                     <div class="d-flex flex-column align-items-center"> 
                         <div class="col-md-12">  
                             <div class="wrapper d-flex flex-column">
                                 <div class="name d-flex flex-column align-items-center">
                                     <img src="@/assets/images/icons/svg/profile.svg">
-                                    <span v-if="user"> {{ capitalizeFirstLetter(user.firstName)  }} {{ capitalizeFirstLetter(patient.user.lastName)}}</span>
+                                    <span v-if="patient"> {{ capitalizeFirstLetter(patient.user.firstName)  }} {{ capitalizeFirstLetter(patient.user.lastName)}}</span>
                                 </div>
                                 <div class="buttons">
                                     <router-link to="/profil/edycja-profilu"><base-button type="dark">Edytuj profil</base-button></router-link>
                                     <router-link to="/profil/edycja-hasla"><base-button type="dark">Zmień hasło</base-button></router-link>
                                 </div>
                             </div>
-                            <div v-if="patient" class="row base-cards-outer-wrapper">
+                            <div class="row base-cards-outer-wrapper">
                                 <div class="col-lg-6">
                                     <base-card class="base-card" @click="toggleModalIsOpen">
                                         <template v-slot:title>Dane personalne</template>
@@ -27,9 +29,9 @@
                                             <p><span>Adres email: </span> {{ patient.user.emailAddress }}</p>
                                             <p><span>Telefon kontaktowy: </span> {{ patient.phoneNumber}} </p>
                                             <p><span>PESEL: </span> {{ patient.pesel }} </p>
-                                            <p><span>Miejscowość: </span>Sandomierz</p>
-                                            <p><span>Kod pocztowy: </span>00-000</p>
-                                            <p><span>Ulica i nr budynku: </span>Baczyńskiego 116</p>
+                                            <p><span>Miejscowość: </span> {{ patient.city }} </p>
+                                            <p><span>Kod pocztowy: </span> {{ patient.postalCode}}</p>
+                                            <p><span>Ulica i nr budynku: </span> {{ patient.streetAddress }}</p>
                                         </template>
                                     </base-card>
                                 </div>
@@ -45,7 +47,8 @@
                                         <base-card class="base-card-sm" @click="toggleModalIsOpen">
                                             <template v-slot:title>Alergie</template>
                                             <template v-slot:content>
-                                                <p>{{ patient.allergies }}</p>
+                                                <p v-if="patient.allergies"> {{ patient.allergies }}</p>
+                                                <p v-else>Brak alergii (możesz je dodać edytując profil)</p>
                                             </template>
                                             <template v-slot:button>Pokaż więcej</template>
                                         </base-card>
@@ -57,43 +60,30 @@
                     </div>
                 </div>
             </div>
-            
     </section>
-    <base-modal class="base-modal" v-bind:modalIsOpen="modalIsOpen" v-if="modalIsOpen" @click="toggleModalIsOpen">
-        <template v-slot:title>Przyjmowane leki</template>
-        <template v-slot:subtitle></template>
-        <template v-slot:content>
-            <p>Lorem Ipsum</p>
-            <p>Lorem Ipsum</p>
-            <p>Lorem Ipsum</p>
-            <p>Lorem Ipsum</p>
-            <p>Lorem Ipsum</p>
-            <p>Lorem Ipsum</p>
-        </template>
-    </base-modal>
-
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
+import jwt_decode from "jwt-decode";
+import axios from 'axios'
 
-    export default {
-        data(){
-            return {
-                modalIsOpen: false, 
-            }
-        },
+export default {
+    computed: {
+        ...mapGetters(['user', 'patient'])
+    },
+    async created(){
+        const token = localStorage.getItem('token');
+        const tokenDecoded = jwt_decode(token);
 
-        methods: {
-            toggleModalIsOpen() {
-                return this.modalIsOpen = !this.modalIsOpen;
-            },  
-        },
-
-        computed: {
-            ...mapGetters(['user', 'isLoggedIn', 'patient'])
-        }
-    } 
+        const getUserInfo = await axios.get(`Users/${tokenDecoded.nameid}`); // wymagane do działania nawigacji
+        const getPatientInfo = await axios.get(`Patients/${tokenDecoded.nameid}`);
+        
+        await this.$store.dispatch('user', getUserInfo.data.data);
+        await this.$store.dispatch('patient', getPatientInfo.data.data);
+        console.log(getPatientInfo);
+    },
+} 
 </script>
 
 <style lang="scss" scoped>

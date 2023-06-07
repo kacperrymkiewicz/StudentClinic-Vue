@@ -9,11 +9,14 @@
                         <label for="email">Adres email</label>
                         <input type="email" class="form-control" id="email" v-model="emailAddress">
                     </div>
+
                     <div class="form-group d-flex flex-column align-items-center">
                         <label for="password">Hasło</label>
                         <input type="password" class="form-control" id="password" v-model="password">
                     </div>
-                    <base-button type="dark" :has-icon="true">Zaloguj się</base-button>
+                    <p v-if="error"> {{ error }} </p>
+                    
+                    <base-button type="dark" :has-icon="true" @click="validateLogin">Zaloguj się</base-button>
                     <p>Nie masz konta? <router-link to="/rejestracja">Zarejestruj się</router-link></p>
                 </form>
             </div>
@@ -31,19 +34,24 @@ export default {
         return {
             emailAddress: "",
             password: "",
+            error: null,
         }
     },
 
     methods: {    
-        async submitForm(){
-            const response = await axios.post('/Auth/Login', {
+        submitForm(){
+            axios
+            .post('/Auth/Login', {
                 emailAddress: this.emailAddress,
                 password: this.password,
-            });
-            
-            localStorage.setItem('token', response.data.data);
-
-            this.$router.replace('/');
+            })
+            .then(response => {
+                localStorage.setItem('token', response.data.data);
+                this.$router.replace('/');
+            })
+            .catch(() => {
+                this.error = "Nieprawidłowe dane logowania"
+            })
         }
     }
 
@@ -103,6 +111,11 @@ export default {
             letter-spacing: -0.01em;
             color: $button-dark;
         }
+        div + p {
+            margin: 0;
+            color: $button-red;
+        }
+
     }
 </style>
   

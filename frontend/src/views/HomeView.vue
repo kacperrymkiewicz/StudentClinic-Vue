@@ -148,18 +148,19 @@ import jwt_decode from "jwt-decode";
 export default {
   name: "HomeView",
   computed: {
-      ...mapGetters(['user'])
+      ...mapGetters(['user', 'patient'])
   },
+  
   async created(){
-            const token = localStorage.getItem('token');
-            const token_decoded = jwt_decode(token);
-
-            const response = await axios.get(`Patient`);
-            //const response2 = await axios.get(`User/${token_decoded.nameid}`);
-
-            await this.$store.dispatch('patient', response.data.data[token_decoded.nameid-1])
-            await this.$store.dispatch('user', response.data.data[token_decoded.nameid-1].user);
-        }
+      const token = localStorage.getItem('token');
+      const tokenDecoded = jwt_decode(token);
+      const getUserInfo = await axios.get(`Users/${tokenDecoded.nameid}`); // wymagane do działania nawigacji
+      const getPatientInfo = await axios.get(`Patients/${tokenDecoded.nameid}`);
+      
+      await this.$store.dispatch('user', getUserInfo.data.data);
+      await this.$store.dispatch('patient', getPatientInfo.data.data);
+  },
+    
 };
 </script>
 

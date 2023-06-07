@@ -229,57 +229,57 @@ div.appointment-container {
                 padding: 0 40px 40px;
                 border-bottom: 1px solid $button-light;
             }
-
         
             div.form-group {
                 margin: 13px 0;
                 width: 300px;
 
-            
-            label {
-                font-weight: 500;
-                font-size: 14px;
-                line-height: 30px;
-                letter-spacing: -0.001em;
-                color: $secondary;
-                margin-bottom: 10px;
+                label {
+                    font-weight: 500;
+                    font-size: 14px;
+                    line-height: 30px;
+                    letter-spacing: -0.001em;
+                    color: $secondary;
+                    margin-bottom: 10px;
 
+                }
+                select {
+                    box-sizing: border-box;
+                    border: 1px solid #5F6D7E;
+                    border-radius: 8px;
+                    display: flex;
+                    padding: 8px 18px;
+                    gap: 16px;
+                    background-color: #F8F9FB;
+                }
             }
-            select {
-                box-sizing: border-box;
-                border: 1px solid #5F6D7E;
-                border-radius: 8px;
-                display: flex;
-                padding: 8px 18px;
-                gap: 16px;
-                background-color: #F8F9FB;
-
-            }
-            
-        }
         
-        .appointment-date-picker {
-            .date-picker {
-                svg {
-                    &:hover {
-                        cursor: pointer;
+            div.appointment-date-picker {
+                div.date-picker {
+                    svg {
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+                    span {
+                        width: 160px;
+                        line-height: 31px;
                     }
                 }
-                span {
-                    width: 160px;
-                    line-height: 31px;
+                .base-button {
+                    margin: 10px;
                 }
             }
             .base-button {
                 margin: 10px;
             }
 
-            a {
-                margin-top: 18px;
-                color: $secondary;
-                font-weight: 600;
-                font-size: 15px;
-            }
+                a {
+                    margin-top: 18px;
+                    color: $secondary;
+                    font-weight: 600;
+                    font-size: 15px;
+                }
 
         }
 
@@ -324,39 +324,42 @@ div.appointment-container {
                 &:checked {
                     background-color: $teal;
                     border-color: $secondary;
+                    &:checked {
+                        background-color: $teal;
+                        border-color: $secondary;
+                    }
                 }
-            }
 
-            label {
-                margin-left: 10px;
-                font-weight: 500;
-                color: $secondary;
+                label {
+                    margin-left: 10px;
+                    font-weight: 500;
+                    color: $secondary;
 
-                span {
+                    span {
 
+                        a {
+                            color: $teal;
+                        }
+                        
+                    }
+                }
+
+                p {
+                    color: $button-dark;
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 15px;
+                    line-height: 22px;
+                    letter-spacing: -0.001em;
+                    color: $secondary;
+                
                     a {
                         color: $teal;
                     }
-                    
-                }
+
+                } 
             }
-
-            p {
-                color: $button-dark;
-                font-style: normal;
-                font-weight: 600;
-                font-size: 15px;
-                line-height: 22px;
-                letter-spacing: -0.001em;
-                color: $secondary;
-            
-                a {
-                    color: $teal;
-                }
-
-            } 
         }
-    }
         h1 {
             margin: 60px 0;
             font-weight: 700;

@@ -19,7 +19,7 @@ div.overlay {
     left: 0;
     height: 100vh;
     width: 100%;
-    z-index: 0;
+    z-index: 1;
     background-color: rgba(0, 0, 0, 0.35);
 }
 dialog {
@@ -31,6 +31,7 @@ dialog {
     top: 50%;
     transform: translate(-50%, -50%);
     background-color: rgba(0, 0, 0, 0);
+    z-index: 2;
     div.outer-wrapper {
         border: 1.5px solid $secondary;
         background-color: $base-modal-background;

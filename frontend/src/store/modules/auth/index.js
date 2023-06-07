@@ -9,7 +9,10 @@ export default {
             accountType: null,
             //isLoggedIn: true,
             patient: null,
-            patientsList: []
+            patientsList: [],
+            visitsList: [],
+            activePatient: null,
+            patientVisitsList: [],
         }
     },
     actions, 
