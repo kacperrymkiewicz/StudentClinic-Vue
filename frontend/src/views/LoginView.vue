@@ -28,10 +28,17 @@
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
 import { mapGetters } from 'vuex'
-// import store from "@/store"
+import { useToast } from "vue-toastification";
+// import store from "@/store"''
 
 export default {
     name: "LoginView",
+
+    setup() {
+        const toast = useToast();
+        return { toast }
+    },
+
     data(){
         return {
             emailAddress: "",
@@ -39,35 +46,41 @@ export default {
             error: null,
             isLoggedIn: false,
             accountType: null,
+            user_object: null,
         }
     },
     computed: {
         ...mapGetters(['isLoggedIn', 'accountType'])
     },
     methods: {    
-        submitForm(){
-            axios
-            .post('/Auth/Login', {
+        async submitForm(){
+            await axios.post('/Auth/Login', {
                 emailAddress: this.emailAddress,
                 password: this.password,
-            }) 
-            .then(response => {
-                localStorage.setItem('token', response.data.data);
+            })
+            .then((response) => {
+                localStorage.token = response.data.data;
                 const responseDecoded = jwt_decode(response.data.data);
                 this.accountType = responseDecoded.role;
+                this.$store.dispatch('user', { id: responseDecoded.nameid, firstName: responseDecoded.firstName, lastName: responseDecoded.lastName, accountType: responseDecoded.role});
             })
             .then(() => {
-                this.$store.dispatch('user');
-            })
-            .then(() => {
+                this.toast.success("Zalogowano pomyślnie", {
+                    timeout: 2500,
+                    position: "bottom-right",
+                });
                 this.isLoggedIn = true;
+                this.redirectAfterSuccessfullLogin();
             })
-            .then(() => {
-                this.redirectAfterSuccessfullLogin()
-            })
-            .catch(() => {
-                this.error = "Nieprawidłowe dane logowania"
-            })
+            .catch((error) => {
+                this.toast.error("Nieprawidłowe dane logowania", {
+                    timeout: 2500,
+                    position: "bottom-right",
+                });
+                this.error = "Nieprawidłowe dane logowania";
+                console.log(error);
+            });
+
         },
         redirectAfterSuccessfullLogin(){
             if(this.isLoggedIn && this.accountType == 'Patient'){
@@ -79,6 +92,10 @@ export default {
             else if(this.isLoggedIn && this.accountType == 'Receptionist'){
                 this.$router.replace({name: 'receptionist-patients-visits'})
             }
+        },
+        async fetchUserData(id) {
+            const response = await axios.get(`Users/${id}`);
+            return response.data.data;
         }
     }
 
