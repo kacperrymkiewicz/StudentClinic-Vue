@@ -68,7 +68,7 @@ const routes = [
     name: "patient-profile-edit",
     component: PatientProfileEdit,
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
     }
   },
   {

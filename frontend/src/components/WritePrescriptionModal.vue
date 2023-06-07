@@ -1,8 +1,8 @@
 <template>
-    <div @click="$emit('closeWriteAPrescriptionModal')" class="overlay"></div>
+    <div @click="$emit('closeWritePrescriptionModal')" class="overlay"></div>
     <dialog open>
         <div class="wrapper d-flex flex-column align-items-center">
-            <img @click="$emit('closeWriteAPrescriptionModal')" class="close-button" src="@/assets/images/icons/svg/base_modal_close.svg">
+            <img @click="$emit('closeWritePrescriptionModal')" class="close-button" src="@/assets/images/icons/svg/base_modal_close.svg">
             <p>Wypisz receptę dla:</p>
             <p>
                 <img class="profile-icon" src="@/assets/images/icons/svg/profile.svg">
@@ -30,7 +30,7 @@
                     <textarea class="form-control" id="recommendations"></textarea>
                 </div>
                 <base-button type="dark" @click="submitForm()">Potwierdź</base-button>
-                <base-button type="light" @click="$emit('closeWriteAPrescriptionModal')">Anuluj</base-button>
+                <base-button type="light" @click="$emit('closeWritePrescriptionModal')">Anuluj</base-button>
             </form>
         </div>
     </dialog>
@@ -38,7 +38,7 @@
 
 <script>
 export default {
-    name: 'WriteAPrescription',
+    name: 'WritePrescription',
     emits: ['closeWriteAPrescriptionModal'],
     props: {
         data: {
