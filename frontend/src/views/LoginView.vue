@@ -4,7 +4,7 @@
             <div class="row d-flex justify-content-center">
             <div class="inner-container col-sm-10 col-md-8 col-lg-6">
                 <h1>Logowanie</h1>
-                <form @submit.prevent="submitForm">
+                <form @submit.prevent="submitForm()">
                     <div class="form-group d-flex flex-column align-items-center">
                         <label for="email">Adres email</label>
                         <input type="email" class="form-control" id="email" v-model="emailAddress">
@@ -15,7 +15,6 @@
                         <input type="password" class="form-control" id="password" v-model="password">
                     </div>
                     <p v-if="error"> {{ error }} </p>
-                    
                     <base-button type="dark" :has-icon="true" @click="validateLogin">Zaloguj się</base-button>
                     <p>Nie masz konta? <router-link to="/rejestracja">Zarejestruj się</router-link></p>
                 </form>
@@ -27,6 +26,7 @@
   
 <script>
 import axios from 'axios';
+import jwt_decode from "jwt-decode";
 
 export default {
     name: "LoginView",
@@ -35,6 +35,8 @@ export default {
             emailAddress: "",
             password: "",
             error: null,
+            isLoggedIn: false,
+            accountType: null,
         }
     },
 
@@ -47,11 +49,25 @@ export default {
             })
             .then(response => {
                 localStorage.setItem('token', response.data.data);
-                this.$router.replace('/');
+                const response_decoded = jwt_decode(response.data.data);
+                this.isLoggedIn = true;
+                //this.$store.dispatch('isLoggedIn', response.data.data);
+                this.accountType = response_decoded.role;
             })
             .catch(() => {
                 this.error = "Nieprawidłowe dane logowania"
             })
+        },
+        validateLogin(){
+            if(this.isLoggedIn && this.accountType == 'Patient'){
+                this.$router.replace({name: 'home'});
+            }
+            else if(this.isLoggedIn && this.accountType == 'Doctor'){
+                this.$router.replace({name: 'patients-list'})
+            }
+            else if(this.isLoggedIn && this.accountType == 'Receptionist'){
+                this.$router.replace({name: 'receptionist-patients-visits'})
+            }
         }
     }
 
