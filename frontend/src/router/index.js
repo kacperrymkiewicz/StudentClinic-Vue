@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { useToast } from "vue-toastification";
 
 import HomeView from "../views/HomeView.vue";
 import SignUpView from "../views/SignUpView.vue";
@@ -110,6 +111,11 @@ const router = createRouter({
 
 router.beforeEach((to) => {
   if(to.meta.requiresAuth && !localStorage.getItem('token')){
+    const toast = useToast();
+    toast.error("Ta akcja wymaga autoryzacji", {
+      timeout: 2500,
+      position: "bottom-right",
+    });
     return  { name: "login" } ;
   }
   return true
