@@ -94,7 +94,6 @@
 
 <script>
 import axios from 'axios'
-import jwt_decode from "jwt-decode";
 import { mapGetters } from 'vuex';
 // import { computed, ref } from "vue";
 
@@ -111,11 +110,18 @@ export default {
     },
     
     methods: {
-        cancelVisit(id){
-            axios.get(`Visits/${id}/Cancel`);
+        async getVisits() {
+            const getVisitsInfo = await axios.get(`Visits`);
+            await this.$store.dispatch('visitsList', getVisitsInfo.data.data);
         },
-        confirmVisit(id){
-            axios.get(`Visits/${id}/Confirm`)
+
+        async cancelVisit(id){
+            await axios.get(`Visits/${id}/Cancel`);
+            this.getVisits();
+        },
+        async confirmVisit(id){
+            await axios.get(`Visits/${id}/Confirm`)
+            this.getVisits();
         },
         setSpecialization(specialization){
             switch(specialization){
@@ -184,16 +190,7 @@ export default {
         // }
     },
     async created(){
-        const token = localStorage.getItem('token');
-        const tokenDecoded = jwt_decode(token);
-
-        const getUserInfo = await axios.get(`Users/${tokenDecoded.nameid}`); // wymagane do działania nawigacji
-        const getVisitsInfo = await axios.get(`Visits`);
-
-        await this.$store.dispatch('user', getUserInfo.data.data);
-        await this.$store.dispatch('visitsList', getVisitsInfo.data.data);
-
-        console.log(getVisitsInfo);
+        this.getVisits();
     },
 }
 </script>
