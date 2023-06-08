@@ -9,7 +9,10 @@
         <div class="logged-in collapse navbar-collapse" id="navbarSupportedContent" v-if="user">
           <ul class="navbar-nav me-auto mb-lg-0" v-if="user.accountType == 'Doctor'">
             <li class="nav-item">
-              <router-link class="nav-link" active-class="active-logged-in" to="/pacjenci">Pacjenci</router-link>
+              <router-link class="nav-link" active-class="active-logged-in" to="/lekarz/pacjenci">Pacjenci</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" active-class="active-logged-in" to="/lekarz/kalendarz-wizyt">Kalendarz wizyt</router-link>
             </li>
           </ul>
           <ul class="navbar-nav me-auto mb-lg-0" v-else-if="user.accountType == 'Receptionist'">
@@ -78,15 +81,6 @@
           <ul class="navbar-nav me-auto mb-lg-0">
             <li class="nav-item">
               <router-link class="nav-link" active-class="active-logged-out" to="/">Strona główna</router-link>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Specjaliści
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Urolog</a></li>
-                <li><a class="dropdown-item" href="#">Proktolog</a></li>
-              </ul>
             </li>
             <li class="nav-item"> 
               <router-link class="nav-link" active-class="active-logged-out" to="/umow-wizyte">Umów wizytę</router-link>

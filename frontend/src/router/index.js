@@ -102,7 +102,7 @@ const routes = [
     }
   },
   {
-    path: "/pacjenci",
+    path: "/lekarz/pacjenci",
     name: "patients-list",
     component: PatientsList,
     meta: {
