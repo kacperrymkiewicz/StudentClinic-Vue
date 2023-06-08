@@ -66,8 +66,13 @@
 
 import { mapGetters } from 'vuex';
 import axios from 'axios'
+import { useToast } from "vue-toastification";
 
 export default {
+    setup() {
+        const toast = useToast();
+        return { toast }
+    },
     computed: {
         ...mapGetters(['patient', 'user'])
     },
@@ -98,9 +103,17 @@ export default {
                 streetAddress: this.patient.street
             })
             .then(() => {
+                this.toast.success("Zmiany zostały zapisane", {
+                        timeout: 2500,
+                        position: "bottom-right",
+                });
                 this.$router.replace('/profil');
             })
             .catch((error) => {
+                this.toast.error("Wystąpił błąd przy edycji profilu", {
+                        timeout: 2500,
+                        position: "bottom-right",
+                });
                 console.log(error)
             })
         },  
