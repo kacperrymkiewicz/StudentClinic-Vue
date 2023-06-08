@@ -14,7 +14,13 @@
           </ul>
           <ul class="navbar-nav me-auto mb-lg-0" v-else-if="user.accountType == 'Receptionist'">
             <li class="nav-item">
-              <router-link class="nav-link" active-class="active-logged-in" to="/wizyty">Wizyty</router-link>
+              <router-link class="nav-link" active-class="active-logged-in" to="/recepcja/wizyty">Wizyty</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" active-class="active-logged-in" to="/recepcja/pacjenci">Lista pacjentów</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" active-class="active-logged-in" to="/recepcja/lista-lekarzy">Lista lekarzy</router-link>
             </li>
           </ul>
           <ul class="navbar-nav me-auto mb-lg-0" v-else>

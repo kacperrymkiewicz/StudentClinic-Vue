@@ -6,13 +6,8 @@
                     <breadcrumbs>
                         <router-link to="/pacjenci">Pacjenci</router-link>
                     </breadcrumbs>
-                    <hello-message v-if="user" :name="user.firstName" icon-name="agenda"><template v-slot:info>Oto lista zarezerwowanych wizyt przez pacjentów</template></hello-message>         
+                    <hello-message v-if="user" :name="user.firstName" icon-name="agenda"><template v-slot:info>Oto lista Twoich pacjentów</template></hello-message>         
                     <div class="wrapper d-flex flex-column">
-                        <div class="search">
-                            <div class="input-group mb-5">
-                                <input type="search" class="form-control" v-model='searchQuery' placeholder="Wyszukaj...">
-                            </div>
-                        </div>
                         <div class="table-responsive d-flex flex-column">  
                             <table class="table">
                                 <thead>
