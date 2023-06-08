@@ -7,7 +7,7 @@
                         <router-link to="/profil">Mój profil</router-link>
                         <router-link to="/profil/edycja-hasla">Edycja hasła</router-link>
                     </breadcrumbs>
-                    <hello-message name="Mariusz" icon-name="clipboard"><template v-slot:info>Tutaj możesz edytować swoje hasło do konta</template></hello-message>
+                    <hello-message :name="user.firstName" icon-name="clipboard"><template v-slot:info>Tutaj możesz edytować swoje hasło do konta</template></hello-message>
                     <div class="d-flex flex-column align-items-center"> 
                         <div class="col-md-6">
                             <h1>Edycja hasła</h1>
