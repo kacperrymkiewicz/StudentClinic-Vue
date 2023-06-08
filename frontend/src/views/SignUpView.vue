@@ -99,9 +99,15 @@
 
 <script>
 import axios from 'axios';
+import { useToast } from "vue-toastification";
 
 export default {
     name: "SignUpView",
+
+    setup() {
+        const toast = useToast();
+        return { toast }
+    },
     computed: {
         emailAddressRegex: () =>  /^[^@]+@\w+(\.\w+)+\w$/,
         phoneNumberRegex: () => /^\d{9}$/,
@@ -198,8 +204,12 @@ export default {
                 city: this.city,
                 postalCode: this.postalCode,
                 streetAddress: this.street
-            });
+            }); 
             if(response.status == 200) {
+                this.toast.success("Zarejestrowano pomyślnie", {
+                    timeout: 2500,
+                    position: "bottom-right",
+                });
                 this.$router.replace({name: "login"});
             }
         },
@@ -216,6 +226,14 @@ export default {
             this.validatePostalCode();
             this.validateStreet();
             this.validateCheckbox();
+            /* trzeba sprawdzac czy ta walidacja przechodzi, bo mozna zrobic konto z nieprawidlowym powtorz haslo
+            if(this.errorFirstName != null || this.error.lastName != null || this.error.emailAddress != null) {
+                this.toast.error("Popraw błędy w formularzu", {
+                    timeout: 2500,
+                    position: "bottom-right",
+                });
+            }
+            */
         }
     }
 };
