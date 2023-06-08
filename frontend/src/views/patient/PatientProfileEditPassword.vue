@@ -11,18 +11,18 @@
                     <div class="d-flex flex-column align-items-center"> 
                         <div class="col-md-6">
                             <h1>Edycja hasła</h1>
-                            <form>
+                            <form @submit.prevent="submitForm">
                                 <div class="form-group d-flex flex-column">
                                     <label class="align-self-start" for="current-password">Aktualne hasło</label>
-                                    <input type="password" class="form-control" id="current-password">
+                                    <input type="password" class="form-control" id="current-password" v-model.trim="currentPassword">
                                 </div>
                                 <div class="form-group d-flex flex-column">
                                     <label class="align-self-start" for="new-password">Nowe hasło</label>
-                                    <input type="password" class="form-control" id="new-password">
+                                    <input type="password" class="form-control" id="new-password" v-model.trim="newPassword">
                                 </div>  
                                 <div class="form-group d-flex flex-column">
                                     <label class="align-self-start" for="repeat-new-password">Powtórz nowe hasło</label>
-                                    <input type="password" class="form-control" id="repeat-new-password">
+                                    <input type="password" class="form-control" id="repeat-new-password" v-model.trim="repeatNewPassword">
                                 </div>  
                                 <base-button type="dark">Zmień hasło</base-button>
                                 <router-link to="/profil"><base-button type="light">Anuluj</base-button></router-link>
@@ -37,12 +37,59 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import axios from 'axios'
+import { useToast } from "vue-toastification";
 
 export default {
+    setup() {
+        const toast = useToast();
+        return { toast }
+    },
+    computed: {
+        ...mapGetters(['patient', 'user'])
+    },
     data(){
         return {
-            info: "Oto lista w"
+            info: "Oto lista w",
+            currentPassword: null,
+            newPassword: null,
+            repeatNewPassword: null,
         }
+    },
+
+    methods: {
+        async submitForm(){
+            if(this.newPassword != null && (this.newPassword == this.repeatNewPassword)) {
+                await axios
+                .post(`Auth/ChangePassword`, {
+                    id: this.user.id,
+                    currentPassword: this.currentPassword,
+                    newPassword: this.newPassword,
+                })
+                .then(() => {
+                    this.toast.success("Hasło zostało zmienione", {
+                            timeout: 2500,
+                            position: "bottom-right",
+                    });
+                    this.$router.replace('/profil');
+                })
+                .catch((error) => {
+                    this.toast.error("Aktualne hasło jest nieprawidłowe", {
+                            timeout: 2500,
+                            position: "bottom-right",
+                    });
+                    console.log(error)
+                })
+            }
+            else {
+                this.toast.error("Podane hasła nie są takie same", {
+                    timeout: 2500,
+                    position: "bottom-right",
+                });
+            }
+
+        },  
     }
 
 }</script>
