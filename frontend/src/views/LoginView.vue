@@ -14,7 +14,6 @@
                         <label for="password">Hasło</label>
                         <input type="password" class="form-control" id="password" v-model="password">
                     </div>
-                    <p v-if="error"> {{ error }} </p>
                     <base-button type="dark" :has-icon="true">Zaloguj się</base-button>
                     <p>Nie masz konta? <router-link to="/rejestracja">Zarejestruj się</router-link></p>
                 </form>
@@ -43,7 +42,6 @@ export default {
         return {
             emailAddress: "",
             password: "",
-            error: null,
             isLoggedIn: false,
             accountType: null,
             user_object: null,
@@ -78,7 +76,6 @@ export default {
                     timeout: 2500,
                     position: "bottom-right",
                 });
-                this.error = "Nieprawidłowe dane logowania";
                 console.log(error);
             });
 
