@@ -25,7 +25,7 @@
                                         <td v-for="field in fields" :key='field'>
                                             <span v-if="field == 'data'">
                                                 <span>
-                                                    {{ new Date(visit.date).toLocaleDateString('pl', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) }}
+                                                    {{ new Date(visit.date).toLocaleDateString('pl', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) }}, {{ visit.slot.startTime.slice(0, 5) }}
                                                 </span>
                                             </span>
                                             <span v-else-if="field == 'lekarz'">
@@ -84,13 +84,20 @@
 import axios from 'axios'
 import jwt_decode from "jwt-decode";
 import { mapGetters } from 'vuex';
-import VisitStatus from "@/components/VisitStatus.vue"
+import VisitStatus from "@/components/VisitStatus.vue";
+import { useToast } from "vue-toastification";
 
 export default {
+    setup() {
+        const toast = useToast();
+        return { toast }
+    },
+
     data(){
         return {
             fields: ['data', 'lekarz', 'specjalizacja', 'status', 'akcje'],
             rerenderStatus: 0,
+            tokenDecoded: null,
         }
     },
     components: {
@@ -101,12 +108,14 @@ export default {
     },
     async created(){
         const token = localStorage.getItem('token');
-        const tokenDecoded = jwt_decode(token);
-        const getPatientVisits = await axios.get(`Patients/${tokenDecoded.roleId}/Visits`);
-        await this.$store.dispatch('patientVisitsList', getPatientVisits.data.data);
-        console.log(getPatientVisits);
+        this.tokenDecoded = jwt_decode(token);
+        this.getVisits();
     },
     methods: {
+        async getVisits() {
+            const getPatientVisits = await axios.get(`Patients/${this.tokenDecoded.roleId}/Visits`);
+            await this.$store.dispatch('patientVisitsList', getPatientVisits.data.data);
+        },
         forceRerenderStatus(){
             this.rerenderStatus += 1;
         },
@@ -118,8 +127,21 @@ export default {
                     return "niezdefiniowana"
             } 
         },
-        cancelVisit(id){
-            axios.get(`Visits/${id}/Cancel`);
+        async cancelVisit(id){
+            await axios.get(`Visits/${id}/Cancel`)
+                .then(() => {
+                    this.toast.success("Wizyta została odwołana", {
+                        timeout: 2500,
+                        position: "bottom-right",
+                    });
+                    this.getVisits();
+                })
+                .catch(() => {
+                    this.toast.error("Nie można odwołać wizyty, ponieważ pozostało mniej niż 24 godziny", {
+                        timeout: 2500,
+                        position: "bottom-right",
+                    });
+                });
         }
     }
 }
