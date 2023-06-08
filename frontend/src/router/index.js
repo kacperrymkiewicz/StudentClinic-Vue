@@ -90,7 +90,8 @@ const routes = [
     name: "receptionist-patients-visits",
     component: ReceptionistPatientsVisits,
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requiresReceptionistPerms: true
     }
   },
   {
@@ -98,7 +99,8 @@ const routes = [
     name: "receptionist-doctors-list",
     component: ReceptionistDoctorsList,
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requiresReceptionistPerms: true
     }
   },
   {
@@ -106,7 +108,8 @@ const routes = [
     name: "patients-list",
     component: PatientsList,
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requiresDoctorPerms: true
     }
   },
   {
@@ -114,7 +117,8 @@ const routes = [
     name: "receptionist-patients-list",
     component: ReceptionistPatientsList,
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requiresReceptionistPerms: true
     }
   },
   {
@@ -122,7 +126,8 @@ const routes = [
     name: "doctor-visit-list",
     component: DoctorVisitList,
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requiresDoctorPerms: true
     }
   },
 
@@ -145,9 +150,23 @@ router.beforeEach((to) => {
     });
     return  { name: "login" } ;
   }
+  if(to.meta.requiresDoctorPerms && localStorage.getItem('role') != 'Doctor'){
+    const toast = useToast();
+    toast.error("Ta akcja wymaga autoryzacji. Poziom uprawnień: Doktor", {
+      timeout: 2500,
+      position: "bottom-right",
+    });
+    return  { name: "login" } ;
+  }
+  if(to.meta.requiresReceptionistPerms && localStorage.getItem('role') != 'Receptionist'){
+    const toast = useToast();
+    toast.error("Ta akcja wymaga autoryzacji. Poziom uprawnień: Recepcjonista", {
+      timeout: 2500,
+      position: "bottom-right",
+    });
+    return  { name: "login" } ;
+  }
   return true
-
-  
 })
 
 export default router;
