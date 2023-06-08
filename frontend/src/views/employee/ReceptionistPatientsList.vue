@@ -4,9 +4,9 @@
             <div class="row">
                 <div class="col-md-12">
                     <breadcrumbs>
-                        <router-link to="/pacjenci">Pacjenci</router-link>
+                        <router-link to="/recepcja/pacjenci">Pacjenci</router-link>
                     </breadcrumbs>
-                    <hello-message v-if="user" :name="user.firstName" icon-name="agenda"><template v-slot:info>Oto lista Twoich pacjentów</template></hello-message>         
+                    <hello-message v-if="user" :name="user.firstName" icon-name="agenda"><template v-slot:info>Oto lista pacjentów</template></hello-message>         
                     <div class="wrapper d-flex flex-column">
                         <div class="table-responsive d-flex flex-column">  
                             <table class="table">

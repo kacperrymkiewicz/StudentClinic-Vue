@@ -4,10 +4,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <breadcrumbs>
-                        <router-link to="/wizyty">Wizyty</router-link>
+                        <router-link to="/recepcja/wizyty">Wizyty</router-link>
                     </breadcrumbs>
                     <hello-message v-if="user" :name="user.firstName" icon-name="reminder">
-                        <template v-slot:info>Oto lista umówionych wizyt przez pacjentów</template>
+                        <template v-slot:info>Oto lista wszystkich wizyt</template>
                     </hello-message>
                     <div class="wrapper d-flex flex-column">
                         <div class="table-responsive d-flex flex-column">  
@@ -22,7 +22,7 @@
                                         <td v-for="field in fields" :key='field'>
                                             <span v-if="field == 'data'">
                                                 <span>
-                                                    {{ new Date(visit.date).toLocaleDateString('pl', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) }}
+                                                    {{ new Date(visit.date).toLocaleDateString('pl', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) }}, {{ visit.slot.startTime.slice(0, 5) }}
                                                 </span>
                                             </span>
                                             <span v-else-if="field == 'pacjent'">
@@ -42,7 +42,7 @@
                                                 </span>
                                             </span>
                                             <span v-else-if="field == 'specjalizacja'">
-                                                {{ capitalizeFirstLetter(setSpecialization(visit.doctor.specialization)) }}
+                                                {{ capitalizeFirstLetter(visit.doctor.specialization) }}
                                             </span>
                                             <span v-else-if="field == 'status'">
                                                 <span class="status-icon" :style="{backgroundColor: setStatusIcon(visit.status)}"></span>
@@ -90,9 +90,14 @@
 <script>
 import axios from 'axios'
 import { mapGetters } from 'vuex';
+import { useToast } from "vue-toastification";
 // import { computed, ref } from "vue";
 
 export default {
+    setup() {
+        const toast = useToast();
+        return { toast }
+    },
     data(){
         return {
             modalIsOpen: false,
@@ -112,19 +117,19 @@ export default {
 
         async cancelVisit(id){
             await axios.get(`Visits/${id}/Cancel`);
+            this.toast("Wizyta została odwołana", {
+                timeout: 2500,
+                position: "bottom-right",
+            });
             this.getVisits();
         },
         async confirmVisit(id){
             await axios.get(`Visits/${id}/Confirm`)
+            this.toast("Wizyta została potwierdzona", {
+                timeout: 2500,
+                position: "bottom-right",
+            });
             this.getVisits();
-        },
-        setSpecialization(specialization){
-            switch(specialization){
-                case 'oculist':
-                    return "okulista"  
-                default:
-                    return "niezdefiniowana"
-            } 
         },
         setStatus(status){
             switch(status){

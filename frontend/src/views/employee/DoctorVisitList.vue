@@ -4,10 +4,10 @@
           <div class="row">
               <div class="col-md-12">
                   <breadcrumbs>
-                      <router-link to="/recepcja/lista-lekarzy">Lista lekarzy</router-link>
+                      <router-link to="/lekarz/kalendarz-wizyt">Kalendarz wizyt</router-link>
                   </breadcrumbs>
                   <hello-message v-if="user" :name="user.firstName" icon-name="reminder">
-                      <template v-slot:info>Oto lista lekarzy</template>
+                      <template v-slot:info>Oto Twój kalendarz wizyt</template>
                   </hello-message>
                   <div class="wrapper d-flex flex-column">
                       <div class="table-responsive d-flex flex-column">  
@@ -17,33 +17,35 @@
                                       <th v-for="field in fields" :key='field'> {{ capitalizeFirstLetter(field) }} </th>
                                   </tr>
                               </thead>
-                              <tbody v-if="doctorsList.length > 0">
-                                  <tr v-for="doctor in doctorsList" :key="doctor.id">
+                              <tbody v-if="visitsList.length > 0">
+                                  <tr v-for="visit in this.visitsList" :key="visit.id">
                                       <td v-for="field in fields" :key='field'>
-                                          <span v-if="field == 'lekarz'">
+                                          <span v-if="field == 'data'">
                                               <span>
-                                                  <span>
-                                                    <img src="@/assets/images/icons/svg/profile.svg">
-                                                  </span>
-                                                  {{ capitalizeFirstLetter(doctor.user.firstName) }} {{ capitalizeFirstLetter(doctor.user.lastName) }}
+                                                  {{ new Date(visit.date).toLocaleDateString('pl', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) }}
                                               </span>
                                           </span>
-                                          <span v-else-if="field == 'specjalizacja'">
+                                          <span v-else-if="field == 'godzina'">
+                                              Od {{ visit.slot.startTime.slice(0, 5) }} do {{ visit.slot.endTime.slice(0, 5) }}
+                                          </span>
+                                          <span v-else-if="field == 'pacjent'">
                                               <span>
-                                                  {{ capitalizeFirstLetter(doctor.specialization) }}
+                                                  <img src="@/assets/images/icons/svg/profile.svg">
+                                              </span>
+                                              <span>
+                                                  {{ capitalizeFirstLetter(visit.patient.user.firstName) }} {{  capitalizeFirstLetter(visit.patient.user.lastName) }}   
                                               </span>
                                           </span>
-                                          <span v-else-if="field == 'akcje'">
-                                              <span>
-                                                  <button>Wyświetl wizyty</button>
-                                              </span>
+                                          <span v-else-if="field == 'status'">
+                                              <span class="status-icon" :style="{backgroundColor: setStatusIcon(visit.status)}"></span>
+                                              <span class="status-text">{{ capitalizeFirstLetter(setStatus(visit.status)) }}</span>
                                           </span>
                                       </td>
                                   </tr>
                               </tbody>
                               <tbody class="no-results" v-else>
                                   <tr>
-                                      <td colspan="6">Brak lekarzy w systemie</td>
+                                      <td colspan="6">Brak umówionych wizyt</td>
                                   </tr>
                               </tbody>
                               <tfoot>
@@ -74,14 +76,21 @@
 <script>
 import axios from 'axios'
 import { mapGetters } from 'vuex';
+import { useToast } from "vue-toastification";
+import jwt_decode from "jwt-decode";
 // import { computed, ref } from "vue";
 
 export default {
+  setup() {
+      const toast = useToast();
+      return { toast }
+  },
   data(){
       return {
           modalIsOpen: false,
-          fields: ['lekarz', 'specjalizacja', 'akcje'],
-          doctorsList: [],
+          fields: ['data', 'godzina', 'pacjent', 'status'],
+          visitsList: [],
+          tokenDecoded: null,
           //filteredList: 
       }
   },  
@@ -90,10 +99,57 @@ export default {
   },
   
   methods: {
-      async getDoctors() {
-          this.doctorsList = (await axios.get(`Doctors`)).data.data;
+      async getVisits() {
+          const getVisitsInfo = await axios.get(`Doctors/${this.tokenDecoded.roleId}/Visits`);
+          this.visitsList = getVisitsInfo.data.data;
+          console.log(this.visitsList);
+          console.log(this.tokenDecoded.roleId);
       },
 
+      async cancelVisit(id){
+          await axios.get(`Visits/${id}/Cancel`);
+          this.toast("Wizyta została odwołana", {
+              timeout: 2500,
+              position: "bottom-right",
+          });
+          this.getVisits();
+      },
+      async confirmVisit(id){
+          await axios.get(`Visits/${id}/Confirm`)
+          this.toast("Wizyta została potwierdzona", {
+              timeout: 2500,
+              position: "bottom-right",
+          });
+          this.getVisits();
+      },
+      setStatus(status){
+          switch(status){
+              case 'Confirmed':
+                  return "Potwierdzona"
+              case 'Unconfirmed':
+                  return "Niepotwierdzona"
+              case 'Canceled':
+                  return "Odwołana"
+              case 'Finished':
+                  return "Zakończona"
+              default:
+                  return "niezdefiniowany"
+          }
+      },
+      setStatusIcon(status) {
+          switch(status) {
+              case 'Confirmed':
+                  return "#209420";
+              case 'Unconfirmed':
+                  return "#F8EE12"
+              case 'Canceled':
+                  return "#F84912";
+              case 'Finished':
+                  return "#205594"
+              default:
+                  return "#FFF";
+          }
+      },
       toggleModalIsOpen(){
 
       }
@@ -125,7 +181,9 @@ export default {
       // }
   },
   async created(){
-      this.getDoctors();
+      const token = localStorage.getItem('token');
+      this.tokenDecoded = jwt_decode(token);
+      this.getVisits();
   },
 }
 </script>

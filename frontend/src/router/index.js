@@ -19,6 +19,7 @@ import ReceptionistPatientsVisits from "../views/employee/ReceptionistPatientsVi
 import ReceptionistDoctorsList from "../views/employee/ReceptionistDoctorsList.vue";
 import ReceptionistPatientsList from "../views/employee/ReceptionistPatientsList.vue";
 import PatientsList from "../views/employee/PatientsList.vue";
+import DoctorVisitList from "../views/employee/DoctorVisitList.vue";
 
 const routes = [
   {
@@ -112,6 +113,14 @@ const routes = [
     path: "/recepcja/pacjenci",
     name: "receptionist-patients-list",
     component: ReceptionistPatientsList,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/lekarz/kalendarz-wizyt",
+    name: "doctor-visit-list",
+    component: DoctorVisitList,
     meta: {
       requiresAuth: true
     }
