@@ -53,10 +53,7 @@ export default {
     async created(){
       const token = localStorage.getItem('token');
       const tokenDecoded = jwt_decode(token);
-      const getUserInfo = await axios.get(`Users/${tokenDecoded.nameid}`); // wymagane do działania nawigacji
-      const getPatientInfo = await axios.get(`Patients/${tokenDecoded.nameid}`);
-      
-      await this.$store.dispatch('user', getUserInfo.data.data);
+      const getPatientInfo = await axios.get(`Patients/${tokenDecoded.roleId}`);
       await this.$store.dispatch('patient', getPatientInfo.data.data);
 
       console.log(getPatientInfo)
