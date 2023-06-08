@@ -105,9 +105,15 @@ import axios from 'axios'
 // import jwt_decode from "jwt-decode";
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
+import { useToast } from "vue-toastification";
 
 export default {
     components: { VueDatePicker },
+    setup() {
+        const toast = useToast();
+        return { toast }
+    },
+
     data(){
         return {
             doctor: "Nie wybrano",
@@ -140,14 +146,41 @@ export default {
         },
 
         async submitForm(){
-            const response = await axios.post('Visits', {
-                patientId: 1,
-                doctorId: this.doctor.id,
-                date: this.date.toLocaleDateString("sv"),
-                slotId: this.slot.id,
-            });
+            if(this.specialization == 'Nie wybrano') {
+                this.toast.warning("Nie wybrano specjalizacji", {
+                    timeout: 2500,
+                    position: "bottom-right",
+                });
+            }
+            else if(this.doctor == 'Nie wybrano') {
+                this.toast.warning("Nie wybrano doktora", {
+                    timeout: 2500,
+                    position: "bottom-right",
+                });
+            }
+            else if(this.slot_id == -1) {
+                this.toast.warning("Nie wybrano godziny", {
+                    timeout: 2500,
+                    position: "bottom-right",
+                });
+            }
+            else {
+                const response = await axios.post('Visits', {
+                    patientId: 1,
+                    doctorId: this.doctor.id,
+                    date: this.date.toLocaleDateString("sv"),
+                    slotId: this.slot.id,
+                });
 
-            console.log(response);
+                if(response.status == 200) {
+                    this.toast.success("Wizyta umówiona", {
+                        timeout: 2500,
+                        position: "bottom-right",
+                    });
+                    this.$router.replace({name: "patient-visits"});
+                }
+            }
+
         },
 
         nextDay() {
