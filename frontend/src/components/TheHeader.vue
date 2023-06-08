@@ -206,6 +206,11 @@ nav {
           }
         }
       }
+
+      .dropdown-item:active {
+        color: var(--bs-dropdown-link-hover-color);
+        background-color: var(--bs-dropdown-link-hover-bg);
+      }
       
     }
 
