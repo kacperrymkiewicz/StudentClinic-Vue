@@ -23,8 +23,13 @@ const capitalizeMixin = {
 }
 
 const options = {
-    transition: "Vue-Toastification__slideBlurred",
-    maxToasts: 3,  
+    transition: "Vue-Toastification__fade",
+    maxToasts: 5,
+    hideProgressBar: true,
+    icon: false,
+    timeout: 3000,
+    position: "bottom-right",
+    newestOnTop: false,
 };
 
 createApp(App)
