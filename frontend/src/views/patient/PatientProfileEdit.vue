@@ -49,6 +49,11 @@
                                     <label class="align-self-start" for="allergies">Alergie</label>
                                     <textarea id="allergies" rows="3" v-model.trim="patient.allergies"></textarea>
                                 </div>
+
+                                <div class="form-group d-flex flex-column">
+                                    <label class="align-self-start" for="medications">Przyjmowane leki</label>
+                                    <textarea id="medications" rows="3" v-model.trim="patient.medicationsTaken"></textarea>
+                                </div>
                                 
                                 <base-button type="dark">Zapisz zmiany</base-button>
                                 <router-link to="/profil"><base-button type="light">Anuluj</base-button></router-link>
@@ -98,9 +103,10 @@ export default {
                 pesel: this.patient.pesel,
                 phoneNumber: this.patient.phoneNumber,
                 allergies: this.patient.allergies,
+                medicationsTaken: this.patient.medicationsTaken,
                 city: this.patient.city,
                 postalCode: this.patient.postalCode,
-                streetAddress: this.patient.street
+                streetAddress: this.patient.streetAddress
             })
             .then(() => {
                 this.toast.success("Zmiany zostały zapisane", {
