@@ -40,7 +40,8 @@
                                         <base-card  class="base-card-sm" @click="toggleModalIsOpen">
                                             <template v-slot:title>Przyjmowane leki</template>
                                             <template v-slot:content>
-                                                <p>Lorem ipsum</p>
+                                                <p v-if="patient.medicationsTaken"> {{ patient.medicationsTaken }}</p>
+                                                <p v-else>Brak przyjmowanych leków (możesz je dodać edytując profil)</p>
                                             </template>
                                             <template v-slot:button>Pokaż więcej</template>
                                         </base-card>
