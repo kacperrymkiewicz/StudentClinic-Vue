@@ -83,14 +83,30 @@
                                 <div class="right-wrapper d-flex flex-column">
                                     <div class="right-inner-wrapper d-flex flex-column align-items-center">
                                         <img src="@/assets/images/icons/doctor.png">
-                                        <p>Twój lekarz:</p>
-                                        <p v-if="doctor != 'Nie wybrano'"> {{ doctor.firstname }} {{ doctor.lastname }}</p>
-                                        <p v-if="specialization != 'Nie wybrano'"> {{ specialization }}</p>
-                                        <p v-if="doctor != 'Nie wybrano'"><span>Termin:</span> {{ date.toLocaleDateString('pl', { weekday:"long", year:"numeric", month:"long", day:"numeric"}) }}<template v-if="slot != null">, {{ slot.starttime.slice(0, 5) }}</template></p>
-                                        <p v-else><span>Termin: </span> Wybierz termin</p>
-                                        <div class="d-flex">
-                                            <p>Koszt wizyty:</p>
-                                            <span> {{ price }} zł</span>
+                                        <p :class="specialization != 'Nie wybrano' ? 'reduced-margin-bottom' : ''">
+                                            <span class="span-upper">Twój lekarz:</span>
+                                        </p>
+                                        <div>
+                                        <p v-if="doctor != 'Nie wybrano' || specialization != 'Nie wybrano'" class="d-flex">
+                                            <span v-if="specialization != 'Nie wybrano'" class="span-lower" style="margin-right: 20px">{{ this.specialization }} </span>
+                                            <span v-if="doctor != 'Nie wybrano'" class="span-lower"> {{ doctor.firstname }} {{ doctor.lastname }} </span>
+                                        </p>
+                                        <p v-else>
+                                            <span  class="span-lower">Wybierz specjalizację i lekarza: </span>
+                                        </p>
+                                        </div>
+                                        <div class="horizontal-line">
+                                            <p v-if="doctor != 'Nie wybrano'" class="d-flex flex-column">
+                                                <span class="span-upper">Termin:</span> 
+                                                <span class="span-lower">{{ date.toLocaleDateString('pl', { weekday:"long", year:"numeric", month:"long", day:"numeric"}) }}</span>
+                                                <template v-if="slot != null"> 
+                                                    <span>{{ slot.starttime.slice(0, 5) }}</span>
+                                                </template>
+                                            </p>
+                                            <p v-else class="d-flex flex-column">
+                                                <span class="span-upper">Termin: </span>
+                                                <span class="span-lower">Wybierz termin</span> 
+                                            </p>
                                         </div>
                                         <base-button @click="submitForm()" type="dark" :has-icon="true">Umów wizytę</base-button>
                                     </div>
@@ -210,7 +226,7 @@ export default {
 
         format() {
             return this.date.toLocaleDateString('pl', { weekday:"long", year:"numeric", month:"short", day:"numeric"});
-        }
+        },
     },
 
     computed: {
@@ -316,7 +332,7 @@ div.appointment-container {
 
         }
 
-        .appointment-dates {
+        div.appointment-dates {
             height: 305px;
             overflow-y: auto;
             .dates-button {
@@ -351,7 +367,7 @@ div.appointment-container {
                 color: white;
             }
         }
-        .form-check {
+        div.form-check {
             input {
                 border-color: $secondary;
                 &:checked {
@@ -409,11 +425,21 @@ div.appointment-container {
         height: 100%;
         justify-content: center;
         div.right-inner-wrapper{
-            p:nth-child(2){
-                text-transform: uppercase;
-                color: $secondary;
-                margin: 30px 0;
+            p {
+                &:nth-child(2){
+                    text-transform: uppercase;
+                    color: $secondary;
+                    margin: 30px 0 15px;
+                }
+                &.reduced-margin-bottom {
+                    margin-bottom: 5px;
+                }
+                
             }
+            
+                
+
+    
             
             p:nth-child(5){
                 margin-bottom: 30px;
@@ -430,11 +456,21 @@ div.appointment-container {
                 }
                 user-select: none;
             }
+            span.span-upper {
+                font-weight: 400;
+                color: rgb(95, 109, 126);
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+            span.span-lower {
+                margin-top: 10px;
+            }
+    
 
-            div {
+            div.horizontal-line {
                 width: 260px;
                 border-top: 1px solid #D1D9E2;
-                padding: 20px 0;
+                padding: 15px 0;
                 justify-content: space-evenly;
                 align-items: center;
                 font-weight: 700;
@@ -443,12 +479,12 @@ div.appointment-container {
                     margin-bottom: 0;
                 }
 
-                span {
-                    background-color: $secondary;
-                    padding: 2px 8px;
-                    border-radius: 5px;
-                    color: white;
-                }
+                // span {
+                //     background-color: $secondary;
+                //     padding: 2px 8px;
+                //     border-radius: 5px;
+                //     color: white;
+                // }
             }
         }
     }
