@@ -117,17 +117,11 @@ export default {
         async cancelVisit(id){
             await axios.get(`Visits/${id}/Cancel`)
                 .then(() => {
-                    this.toast.success("Wizyta została odwołana", {
-                        timeout: 2500,
-                        position: "bottom-right",
-                    });
+                    this.toast.success("Wizyta została odwołana");
                     this.getVisits();
                 })
                 .catch(() => {
-                    this.toast.error("Nie można odwołać wizyty, ponieważ pozostało mniej niż 24 godziny", {
-                        timeout: 2500,
-                        position: "bottom-right",
-                    });
+                    this.toast.error("Nie można odwołać wizyty, ponieważ pozostało mniej niż 24 godziny");
                 });
         }
     }

@@ -106,18 +106,12 @@ export default {
 
       async cancelVisit(id){
           await axios.get(`Visits/${id}/Cancel`);
-          this.toast("Wizyta została odwołana", {
-              timeout: 2500,
-              position: "bottom-right",
-          });
+          this.toast("Wizyta została odwołana");
           this.getVisits();
       },
       async confirmVisit(id){
           await axios.get(`Visits/${id}/Confirm`)
-          this.toast("Wizyta została potwierdzona", {
-              timeout: 2500,
-              position: "bottom-right",
-          });
+          this.toast("Wizyta została potwierdzona");
           this.getVisits();
       },
       setStatus(status){

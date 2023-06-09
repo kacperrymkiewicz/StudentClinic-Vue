@@ -66,18 +66,12 @@ export default {
                 this.$store.dispatch('user', { id: responseDecoded.nameid, firstName: responseDecoded.firstName, lastName: responseDecoded.lastName, accountType: responseDecoded.role});
             })
             .then(() => {
-                this.toast.success("Zalogowano pomyślnie", {
-                    timeout: 2500,
-                    position: "bottom-right",
-                });
+                this.toast.success("Zalogowano pomyślnie");
                 this.isLoggedIn = true;
                 this.redirectAfterSuccessfullLogin();
             })
             .catch((error) => {
-                this.toast.error("Nieprawidłowe dane logowania", {
-                    timeout: 2500,
-                    position: "bottom-right",
-                });
+                this.toast.error("Nieprawidłowe dane logowania");
                 console.log(error);
             });
 

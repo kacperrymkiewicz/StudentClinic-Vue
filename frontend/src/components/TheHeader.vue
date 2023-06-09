@@ -140,10 +140,7 @@ export default {
       this.isDropDownMenuOpen = !this.isDropDownMenuOpen;
     },
     logout(){
-      this.toast("Wylogowano pomyślnie", {
-        timeout: 2500,
-        position: "bottom-right",
-      });
+      this.toast("Wylogowano pomyślnie");
       localStorage.removeItem('token');
       this.$store.dispatch('user', null);
       router.push("/logowanie");

@@ -68,25 +68,16 @@ export default {
                     newPassword: this.newPassword,
                 })
                 .then(() => {
-                    this.toast.success("Hasło zostało zmienione", {
-                            timeout: 2500,
-                            position: "bottom-right",
-                    });
+                    this.toast.success("Hasło zostało zmienione");
                     this.$router.replace('/profil');
                 })
                 .catch((error) => {
-                    this.toast.error("Aktualne hasło jest nieprawidłowe", {
-                            timeout: 2500,
-                            position: "bottom-right",
-                    });
+                    this.toast.error("Aktualne hasło jest nieprawidłowe");
                     console.log(error)
                 })
             }
             else {
-                this.toast.error("Podane hasła nie są takie same", {
-                    timeout: 2500,
-                    position: "bottom-right",
-                });
+                this.toast.error("Podane hasła nie są takie same");
             }
         },  
     }

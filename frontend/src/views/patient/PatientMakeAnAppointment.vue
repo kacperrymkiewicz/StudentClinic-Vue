@@ -155,22 +155,13 @@ export default {
 
         async submitForm(){
             if(this.specialization == 'Nie wybrano') {
-                this.toast.warning("Nie wybrano specjalizacji", {
-                    timeout: 2500,
-                    position: "bottom-right",
-                });
+                this.toast.warning("Nie wybrano specjalizacji");
             }
             else if(this.doctor == 'Nie wybrano') {
-                this.toast.warning("Nie wybrano doktora", {
-                    timeout: 2500,
-                    position: "bottom-right",
-                });
+                this.toast.warning("Nie wybrano doktora");
             }
             else if(this.slot_id == -1) {
-                this.toast.warning("Nie wybrano godziny", {
-                    timeout: 2500,
-                    position: "bottom-right",
-                });
+                this.toast.warning("Nie wybrano godziny");
             }
             else {
                 const response = await axios.post('Visits', {
@@ -181,10 +172,7 @@ export default {
                 });
 
                 if(response.status == 200) {
-                    this.toast.success("Wizyta umówiona", {
-                        timeout: 2500,
-                        position: "bottom-right",
-                    });
+                    this.toast.success("Wizyta umówiona");
                     this.$router.replace({name: "patient-visits"});
                 }
             }
