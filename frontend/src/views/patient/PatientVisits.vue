@@ -114,14 +114,6 @@ export default {
         forceRerenderStatus(){
             this.rerenderStatus += 1;
         },
-        setSpecialization(specialization){
-            switch(specialization){
-                case 'oculist':
-                    return "Okulista"
-                default:
-                    return "niezdefiniowana"
-            } 
-        },
         async cancelVisit(id){
             await axios.get(`Visits/${id}/Cancel`)
                 .then(() => {

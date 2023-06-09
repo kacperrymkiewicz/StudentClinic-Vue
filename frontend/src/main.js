@@ -13,7 +13,6 @@ import BaseButton from "@/components/BaseButton.vue";
 import HelloMessage from "@/components/HelloMessage.vue";
 import BaseCard from "@/components/BaseCard.vue";
 import BaseModal from "@/components/BaseModal.vue";
-import BaseTable from "@/components/BaseTable.vue";
 import Breadcrumbs from "@/components/Breadcrumbs.vue";
 
 const capitalizeMixin = {
@@ -41,6 +40,5 @@ createApp(App)
 .component('hello-message', HelloMessage)
 .component('base-card', BaseCard)
 .component('base-modal', BaseModal)
-.component('base-table', BaseTable)
 .component('breadcrumbs', Breadcrumbs)
 .mount("#app");

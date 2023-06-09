@@ -171,8 +171,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-//import axios from 'axios'
-//import jwt_decode from "jwt-decode";
 
 export default {
   name: "HomeView",
@@ -184,14 +182,6 @@ export default {
       localStorage.setItem('visitDoctor', data.doctor)
     }
   },
-  async created(){
-      // const token = localStorage.getItem('token');
-      // const tokenDecoded = jwt_decode(token);
-      // const getPatientInfo = await axios.get(`Patients/${tokenDecoded.nameid}`);
-      
-      // await this.$store.dispatch('patient', getPatientInfo.data.data);
-  },
-    
 };
 </script>
 

@@ -116,18 +116,7 @@ export default {
 
   data(){
     return {
-      role: "Pacjent",
       isDropDownMenuOpen: false,
-    }
-  },
-  props: {
-    isDoctor: {
-      type: Boolean,
-      required: false
-    },
-    isReceptionist: {
-      type: Boolean,
-      required: false
     }
   },
   computed: {
@@ -313,8 +302,4 @@ nav {
     }
   }
 }
-  
-  
-
-
 </style>

@@ -88,11 +88,10 @@ export default {
                     position: "bottom-right",
                 });
             }
-
         },  
     }
-
-}</script>
+}
+</script>
 
 <style lang="scss" scoped>
 .col-md-6 {

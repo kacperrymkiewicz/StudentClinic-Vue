@@ -87,11 +87,9 @@ export default {
   },
   data(){
       return {
-          modalIsOpen: false,
           fields: ['data', 'godzina', 'pacjent', 'status'],
           visitsList: [],
           tokenDecoded: null,
-          //filteredList: 
       }
   },  
   computed: {
@@ -150,35 +148,6 @@ export default {
                   return "#FFF";
           }
       },
-      toggleModalIsOpen(){
-
-      }
-
-      // search(props){
-      //     let sort = ref(false);
-      //     let updatedList =  ref([])
-      //     let searchQuery = ref("");
-          
-      //     const sortedList = computed(() => {
-      //         if (sort.value) {
-      //             return updatedList.value
-      //         } else {
-      //             return props.data;
-      //         }
-      //     });
-
-      //     const filteredList = computed(() => {
-      //         return sortedList.value.filter((product) => {
-      //             if(product.value){
-      //                 return product.value.toLowerCase().indexOf(searchQuery.value.toLowerCase()) != -1;
-      //             }
-      //             return product;
-                  
-      //         });
-      //     });   
-      
-      //     return { sortedList, searchQuery, filteredList }
-      // }
   },
   async created(){
       const token = localStorage.getItem('token');

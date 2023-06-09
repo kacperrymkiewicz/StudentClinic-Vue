@@ -65,7 +65,6 @@
 <script>
 import axios from 'axios'
 import { mapGetters } from 'vuex'
-import { computed, ref } from "vue";
 import jwt_decode from "jwt-decode";
 import PatientCardModal from '@/components/PatientCardModal.vue';
 import WritePrescriptionModal from '@/components/WritePrescriptionModal.vue';
@@ -75,7 +74,6 @@ export default {
         return {
             patients: [],
             fields: ['pacjent', 'akcje'],
-            //patientInfo: [],
             patientCardModalData: [],
             patientCardModalIsOpen: false,
             writePrescriptionModalData: [],
@@ -98,32 +96,6 @@ export default {
     },
     computed: {
         ...mapGetters(['user', 'doctor', 'isLoggedIn'])
-    },
-
-    setup(props) {
-        let sort = ref(false);
-        let updatedList =  ref([])
-        let searchQuery = ref("");
-        
-        const sortedList = computed(() => {
-            if (sort.value) {
-                return updatedList.value
-            } else {
-                return props.data;
-            }
-        });
-
-        const filteredList = computed(() => {
-            return sortedList.value.filter((product) => {
-                if(product.pacjent){
-                    return product.pacjent.toLowerCase().indexOf(searchQuery.value.toLowerCase()) != -1;
-                }
-                return product;
-                
-            });
-        });   
-    
-        return { sortedList, searchQuery, filteredList }
     },
     async created(){
         const token = localStorage.getItem('token');

@@ -81,12 +81,6 @@ export default {
     computed: {
         ...mapGetters(['patient', 'user'])
     },
-    async created(){
-        // const tokenDecoded = localStorage.decodedToken;
-        // const getPatientInfo = await axios.get(`Patients/${tokenDecoded.nameid}`);
-        
-        // await this.$store.dispatch('patient', getPatientInfo.data.data);
-    },
 
     methods: {
         submitForm(){

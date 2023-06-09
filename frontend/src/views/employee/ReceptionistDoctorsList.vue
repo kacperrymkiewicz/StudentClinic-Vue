@@ -69,7 +69,6 @@
 <script>
 import axios from 'axios'
 import { mapGetters } from 'vuex';
-// import { computed, ref } from "vue";
 
 export default {
   data(){
@@ -77,7 +76,6 @@ export default {
           modalIsOpen: false,
           fields: ['lekarz', 'specjalizacja'],
           doctorsList: [],
-          //filteredList: 
       }
   },  
   computed: {
@@ -88,36 +86,6 @@ export default {
       async getDoctors() {
           this.doctorsList = (await axios.get(`Doctors`)).data.data;
       },
-
-      toggleModalIsOpen(){
-
-      }
-
-      // search(props){
-      //     let sort = ref(false);
-      //     let updatedList =  ref([])
-      //     let searchQuery = ref("");
-          
-      //     const sortedList = computed(() => {
-      //         if (sort.value) {
-      //             return updatedList.value
-      //         } else {
-      //             return props.data;
-      //         }
-      //     });
-
-      //     const filteredList = computed(() => {
-      //         return sortedList.value.filter((product) => {
-      //             if(product.value){
-      //                 return product.value.toLowerCase().indexOf(searchQuery.value.toLowerCase()) != -1;
-      //             }
-      //             return product;
-                  
-      //         });
-      //     });   
-      
-      //     return { sortedList, searchQuery, filteredList }
-      // }
   },
   async created(){
       this.getDoctors();

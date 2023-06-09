@@ -54,7 +54,7 @@ export default {
 
         }
     },
-    name: 'WritePrescription',
+    name: 'WritePrescriptionModal',
     emits: ['closeWriteAPrescriptionModal'],
     props: {
         data: {
