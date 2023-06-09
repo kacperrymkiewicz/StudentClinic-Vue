@@ -85,7 +85,7 @@ import axios from 'axios';
 import { reactive, computed } from 'vue';
 import { useToast } from "vue-toastification";
 import { useVuelidate } from '@vuelidate/core'
-import { required, sameAs, helpers, email, alphaNum, minLength, maxLength } from '@vuelidate/validators'
+import { required, sameAs, helpers, email, alphaNum, minLength, maxLength, not } from '@vuelidate/validators'
 import { useRouter } from 'vue-router'
 
 export default {
@@ -152,7 +152,7 @@ export default {
                 },
                 street: {
                     required: helpers.withMessage('Pole nie może być puste', required),
-                    alphaNum: helpers.withMessage('Niepoprawna wartość', alphaNum),
+                    alphaNum: helpers.withMessage('Niepoprawna wartość', not(alphaNum)),
                 },
                 regulationsAccepted: {
                     sameAs: helpers.withMessage('Zaakceptuj regulamin', sameAs(true)),
