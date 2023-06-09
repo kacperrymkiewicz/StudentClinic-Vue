@@ -85,7 +85,7 @@ import axios from 'axios';
 import { reactive, computed } from 'vue';
 import { useToast } from "vue-toastification";
 import { useVuelidate } from '@vuelidate/core'
-import { required, minLength, sameAs, helpers, email, numeric, maxLength } from '@vuelidate/validators'
+import { required, sameAs, helpers, email, alphaNum, minLength, maxLength } from '@vuelidate/validators'
 import { useRouter } from 'vue-router'
 
 export default {
@@ -95,6 +95,9 @@ export default {
         const router = useRouter();
         const toast = useToast();
         
+        const postalCodeRegex = helpers.regex(/^[0-9]{2}-[0-9]{3}/, /\d/)
+        const phoneNumberRegex = helpers.regex(/(?<!\w)(\(?(\+|00)?48\)?)?[ -]?\d{3}[ -]?\d{3}[ -]?\d{3}(?!\w)/, /\d/)
+
         const state = reactive({
             firstName: "",
             lastName: "",
@@ -117,7 +120,7 @@ export default {
                 },
                 lastName: {
                     required: helpers.withMessage('Pole nie może być puste', required),
-                    minLength: helpers.withMessage('Nazwisko zbyt krótkie', minLength(2)), 
+                    minLength: helpers.withMessage('Nazwisko jest zbyt krótkie', minLength(2)), 
                 },
                 emailAddress: {
                     required: helpers.withMessage('Pole nie może być puste', required),
@@ -133,31 +136,31 @@ export default {
                 },
                 phoneNumber: {
                     required: helpers.withMessage('Pole nie może być puste', required),
-                    minLength: helpers.withMessage('Niepoprawny numer telefonu', minLength(9)), 
-                    maxLength: helpers.withMessage('Niepoprawny numer telefonu', maxLength(9)), 
-                    numeric
+                    phoneNumberRegex: helpers.withMessage('Niepoprawny numer telefonu', phoneNumberRegex)
                 },
                 pesel: {
                     required: helpers.withMessage('Pole nie może być puste', required),
-                    minLength: helpers.withMessage('Niepoprawny PESEL', minLength(11)), 
-                    maxLength: helpers.withMessage('Niepoprawny PESEL', maxLength(11)), 
-                    numeric
+                    minLength: helpers.withMessage('Niepoprawny PESEL', minLength(11)),
+                    maxLength: helpers.withMessage('Niepoprawny PESEL', maxLength(11)),
                 },
                 city: {
                     required: helpers.withMessage('Pole nie może być puste', required),
                 },
                 postalCode: {
                     required: helpers.withMessage('Pole nie może być puste', required),
+                    postalCodeRegex: helpers.withMessage('Niepoprawny adres email', postalCodeRegex),
                 },
                 street: {
                     required: helpers.withMessage('Pole nie może być puste', required),
+                    alphaNum: helpers.withMessage('Niepoprawna wartość', alphaNum),
                 },
                 regulationsAccepted: {
                     sameAs: helpers.withMessage('Zaakceptuj regulamin', sameAs(true)),
                 }
             }
         })
-        
+    
+
         const submitForm = async () => {
             const isValid = await v$.value.$validate()
             if(isValid){
@@ -188,12 +191,6 @@ export default {
 
         return { toast, state, rules, submitForm, v$ }
     },
-
-//     emailAddressRegex: () =>  /^[^@]+@\w+(\.\w+)+\w$/,
-//     phoneNumberRegex: () => /^\d{9}$/,
-//     peselRegex: () => /^\d{11}$/,
-//     postalCodeRegex: () => /^[0-9]{2}-[0-9]{3}/
-
 };
 
 </script>
