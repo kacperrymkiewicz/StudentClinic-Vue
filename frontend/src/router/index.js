@@ -18,7 +18,7 @@ import PatientProfileEditPassword from "../views/patient/PatientProfileEditPassw
 import ReceptionistPatientsVisits from "../views/employee/ReceptionistPatientsVisits.vue";
 import ReceptionistDoctorsList from "../views/employee/ReceptionistDoctorsList.vue";
 import ReceptionistPatientsList from "../views/employee/ReceptionistPatientsList.vue";
-import PatientsList from "../views/employee/PatientsList.vue";
+import DoctorPatientsList from "../views/employee/DoctorPatientsList.vue";
 import DoctorVisitList from "../views/employee/DoctorVisitList.vue";
 
 const routes = [
@@ -83,8 +83,8 @@ const routes = [
       requiresAuth: true
     }
   },
-
-  // pracownik
+  
+  // recepcja
   {
     path: "/recepcja/wizyty",
     name: "receptionist-patients-visits",
@@ -104,21 +104,23 @@ const routes = [
     }
   },
   {
-    path: "/lekarz/pacjenci",
-    name: "patients-list",
-    component: PatientsList,
-    meta: {
-      requiresAuth: true,
-      requiresDoctorPerms: true
-    }
-  },
-  {
     path: "/recepcja/pacjenci",
     name: "receptionist-patients-list",
     component: ReceptionistPatientsList,
     meta: {
       requiresAuth: true,
       requiresReceptionistPerms: true
+    }
+  },
+
+  //lekarz
+  {
+    path: "/lekarz/pacjenci",
+    name: "doctor-patients-list",
+    component: DoctorPatientsList,
+    meta: {
+      requiresAuth: true,
+      requiresDoctorPerms: true
     }
   },
   {

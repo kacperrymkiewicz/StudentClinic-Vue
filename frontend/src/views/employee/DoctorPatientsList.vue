@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <breadcrumbs>
-                        <router-link to="/pacjenci">Pacjenci</router-link>
+                        <router-link to="lekarz/pacjenci">Pacjenci</router-link>
                     </breadcrumbs>
                     <hello-message v-if="user" :name="user.firstName" icon-name="agenda"><template v-slot:info>Oto lista Twoich pacjentów</template></hello-message>         
                     <div class="wrapper d-flex flex-column">
