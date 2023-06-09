@@ -86,11 +86,13 @@ import { reactive, computed } from 'vue';
 import { useToast } from "vue-toastification";
 import { useVuelidate } from '@vuelidate/core'
 import { required, minLength, sameAs, helpers, email, numeric, maxLength } from '@vuelidate/validators'
-
+import { useRouter } from 'vue-router'
 
 export default {
     name: "SignUpView",
     setup() {
+
+        const router = useRouter();
         const toast = useToast();
         
         const state = reactive({
@@ -172,7 +174,7 @@ export default {
                 })
                 .then(() => {
                     toast.success("Zarejestrowano pomyślnie");
-                    this.$router.replace({name: "login"});
+                    router.replace({name: "login"});
                 })
                 .catch(() => {
                     //    
