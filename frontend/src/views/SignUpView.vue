@@ -61,9 +61,9 @@
 
                 <div class="form-group d-flex flex-column">
                     <label class="align-self-start" for="street">Ulica i nr budynku</label>
-                    <input type="text" class="form-control" id="street" v-model.trim="state.street">
+                    <input type="text" class="form-control" id="street" v-model.trim="state.streetAddress">
                 </div>
-                <p v-if="v$.street.$error"> {{ v$.street.$errors[0].$message }} </p>
+                <p v-if="v$.streetAddress.$error"> {{ v$.streetAddress.$errors[0].$message }} </p>
                 
                 <div class="form-check d-flex">
                     <input type="checkbox" class="form-check-input" id="regulamin" v-model="state.regulationsAccepted">
@@ -150,7 +150,7 @@ export default {
                     required: helpers.withMessage('Pole nie może być puste', required),
                     postalCodeRegex: helpers.withMessage('Niepoprawny adres email', postalCodeRegex),
                 },
-                street: {
+                streetAddress: {
                     required: helpers.withMessage('Pole nie może być puste', required),
                     alphaNum: helpers.withMessage('Niepoprawna wartość', not(alphaNum)),
                 },
@@ -169,19 +169,18 @@ export default {
                     lastName: state.lastName,
                     emailAddress: state.emailAddress,
                     password: state.password,
-                    phoneNumber: 'state.phoneNumber',
-                    pesel: 'state.pesel',
-                    city: 'state.city',
-                    postalCode: 'state.postalCode',
-                    streetAddress: 'state.streetAddress',
+                    phoneNumber: state.phoneNumber,
+                    pesel: state.pesel,
+                    city: state.city,
+                    postalCode: state.postalCode,
+                    streetAddress: state.streetAddress,
                 })
                 .then(() => {
                     toast.success("Zarejestrowano pomyślnie");
                     router.replace({name: "login"});
+                }).catch(error => {
+                    console.log(error);
                 })
-                .catch(() => {
-                    //    
-                    })
             } else {
                 toast.error("Błędy w formularzu");
             }

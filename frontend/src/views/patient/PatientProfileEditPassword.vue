@@ -40,6 +40,7 @@
 import { mapGetters } from 'vuex';
 import axios from 'axios'
 import { useToast } from "vue-toastification";
+import jwt_decode from "jwt-decode";
 
 export default {
     setup() {
@@ -51,7 +52,6 @@ export default {
     },
     data(){
         return {
-            info: "Oto lista w",
             currentPassword: null,
             newPassword: null,
             repeatNewPassword: null,
@@ -79,7 +79,17 @@ export default {
             else {
                 this.toast.error("Podane hasła nie są takie same");
             }
-        },  
+        },
+
+    },
+    async created(){
+        const token = localStorage.getItem('token');
+        const tokenDecoded = jwt_decode(token);
+
+        const getPatientInfo = await axios.get(`Patients/${tokenDecoded.roleId}`);
+        
+        await this.$store.dispatch('patient', getPatientInfo.data.data);
+        console.log(getPatientInfo);
     }
 }
 </script>
