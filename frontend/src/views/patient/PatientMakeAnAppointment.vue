@@ -14,9 +14,14 @@
                                     <div class="left-inner-wrapper d-flex flex-column align-items-center">
                                         <div class="form-group d-flex flex-column">
                                             <label class="align-self-start" for="specialization">Wybierz specjalizację</label>
-                                            <select class="form-select" aria-label="Wybierz specjalistę" id="specialization" @change="onSpecializationChange($event)" v-model="specialization">
+                                            <select v-if="this.findvisitDoctor == null" class="form-select" aria-label="Wybierz specjalistę" id="specialization" @change="onSpecializationChange($event)" v-model="specialization">
                                                 <option selected disabled hidden>Nie wybrano</option>
                                                 <option v-for="specialization in specialization_data" :key="specialization" :value="specialization">
+                                                    {{ specialization }}
+                                                </option>
+                                            </select>
+                                            <select v-else class="form-select" aria-label="Wybierz specjalistę" id="specialization" @change="onSpecializationChange($event)" v-model="specialization">
+                                                <option v-for="specialization in specialization_data" :selected="specialization == this.findvisitDoctor" :key="specialization" :value="specialization">
                                                     {{ specialization }}
                                                 </option>
                                             </select>
@@ -128,10 +133,12 @@ export default {
             slot: null,
             slot_id: -1,
             patientId: null,
+            findvisitDoctor: null,
         }
     },
     methods: {
         async onSpecializationChange(event) {
+            this.doctor = "Nie wybrano";
             await axios.get('Doctors/' + event.target.value).
                 then(response => (this.doctor_data = response.data.data));
         },
@@ -167,7 +174,7 @@ export default {
             }
             else {
                 const response = await axios.post('Visits', {
-                    patientId: 1,
+                    patientId: this.patientId,
                     doctorId: this.doctor.id,
                     date: this.date.toLocaleDateString("sv"),
                     slotId: this.slot.id,
@@ -223,8 +230,18 @@ export default {
     },
 
     async created(){
+        this.findvisitDoctor = localStorage.getItem('visitDoctor');
+        if(this.findvisitDoctor != null) {
+            localStorage.removeItem('visitDoctor');
+            this.specialization = this.findvisitDoctor;
+            await axios.get('Doctors/' + this.findvisitDoctor).
+                then(response => (this.doctor_data = response.data.data));
+        }
+
+        console.log(this.findvisitDoctor);
         const token = localStorage.getItem('token');
-        this.patientId = jwt_decode(token).roleId;
+        const tokenDecoded = jwt_decode(token)
+        this.patientId = tokenDecoded.roleId;
     },
 
     async mounted(){

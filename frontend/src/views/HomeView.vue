@@ -44,21 +44,31 @@
                     <div class="termin-content-daty">
                       <div class="row">
                         <div class="col-md-12 col-lg-6">
-                          <base-button class="termin-button">Dzisiaj 09:00</base-button>
+                          <router-link to="/umow-wizyte" @click="redirectToVisitPage({doctor: 'Internista'})">
+                            <base-button class="termin-button">Dzisiaj 09:00</base-button>
+                          </router-link>
                         </div>
                         <div class="col-md-12 col-lg-6">
-                          <base-button class="termin-button">Dzisiaj 09:30</base-button>
+                          <router-link to="/umow-wizyte" @click="redirectToVisitPage({doctor: 'Internista'})">
+                            <base-button class="termin-button">Dzisiaj 09:30</base-button>
+                          </router-link>
                         </div>
                         <div class="col-md-12 col-lg-6">
-                          <base-button class="termin-button">Jutro 09:00</base-button>
+                          <router-link to="/umow-wizyte" @click="redirectToVisitPage({doctor: 'Internista'})">
+                            <base-button class="termin-button">Jutro 09:00</base-button>
+                          </router-link>
                         </div>
                         <div class="col-md-12 col-lg-6">
-                          <base-button class="termin-button">Jutro 09:00</base-button>
+                          <router-link to="/umow-wizyte" @click="redirectToVisitPage({doctor: 'Internista'})">
+                            <base-button class="termin-button">Jutro 09:30</base-button>
+                          </router-link>
                         </div>
                       </div>
                     </div>
                     <div class="termin-content-more-button">
-                      <base-button class="termin-button mt-2">Więcej terminów</base-button>
+                      <router-link to="/umow-wizyte" @click="redirectToVisitPage({doctor: 'Internista'})">
+                        <base-button class="termin-button mt-2">Więcej terminów</base-button>
+                      </router-link>
                     </div>
                   </div>
                 </div>
@@ -78,21 +88,31 @@
                     <div class="termin-content-daty">
                       <div class="row">
                         <div class="col-md-12 col-lg-6">
-                          <base-button class="termin-button">Dzisiaj 09:00</base-button>
+                          <router-link to="/umow-wizyte" @click="redirectToVisitPage({doctor: 'Okulista'})">
+                            <base-button class="termin-button">Dzisiaj 09:00</base-button>
+                          </router-link>
                         </div>
                         <div class="col-md-12 col-lg-6">
-                          <base-button class="termin-button">Dzisiaj 09:30</base-button>
+                          <router-link to="/umow-wizyte" @click="redirectToVisitPage({doctor: 'Okulista'})">
+                            <base-button class="termin-button">Dzisiaj 09:30</base-button>
+                          </router-link>
                         </div>
                         <div class="col-md-12 col-lg-6">
-                          <base-button class="termin-button">Jutro 09:00</base-button>
+                          <router-link to="/umow-wizyte" @click="redirectToVisitPage({doctor: 'Okulista'})">
+                            <base-button class="termin-button">Jutro 09:00</base-button>
+                          </router-link>
                         </div>
                         <div class="col-md-12 col-lg-6">
-                          <base-button class="termin-button">Jutro 09:00</base-button>
+                          <router-link to="/umow-wizyte" @click="redirectToVisitPage({doctor: 'Okulista'})">
+                            <base-button class="termin-button">Jutro 09:30</base-button>
+                          </router-link>
                         </div>
                       </div>
                     </div>
                     <div class="termin-content-more-button">
-                      <base-button class="termin-button mt-2">Więcej terminów</base-button>
+                      <router-link to="/umow-wizyte" @click="redirectToVisitPage({doctor: 'Okulista'})">
+                          <base-button class="termin-button mt-2">Więcej terminów</base-button>
+                      </router-link>
                     </div>
                   </div>
                 </div>
@@ -112,21 +132,31 @@
                     <div class="termin-content-daty">
                       <div class="row">
                         <div class="col-md-12 col-lg-6">
-                          <base-button class="termin-button">Dzisiaj 09:00</base-button>
+                          <router-link to="/umow-wizyte" @click="redirectToVisitPage({doctor: 'Gastrolog'})">
+                            <base-button class="termin-button">Dzisiaj 09:00</base-button>
+                          </router-link>
                         </div>
                         <div class="col-md-12 col-lg-6">
-                          <base-button class="termin-button">Dzisiaj 09:30</base-button>
+                          <router-link to="/umow-wizyte" @click="redirectToVisitPage({doctor: 'Gastrolog'})">
+                            <base-button class="termin-button">Dzisiaj 09:30</base-button>
+                          </router-link>
                         </div>
                         <div class="col-md-12 col-lg-6">
-                          <base-button class="termin-button">Jutro 09:00</base-button>
+                          <router-link to="/umow-wizyte" @click="redirectToVisitPage({doctor: 'Gastrolog'})">
+                            <base-button class="termin-button">Jutro 09:00</base-button>
+                          </router-link>
                         </div>
                         <div class="col-md-12 col-lg-6">
-                          <base-button class="termin-button">Jutro 09:00</base-button>
+                          <router-link to="/umow-wizyte" @click="redirectToVisitPage({doctor: 'Gastrolog'})">
+                            <base-button class="termin-button">Jutro 09:30</base-button>
+                          </router-link>
                         </div>
                       </div>
                     </div>
                     <div class="termin-content-more-button">
-                      <base-button class="termin-button mt-2">Więcej terminów</base-button>
+                      <router-link to="/umow-wizyte" @click="redirectToVisitPage({doctor: 'Gastrolog'})">
+                        <base-button class="termin-button mt-2">Więcej terminów</base-button>
+                      </router-link>
                     </div>
                   </div>
                 </div>
@@ -149,7 +179,11 @@ export default {
   computed: {
       ...mapGetters(['user', 'patient'])
   },
-  
+  methods: {
+    redirectToVisitPage(data) {
+      localStorage.setItem('visitDoctor', data.doctor)
+    }
+  },
   async created(){
       // const token = localStorage.getItem('token');
       // const tokenDecoded = jwt_decode(token);

@@ -22,7 +22,7 @@
                                         <td v-for="field in fields" :key='field'>
                                             <span v-if="field == 'data'">
                                                 <span>
-                                                    {{ new Date(visit.date).toLocaleDateString('pl', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) }}, {{ visit.slot.startTime.slice(0, 5) }}
+                                                    {{ new Date(visit.date).toLocaleDateString('pl', { weekday:"short", year:"numeric", month:"short", day:"numeric"}) }}, {{ visit.slot.startTime.slice(0, 5) }}
                                                 </span>
                                             </span>
                                             <span v-else-if="field == 'pacjent'">

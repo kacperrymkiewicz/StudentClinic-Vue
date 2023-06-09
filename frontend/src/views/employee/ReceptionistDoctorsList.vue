@@ -6,7 +6,7 @@
                   <breadcrumbs>
                       <router-link to="/recepcja/lista-lekarzy">Lista lekarzy</router-link>
                   </breadcrumbs>
-                  <hello-message v-if="user" :name="user.firstName" icon-name="reminder">
+                  <hello-message v-if="user" :name="user.firstName" icon-name="agenda">
                       <template v-slot:info>Oto lista lekarzy</template>
                   </hello-message>
                   <div class="wrapper d-flex flex-column">
@@ -31,11 +31,6 @@
                                           <span v-else-if="field == 'specjalizacja'">
                                               <span>
                                                   {{ capitalizeFirstLetter(doctor.specialization) }}
-                                              </span>
-                                          </span>
-                                          <span v-else-if="field == 'akcje'">
-                                              <span>
-                                                  <button>Wyświetl wizyty</button>
                                               </span>
                                           </span>
                                       </td>
@@ -80,7 +75,7 @@ export default {
   data(){
       return {
           modalIsOpen: false,
-          fields: ['lekarz', 'specjalizacja', 'akcje'],
+          fields: ['lekarz', 'specjalizacja'],
           doctorsList: [],
           //filteredList: 
       }
