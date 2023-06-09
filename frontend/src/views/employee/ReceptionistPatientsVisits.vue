@@ -278,10 +278,12 @@ div.wrapper {
                             &.disabled-teal-button {
                                 cursor: not-allowed;
                                 background-color: $button-teal-hover !important;
+                                pointer-events: none;
                             }
                             &.disabled-red-button {
                                 cursor: not-allowed;
                                 background-color: $button-red-hover !important; 
+                                pointer-events: none;
                             }
                             &.blue-button {
                                 background-color: $button-blue;
