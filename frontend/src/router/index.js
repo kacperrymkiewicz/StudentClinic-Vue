@@ -23,6 +23,10 @@ import DoctorVisitList from "../views/employee/DoctorVisitList.vue";
 
 const routes = [
   {
+    path: '/:pathMatch(.*)*',
+    redirect: "/",
+  },
+  {
     path: "/",
     name: "home",
     component: HomeView,
