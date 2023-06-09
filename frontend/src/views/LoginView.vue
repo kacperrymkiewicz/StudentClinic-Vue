@@ -60,7 +60,9 @@ export default {
                 localStorage.token = response.data.data;
                 const responseDecoded = jwt_decode(response.data.data);
                 localStorage.decodedToken = responseDecoded;
+                localStorage.role = responseDecoded.role;
                 this.accountType = responseDecoded.role;
+                this.$store.dispatch('accountType', responseDecoded.role);
                 this.$store.dispatch('user', { id: responseDecoded.nameid, firstName: responseDecoded.firstName, lastName: responseDecoded.lastName, accountType: responseDecoded.role});
             })
             .then(() => {

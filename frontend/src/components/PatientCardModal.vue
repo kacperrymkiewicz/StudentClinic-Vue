@@ -10,7 +10,8 @@
                     <p><span>Telefon komórkowy:</span> {{ data.phoneNumber}}</p>
                     <p><span>PESEL:</span> {{ data.pesel }}</p>
                     <p><span>Adres zamieszkania:</span> {{ data.streetAddress }} {{ data.postalCode}} {{ data.city}}</p>
-                    <p><span>Przyjmowane leki:</span> lorem ipsum, lorem ipsum, lorem ipsum</p>
+                    <p v-if="data.medicationsTaken"><span>Przyjmowane leki:</span> {{ data.medicationsTaken }}</p>
+                    <p v-else><span>Przyjmowane leki:</span> brak </p>
                     <p v-if="data.allergies"><span>Alergie:</span> {{ data.allergies }}</p>
                     <p v-else><span>Alergie:</span> brak </p>
                 </div>

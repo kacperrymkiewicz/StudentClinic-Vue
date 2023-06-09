@@ -13,12 +13,12 @@
                     <label class="align-self-start" for="drug">Lek</label>
                     <select class="form-select" id="drug" v-model="drug" required>
                         <option selected disabled>Nie wybrano</option>
-                        <option value="lorem 10mg">Lorem 10mg</option>
-                        <option value="lorem 20mg">Lorem 20mg</option>
-                        <option value="ipsum 10mg">Ipsum 10mg</option>
-                        <option value="ipsum 20mg">Ipsum 20mg</option>
-                        <option value="dolor 10mg">Dolor 10mg</option>
-                        <option value="dolor 20mg">Dolor 20mg</option>
+                        <option value="Acard 300 mg (tabletki)*">Acard (tabletki) 300 mg</option>
+                        <option value="lorem 20mg">Polopiryna C (tabletki musujące) 150mg</option>
+                        <option value="ipsum 10mg">Ibuprom 30mg</option>
+                        <option value="ipsum 20mg">Magne B6 50mg</option>
+                        <option value="dolor 10mg">Rutinoscorbin 120mg</option>
+                        <option value="dolor 20mg">Euthyrox N 20mg</option>
                     </select>
                 </div>
                 <div class="form-group d-flex flex-column">
@@ -39,8 +39,13 @@
 <script>
 import axios from 'axios';
 import { mapGetters } from 'vuex';
+import { useToast } from "vue-toastification";
 
 export default {
+    setup() {
+        const toast = useToast();
+        return { toast }
+    },
     data(){
         return {
             drug: '',
@@ -84,10 +89,18 @@ export default {
             })
             .then(response => {
                 console.log(response.data.data);
+                this.toast.success("Recepta została wypisana", {
+                    timeout: 2500,
+                    position: "bottom-right",
+                });
                 this.$emit('closeWritePrescriptionModal');
             })
             .catch((error) => {
                 this.error = "Nie udało się wystawić recepty";
+                this.toast.error("Nie udało się wypisać recepty", {
+                    timeout: 2500,
+                    position: "bottom-right",
+                });
                 console.log(error);
             })
         }

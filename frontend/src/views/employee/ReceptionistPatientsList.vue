@@ -1,12 +1,12 @@
 <template>
-    <section id="patient-visits">
+    <section id="patients-list">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <breadcrumbs is-patient>
-                        <router-link to="/moje-wizyty">Moje wizyty</router-link>
+                    <breadcrumbs>
+                        <router-link to="/recepcja/pacjenci">Pacjenci</router-link>
                     </breadcrumbs>
-                    <hello-message v-if="user" :name="user.firstName" icon-name="reminder"><template v-slot:info>Oto lista Twoich wizyt</template></hello-message>
+                    <hello-message v-if="user" :name="user.firstName" icon-name="agenda"><template v-slot:info>Oto lista pacjentów</template></hello-message>         
                     <div class="wrapper d-flex flex-column">
                         <div class="table-responsive d-flex flex-column">  
                             <table class="table">
@@ -15,39 +15,33 @@
                                         <th v-for="field in fields" :key='field'> {{ capitalizeFirstLetter(field) }} </th>
                                     </tr>
                                 </thead>
-                                <tbody v-if="patientVisitsList.length > 0">
-                                    <tr v-for="visit in patientVisitsList" :key="visit.id">
-                                        <td v-for="field in fields" :key='field'>
-                                            <span v-if="field == 'data'">
-                                                <span>
-                                                    {{ new Date(visit.date).toLocaleDateString('pl', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) }}, {{ visit.slot.startTime.slice(0, 5) }}
-                                                </span>
-                                            </span>
-                                            <span v-else-if="field == 'lekarz'">
+                                <tbody>
+                                    <tr v-for="patient in patients" :key="patient.id">
+                                        <td v-for="field in fields" :key='field'> 
+                                            <span v-if="field == 'pacjent'">
                                                 <span>
                                                     <img src="@/assets/images/icons/svg/profile.svg">
                                                 </span>
                                                 <span>
-                                                    {{ capitalizeFirstLetter(visit.doctor.user.firstName) }} {{  capitalizeFirstLetter(visit.doctor.user.lastName) }}   
+                                                    {{ capitalizeFirstLetter(patient.user.firstName) }} {{  capitalizeFirstLetter(patient.user.lastName) }}   
                                                 </span>
                                             </span>
-                                            <span v-else-if="field == 'specjalizacja'">
-                                                {{ capitalizeFirstLetter(visit.doctor.specialization) }}
+                                            <span v-else-if="field == 'adres email'">
+                                                <span >
+                                                    {{ patient.user.emailAddress }}
+                                                </span>
                                             </span>
-                                            <span v-else-if="field == 'status'">
-                                                <visit-status :status="visit.status"></visit-status>
-                                            </span>
-                                            <span v-else>
-                                                <span>
-                                                    <button @click="cancelVisit(visit.id)" :class="['red-button', {'disabled-red-button': visit.status == 'Finished' || visit.status == 'Canceled'}]">Odwołaj</button>
+                                            <span v-else-if="field == 'numer telefonu'">
+                                                <span >
+                                                    {{ patient.phoneNumber }}
+                                                </span>
+                                            </span> 
+                                            <span v-else-if="field == 'adres zamieszkania'">
+                                                <span >
+                                                    {{ patient.postalCode }} {{ patient.city }}, {{ patient.streetAddress }}
                                                 </span>
                                             </span> 
                                         </td>
-                                    </tr>
-                                </tbody>
-                                <tbody class="no-results" v-else>
-                                    <tr>
-                                        <td colspan='5'>Brak umówionych wizyt</td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
@@ -73,72 +67,89 @@
             </div>
         </div>
     </section>
+    <patient-card-modal @close-patient-card-modal="patientCardModalIsOpen = false" v-if="patientCardModalData && patientCardModalIsOpen" :data="patientCardModalData"></patient-card-modal>
+    <write-prescription-modal @close-write-prescription-modal="writePrescriptionModalIsOpen = false" v-if="writePrescriptionModalIsOpen" :data="writePrescriptionModalData" :doctor-id-prop="doctor.id"></write-prescription-modal>
 </template>
 
 <script>
 import axios from 'axios'
+import { mapGetters } from 'vuex'
+import { computed, ref } from "vue";
 import jwt_decode from "jwt-decode";
-import { mapGetters } from 'vuex';
-import VisitStatus from "@/components/VisitStatus.vue";
-import { useToast } from "vue-toastification";
+import PatientCardModal from '@/components/PatientCardModal.vue';
+import WritePrescriptionModal from '@/components/WritePrescriptionModal.vue';
 
 export default {
-    setup() {
-        const toast = useToast();
-        return { toast }
-    },
-
     data(){
         return {
-            fields: ['data', 'lekarz', 'specjalizacja', 'status', 'akcje'],
-            rerenderStatus: 0,
-            tokenDecoded: null,
+            patients: [],
+            fields: ['pacjent', 'adres email', 'numer telefonu', 'adres zamieszkania'],
+            //patientInfo: [],
+            patientCardModalData: [],
+            patientCardModalIsOpen: false,
+            writePrescriptionModalData: [],
+            writePrescriptionModalIsOpen: false,
         }
     },
     components: {
-        VisitStatus
+        PatientCardModal,
+        WritePrescriptionModal
+    },
+    methods: {
+        openPatientCardModal(patientInfo) {
+            this.patientCardModalData = patientInfo;
+            this.patientCardModalIsOpen = true;
+        },
+        openWritePrescriptionModal(patientInfo){
+            this.writePrescriptionModalData = patientInfo;
+            this.writePrescriptionModalIsOpen = true;
+        }
     },
     computed: {
-        ...mapGetters(['user', 'patientVisitsList']),
+        ...mapGetters(['user', 'doctor', 'isLoggedIn'])
+    },
+
+    setup(props) {
+        let sort = ref(false);
+        let updatedList =  ref([])
+        let searchQuery = ref("");
+        
+        const sortedList = computed(() => {
+            if (sort.value) {
+                return updatedList.value
+            } else {
+                return props.data;
+            }
+        });
+
+        const filteredList = computed(() => {
+            return sortedList.value.filter((product) => {
+                if(product.pacjent){
+                    return product.pacjent.toLowerCase().indexOf(searchQuery.value.toLowerCase()) != -1;
+                }
+                return product;
+                
+            });
+        });   
+    
+        return { sortedList, searchQuery, filteredList }
     },
     async created(){
         const token = localStorage.getItem('token');
-        this.tokenDecoded = jwt_decode(token);
-        this.getVisits();
+        const tokenDecoded = jwt_decode(token);
+        console.log(tokenDecoded)
+        const responseUserId = await axios.get(`Users/${tokenDecoded.nameid}`);
+        const responseDoctorId = await axios.get(`Doctors/${tokenDecoded.roleId}`);
+        console.log(responseUserId)
+        await this.$store.dispatch('user', responseUserId.data.data);
+        await this.$store.dispatch('doctor', responseDoctorId.data.data);
+    
     },
-    methods: {
-        async getVisits() {
-            const getPatientVisits = await axios.get(`Patients/${this.tokenDecoded.roleId}/Visits`);
-            await this.$store.dispatch('patientVisitsList', getPatientVisits.data.data);
-        },
-        forceRerenderStatus(){
-            this.rerenderStatus += 1;
-        },
-        setSpecialization(specialization){
-            switch(specialization){
-                case 'oculist':
-                    return "Okulista"
-                default:
-                    return "niezdefiniowana"
-            } 
-        },
-        async cancelVisit(id){
-            await axios.get(`Visits/${id}/Cancel`)
-                .then(() => {
-                    this.toast.success("Wizyta została odwołana", {
-                        timeout: 2500,
-                        position: "bottom-right",
-                    });
-                    this.getVisits();
-                })
-                .catch(() => {
-                    this.toast.error("Nie można odwołać wizyty, ponieważ pozostało mniej niż 24 godziny", {
-                        timeout: 2500,
-                        position: "bottom-right",
-                    });
-                });
-        }
-    }
+    async mounted(){
+        const patientInfo = await axios.get('Patients');
+        this.patients = patientInfo.data.data;
+        console.log(patientInfo.data.data)
+    },
 }
 </script>
 
@@ -176,7 +187,6 @@ export default {
         border: 1px solid $button-light;
         border-radius: 10px;
         background-color: $primary;
-        margin: 40px 0;
 
         table {
             margin: 0;
@@ -254,10 +264,6 @@ export default {
                             border: 0;
                             margin-right: 20px;
                             transition: all .2s ease-in-out;
-                            &.disabled-red-button {
-                                cursor: not-allowed;
-                                background-color: $button-red-hover !important; 
-                            }
 
                             &.blue-button {
                                 background-color: $button-blue;
@@ -282,14 +288,6 @@ export default {
                                     background-color: $button-red-hover;
                                 }
                             }       
-                        }
-                    } 
-                }
-                &.no-results {
-                    
-                    tr {
-                        td {
-                            text-align: center;
                         }
                     }
                 }

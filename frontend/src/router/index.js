@@ -16,7 +16,10 @@ import PatientProfileEditPassword from "../views/patient/PatientProfileEditPassw
 
 // pracownik
 import ReceptionistPatientsVisits from "../views/employee/ReceptionistPatientsVisits.vue";
+import ReceptionistDoctorsList from "../views/employee/ReceptionistDoctorsList.vue";
+import ReceptionistPatientsList from "../views/employee/ReceptionistPatientsList.vue";
 import PatientsList from "../views/employee/PatientsList.vue";
+import DoctorVisitList from "../views/employee/DoctorVisitList.vue";
 
 const routes = [
   {
@@ -83,19 +86,48 @@ const routes = [
 
   // pracownik
   {
-    path: "/wizyty",
+    path: "/recepcja/wizyty",
     name: "receptionist-patients-visits",
     component: ReceptionistPatientsVisits,
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requiresReceptionistPerms: true
     }
   },
   {
-    path: "/pacjenci",
+    path: "/recepcja/lista-lekarzy",
+    name: "receptionist-doctors-list",
+    component: ReceptionistDoctorsList,
+    meta: {
+      requiresAuth: true,
+      requiresReceptionistPerms: true
+    }
+  },
+  {
+    path: "/lekarz/pacjenci",
     name: "patients-list",
     component: PatientsList,
     meta: {
-      requiresAuth: true
+      requiresAuth: true,
+      requiresDoctorPerms: true
+    }
+  },
+  {
+    path: "/recepcja/pacjenci",
+    name: "receptionist-patients-list",
+    component: ReceptionistPatientsList,
+    meta: {
+      requiresAuth: true,
+      requiresReceptionistPerms: true
+    }
+  },
+  {
+    path: "/lekarz/kalendarz-wizyt",
+    name: "doctor-visit-list",
+    component: DoctorVisitList,
+    meta: {
+      requiresAuth: true,
+      requiresDoctorPerms: true
     }
   },
 
@@ -118,9 +150,23 @@ router.beforeEach((to) => {
     });
     return  { name: "login" } ;
   }
+  if(to.meta.requiresDoctorPerms && localStorage.getItem('role') != 'Doctor'){
+    const toast = useToast();
+    toast.error("Ta akcja wymaga autoryzacji. Poziom uprawnień: Doktor", {
+      timeout: 2500,
+      position: "bottom-right",
+    });
+    return  { name: "login" } ;
+  }
+  if(to.meta.requiresReceptionistPerms && localStorage.getItem('role') != 'Receptionist'){
+    const toast = useToast();
+    toast.error("Ta akcja wymaga autoryzacji. Poziom uprawnień: Recepcjonista", {
+      timeout: 2500,
+      position: "bottom-right",
+    });
+    return  { name: "login" } ;
+  }
   return true
-
-  
 })
 
 export default router;

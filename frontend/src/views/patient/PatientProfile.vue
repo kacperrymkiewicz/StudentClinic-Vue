@@ -78,7 +78,7 @@ export default {
         const tokenDecoded = jwt_decode(token);
 
         const getUserInfo = await axios.get(`Users/${tokenDecoded.nameid}`); // wymagane do działania nawigacji
-        const getPatientInfo = await axios.get(`Patients/${tokenDecoded.nameid}`);
+        const getPatientInfo = await axios.get(`Patients/${tokenDecoded.roleId}`);
         
         await this.$store.dispatch('user', getUserInfo.data.data);
         await this.$store.dispatch('patient', getPatientInfo.data.data);
