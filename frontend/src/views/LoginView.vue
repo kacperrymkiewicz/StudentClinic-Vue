@@ -81,7 +81,7 @@ export default {
                 this.$router.replace({name: 'home'});
             }
             else if(this.isLoggedIn && this.accountType == 'Doctor'){
-                this.$router.replace({name: 'patients-list'})
+                this.$router.replace({name: 'doctor-patients-list'})
             }
             else if(this.isLoggedIn && this.accountType == 'Receptionist'){
                 this.$router.replace({name: 'receptionist-patients-visits'})

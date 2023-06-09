@@ -150,17 +150,17 @@ const router = createRouter({
 router.beforeEach((to) => {
   if(to.meta.requiresAuth && !localStorage.getItem('token')){
     const toast = useToast();
-    toast.info("Ta akcja wymaga autoryzacji");
+    toast.error("Ta akcja wymaga autoryzacji");
     return  { name: "login" } ;
   }
   if(to.meta.requiresDoctorPerms && localStorage.getItem('role') != 'Doctor'){
     const toast = useToast();
-    toast.info("Ta akcja wymaga autoryzacji. Poziom uprawnień: Doktor");
+    toast.error("Ta akcja wymaga autoryzacji. Poziom uprawnień: Doktor");
     return  { name: "login" } ;
   }
   if(to.meta.requiresReceptionistPerms && localStorage.getItem('role') != 'Receptionist'){
     const toast = useToast();
-    toast.info("Ta akcja wymaga autoryzacji. Poziom uprawnień: Recepcjonista");
+    toast.error("Ta akcja wymaga autoryzacji. Poziom uprawnień: Recepcjonista");
     return  { name: "login" } ;
   }
   return true
